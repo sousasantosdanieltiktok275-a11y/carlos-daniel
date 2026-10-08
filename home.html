@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroTrator - Login</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f2f2f2;
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* =========================
+           TELA
+        ========================= */
+
+        .tela {
+            width: 390px;
+            height: 844px;
+
+            background: #ffffff;
+
+            border-radius: 30px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* =========================
+           BARRA SUPERIOR
+        ========================= */
+
+        .status {
+            height: 35px;
+
+            padding: 10px 20px;
+
+            display: flex;
+            justify-content: space-between;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #222;
+        }
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        .conteudo {
+            position: relative;
+
+            z-index: 2;
+
+            padding: 20px 35px;
+
+            text-align: center;
+        }
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo {
+            width: 180px;
+
+            height: auto;
+
+            display: block;
+
+            margin: 20px auto 10px;
+
+            object-fit: contain;
+        }
+
+        /* =========================
+           TÍTULO
+        ========================= */
+
+        .titulo {
+            color: #2E7D32;
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            margin-top: 5px;
+        }
+
+        .subtitulo {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-top: 7px;
+
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           CAMPOS
+        ========================= */
+
+        .campo {
+            text-align: left;
+
+            margin-bottom: 20px;
+        }
+
+        .campo label {
+            display: block;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #333;
+
+            margin-bottom: 8px;
+        }
+
+        .campo label span {
+            color: #2E7D32;
+
+            margin-right: 5px;
+        }
+
+        .campo input {
+            width: 100%;
+
+            height: 48px;
+
+            border: 1px solid #d5d5d5;
+
+            border-radius: 8px;
+
+            padding: 0 14px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            background: #fff;
+        }
+
+        .campo input:focus {
+            border-color: #2E7D32;
+        }
+
+        /* =========================
+           SENHA
+        ========================= */
+
+        .senha-container {
+            position: relative;
+        }
+
+        .senha-container input {
+            padding-right: 45px;
+        }
+
+        .olho {
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #777;
+
+            cursor: pointer;
+
+            font-size: 18px;
+        }
+
+        /* =========================
+           ESQUECEU SENHA
+        ========================= */
+
+        .esqueceu {
+            display: block;
+
+            text-align: right;
+
+            color: #2E7D32;
+
+            font-size: 12px;
+
+            margin-top: -8px;
+
+            margin-bottom: 25px;
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           BOTÃO ENTRAR
+        ========================= */
+
+        .botao {
+            width: 100%;
+
+            height: 48px;
+
+            background: #2E7D32;
+
+            color: white;
+
+            border: none;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .botao:hover {
+            background: #256628;
+        }
+
+        /* =========================
+           DIVISOR
+        ========================= */
+
+        .divisor {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 28px 0 20px;
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+        .linha {
+            flex: 1;
+
+            height: 1px;
+
+            background: #ddd;
+        }
+
+        /* =========================
+           CRIAR CONTA
+        ========================= */
+
+        .pergunta {
+            color: #777;
+
+            font-size: 12px;
+
+            margin-bottom: 8px;
+        }
+
+        .criar {
+            color: #F57C00;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        /* =========================
+           FUNDO AGRÍCOLA
+        ========================= */
+
+        .paisagem {
+            position: absolute;
+
+            bottom: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 145px;
+
+            overflow: hidden;
+
+            z-index: 1;
+
+            background: #eef6eb;
+        }
+
+        .morro1 {
+            position: absolute;
+
+            bottom: -70px;
+
+            left: -50px;
+
+            width: 500px;
+
+            height: 160px;
+
+            background: #d8ead3;
+
+            border-radius: 50%;
+        }
+
+        .morro2 {
+            position: absolute;
+
+            bottom: -90px;
+
+            right: -100px;
+
+            width: 500px;
+
+            height: 170px;
+
+            background: #c5dfbd;
+
+            border-radius: 50%;
+        }
+
+        .plantacao {
+            position: absolute;
+
+            bottom: 15px;
+
+            left: -40px;
+
+            width: 470px;
+
+            height: 50px;
+
+            border-top: 4px solid #b1d2a8;
+
+            border-radius: 50%;
+
+            transform: rotate(7deg);
+        }
+
+        .plantacao2 {
+            position: absolute;
+
+            bottom: 5px;
+
+            left: -20px;
+
+            width: 450px;
+
+            height: 40px;
+
+            border-top: 3px solid #c1ddba;
+
+            border-radius: 50%;
+
+            transform: rotate(5deg);
+        }
+
+        /* =========================
+           RESPONSIVO
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .tela {
+                width: 92vw;
+
+                height: 92vh;
+
+                max-width: 390px;
+
+                max-height: 844px;
+
+                border-radius: 25px;
+            }
+
+            .conteudo {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="tela">
+
+
+        <!-- =========================
+             BARRA SUPERIOR
+        ========================= -->
+
+        <div class="status">
+
+            <span></span>
+
+            <span></span>
+
+        </div>
+
+
+        <!-- =========================
+             CONTEÚDO
+        ========================= -->
+
+        <div class="conteudo">
+
+
+            <!--
+                =============================
+                LOGO
+
+                COLOQUE SUA IMAGEM AQUI:
+
+                imagens/logo.png
+                =============================
+            -->
+
+            <img
+                src="imagens/imagens/logo trator.png"
+                alt="Logo AgroTrator"
+                class="logo"
+            >
+
+
+            <h1 class="titulo">
+                AgroTrator
+            </h1>
+
+
+            <p class="subtitulo">
+                Gestão inteligente da sua frota.
+            </p>
+
+
+            <!-- =========================
+                 E-MAIL
+            ========================= -->
+
+            <div class="campo">
+
+                <label>
+                    <span>✉</span>
+                    E-mail
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Digite seu e-mail"
+                >
+
+            </div>
+
+
+            <!-- =========================
+                 SENHA
+            ========================= -->
+
+            <div class="campo">
+
+                <label>
+                    <span>🔒</span>
+                    Senha
+                </label>
+
+                <div class="senha-container">
+
+                    <input
+                        type="password"
+                        id="senha"
+                        placeholder="Digite sua senha"
+                    >
+
+                    <span
+                        class="olho"
+                        onclick="mostrarSenha()"
+                    >
+                        👁
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Esqueceu a senha -->
+
+            <a class="esqueceu">
+                Esqueceu a senha?
+            </a>
+
+
+            <!-- =========================
+                 BOTÃO ENTRAR
+            ========================= -->
+
+            <button
+                class="botao"
+                onclick="entrar()"
+            >
+                Entrar
+            </button>
+
+
+            <!-- =========================
+                 DIVISOR
+            ========================= -->
+
+            <div class="divisor">
+
+                <span class="linha"></span>
+
+                <span>ou</span>
+
+                <span class="linha"></span>
+
+            </div>
+
+
+            <!-- =========================
+                 CRIAR CONTA
+            ========================= -->
+
+            <p class="pergunta">
+                Ainda não possui uma conta?
+            </p>
+
+            <a class="criar">
+                Criar Conta
+            </a>
+
+
+        </div>
+
+
+        <!-- =========================
+             FUNDO DA FAZENDA
+        ========================= -->
+
+        <div class="paisagem">
+
+            <div class="morro1"></div>
+
+            <div class="morro2"></div>
+
+            <div class="plantacao"></div>
+
+            <div class="plantacao2"></div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script>
+
+        function mostrarSenha() {
+
+            const senha =
+                document.getElementById("senha");
+
+            if (senha.type === "password") {
+
+                senha.type = "text";
+
+            } else {
+
+                senha.type = "password";
+
+            }
+
+        }
+
+
+        function entrar() {
+
+            const email =
+                document.getElementById("email").value;
+
+            const senha =
+                document.getElementById("senha").value;
+
+
+            if (email === "" || senha === "") {
+
+                alert("Digite seu e-mail e sua senha.");
+
+                return;
+            }
+
+
+            /*
+              Depois de preencher o login,
+              vai para a página principal.
+
+              Se sua página principal tiver
+              outro nome, troque aqui.
+            */
+
+            window.location.href = "principal.html";
+
+        }
+
+
+
+
+</script>
+
+
+</body>
+
+</html>

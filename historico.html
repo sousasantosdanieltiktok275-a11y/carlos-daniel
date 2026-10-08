@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroTrator - Histórico</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #F5F5F5;
+            color: #212121;
+        }
+
+        /* =========================
+           CABEÇALHO
+        ========================= */
+
+        .cabecalho {
+            background-color: #2E7D32;
+            color: white;
+
+            padding: 18px 20px;
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            border-radius: 0 0 25px 25px;
+        }
+
+        .voltar {
+            color: white;
+            text-decoration: none;
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .cabecalho h1 {
+            font-size: 22px;
+        }
+
+
+        /* =========================
+           CONTEÚDO
+        ========================= */
+
+        .conteudo {
+            max-width: 850px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           HISTÓRICO
+        ========================= */
+
+        .historico {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .item {
+            background-color: white;
+
+            border-radius: 20px;
+
+            padding: 15px;
+
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.10);
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+
+        /* =========================
+           IMAGEM
+        ========================= */
+
+        .imagem-container {
+            width: 130px;
+            height: 110px;
+
+            background-color: #EEEEEE;
+
+            border-radius: 15px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .imagem-historico {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+
+        /* =========================
+           INFORMAÇÕES
+        ========================= */
+
+        .informacao {
+            flex: 1;
+        }
+
+        .informacao h2 {
+            font-size: 18px;
+
+            margin-bottom: 8px;
+
+            color: #212121;
+        }
+
+        .data {
+            color: #2E7D32;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+        }
+
+        .descricao {
+            color: #666;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           BOTÃO PRÓXIMA TELA
+        ========================= */
+
+        .proxima {
+            display: block;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            background-color: #F57C00;
+
+            color: white;
+
+            padding: 16px;
+
+            border-radius: 15px;
+
+            margin-top: 25px;
+
+            font-weight: bold;
+
+            font-size: 16px;
+        }
+
+        .proxima:hover {
+            opacity: 0.85;
+        }
+
+
+        /* =========================
+           BOTÃO VOLTAR
+        ========================= */
+
+        .voltar-detalhes {
+            display: block;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            color: #2E7D32;
+
+            font-weight: bold;
+
+            margin-top: 18px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           CELULAR
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .item {
+                align-items: flex-start;
+            }
+
+            .imagem-container {
+                width: 105px;
+                height: 95px;
+            }
+
+            .informacao h2 {
+                font-size: 16px;
+            }
+
+            .descricao {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         CABEÇALHO
+    ========================= -->
+
+    <header class="cabecalho">
+
+        <!-- VOLTAR -->
+
+        <a href="detalhes.html" class="voltar">
+            ←
+        </a>
+
+
+        <!-- LOGO -->
+
+        <!--
+            COLOQUE SUA LOGO AQUI
+
+            Arquivo:
+            imagens/logo.png
+        -->
+
+        <img
+            src="imagens/imagens/logo trator.png"
+            alt="Logo AgroTrator"
+            class="logo"
+        >
+
+
+        <h1>
+            Histórico
+        </h1>
+
+    </header>
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================= -->
+
+    <main class="conteudo">
+
+        <h2 class="titulo">
+            Histórico do Trator
+        </h2>
+
+
+        <section class="historico">
+
+
+            <!-- =================================
+                 HISTÓRICO 1
+            ================================== -->
+
+            <div class="item">
+
+
+                <!-- IMAGEM 1 -->
+
+                <div class="imagem-container">
+
+                    <!--
+                        COLOQUE A IMAGEM 1 AQUI
+
+                        Arquivo:
+                        imagens/historico1.png
+                    -->
+
+                    <img
+                        src="imagens/imagens/manutenca3o.jpg.jpg"
+                        alt="Troca de óleo"
+                        class="imagem-historico"
+                    >
+
+                </div>
+
+
+                <!-- INFORMAÇÕES -->
+
+                <div class="informacao">
+
+                    <h2>
+                        Troca de óleo
+                    </h2>
+
+                    <p class="data">
+                        10/05
+                    </p>
+
+                    <p class="descricao">
+                        Manutenção realizada no motor do trator.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 HISTÓRICO 2
+            ================================== -->
+
+            <div class="item">
+
+
+                <!-- IMAGEM 2 -->
+
+                <div class="imagem-container">
+
+                    <!--
+                        COLOQUE A IMAGEM 2 AQUI
+
+                        Arquivo:
+                        imagens/historico2.png
+                    -->
+
+                    <img
+                        src="imagens/imagens/troca de filtro.jpg"
+                        alt="Troca de filtro"
+                        class="imagem-historico"
+                    >
+
+                </div>
+
+
+                <!-- INFORMAÇÕES -->
+
+                <div class="informacao">
+
+                    <h2>
+                        Troca de filtro
+                    </h2>
+
+                    <p class="data">
+                        25/04
+                    </p>
+
+                    <p class="descricao">
+                        Filtro do motor substituído.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 HISTÓRICO 3
+            ================================== -->
+
+            <div class="item">
+
+
+                <!-- IMAGEM 3 -->
+
+                <div class="imagem-container">
+
+                    <!--
+                        COLOQUE A IMAGEM 3 AQUI
+
+                        Arquivo:
+                        imagens/historico3.png
+                    -->
+
+                    <img
+                        src="imagens/imagens/abastecimento.jpg.jpg"
+                        alt="Abastecimento"
+                        class="imagem-historico"
+                    >
+
+                </div>
+
+
+                <!-- INFORMAÇÕES -->
+
+                <div class="informacao">
+
+                    <h2>
+                        Abastecimento
+                    </h2>
+
+                    <p class="data">
+                        03/04
+                    </p>
+
+                    <p class="descricao">
+                        Abastecimento de diesel realizado.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================
+                 HISTÓRICO 4
+            ================================== -->
+
+            <div class="item">
+
+
+                <!-- IMAGEM 4 -->
+
+                <div class="imagem-container">
+
+                    <!--
+                        COLOQUE A IMAGEM 4 AQUI
+
+                        Arquivo:
+                        imagens/historico4.png
+                    -->
+
+                    <img
+                        src="imagens/imagens/manutencao.jpg.jpg"
+                        alt="Manutenção do trator"
+                        class="imagem-historico"
+                    >
+
+                </div>
+
+
+                <!-- INFORMAÇÕES -->
+
+                <div class="informacao">
+
+                    <h2>
+                        Manutenção preventiva
+                    </h2>
+
+                    <p class="data">
+                        20/03
+                    </p>
+
+                    <p class="descricao">
+                        Revisão preventiva do trator.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =========================
+             PRÓXIMA TELA
+        ========================= -->
+
+        <a
+            href="manutencao.html"
+            class="proxima"
+        >
+            🔧 Próxima tela: Agendar Manutenção
+        </a>
+
+
+        <!-- =========================
+             VOLTAR
+        ========================= -->
+
+        <a
+            href="detalhes.html"
+            class="voltar-detalhes"
+        >
+            ← Voltar para Detalhes
+        </a>
+
+
+    </main>
+
+
+</body>
+
+</html>

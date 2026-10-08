@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgroTrator - Principal</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #F5F5F5;
+            color: #212121;
+        }
+
+        /* CONTAINER PRINCIPAL */
+
+        .app {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            margin: auto;
+            background: #F5F5F5;
+            padding-bottom: 90px;
+        }
+
+        /* CABEÇALHO */
+
+        header {
+            background: #2E7D32;
+            color: white;
+            padding: 25px 20px;
+            border-radius: 0 0 25px 25px;
+        }
+
+        .topo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+        }
+
+        .notificacao {
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        .saudacao {
+            margin-top: 20px;
+        }
+
+        .saudacao h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .saudacao p {
+            font-size: 15px;
+            opacity: 0.9;
+        }
+
+        /* CONTEÚDO */
+
+        main {
+            padding: 20px;
+        }
+
+        .titulo {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #212121;
+        }
+
+        /* IMAGEM DO TRATOR */
+
+        .imagem-trator {
+            width: 100%;
+            height: 170px;
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .imagem-trator img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* SE VOCÊ AINDA NÃO TIVER A IMAGEM */
+
+        .imagem-trator .sem-imagem {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            font-size: 16px;
+        }
+
+        /* CARDS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 18px;
+            min-height: 125px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .icone {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            font-size: 22px;
+            color: #2E7D32;
+            margin-bottom: 5px;
+        }
+
+        .card p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* SEÇÃO DE ATALHOS */
+
+        .atalhos {
+            margin-top: 25px;
+        }
+
+        .atalhos h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .botao {
+            background: white;
+            border: none;
+            border-radius: 16px;
+            padding: 18px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #212121;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .botao:hover {
+            transform: scale(1.03);
+        }
+
+        .botao .icone-botao {
+            display: block;
+            font-size: 27px;
+            margin-bottom: 7px;
+        }
+
+        .botao span:last-child {
+            font-size: 14px;
+        }
+
+        /* MENU INFERIOR */
+
+        .menu-inferior {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 430px;
+            height: 75px;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -3px 10px rgba(0,0,0,0.08);
+            z-index: 10;
+        }
+
+        .menu-item {
+            text-decoration: none;
+            color: #666;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .menu-item .menu-icone {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .menu-item.ativo {
+            color: #2E7D32;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =========================
+         CABEÇALHO
+    ========================== -->
+
+    <header>
+
+        <div class="topo">
+
+            <!--
+                COLOQUE A LOGO AQUI
+
+                Arquivo:
+                imagens/logo.png
+            -->
+
+            <img
+                src="imagens/logo.png"
+                alt="Logo AgroTrator"
+                class="logo"
+            >
+
+            <div class="notificacao">
+                🔔
+            </div>
+
+        </div>
+
+        <div class="saudacao">
+
+            <h1>Bom dia, Carlos 👋</h1>
+
+            <p>
+                Bem-vindo ao AgroTrator
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
+    <main>
+
+        <h2 class="titulo">
+            Visão geral
+        </h2>
+
+
+        <!-- =========================
+             IMAGEM DO TRATOR
+        ========================== -->
+
+        <div class="imagem-trator">
+
+            <!--
+                COLOQUE A IMAGEM DO TRATOR AQUI.
+
+                Salve a imagem dentro da pasta:
+
+                imagens/
+
+                Por exemplo:
+
+                imagens/trator.png
+
+                Depois deixe o src assim:
+            -->
+
+            <img
+                src="imagens/imagens/tela trator.png"
+                alt="Trator agrícola"
+            >
+
+        </div>
+
+
+        <!-- =========================
+             CARDS
+        ========================== -->
+
+        <div class="cards">
+
+
+            <!-- TRATORES -->
+
+            <div class="card">
+
+                <div class="icone">
+                    🚜
+                </div>
+
+                <h2>
+                    8
+                </h2>
+
+                <p>
+                    Tratores
+                </p>
+
+            </div>
+
+
+            <!-- MANUTENÇÕES -->
+
+            <div class="card">
+
+                <div class="icone">
+                    🔧
+                </div>
+
+                <h2>
+                    2
+                </h2>
+
+                <p>
+                    Manutenções
+                </p>
+
+            </div>
+
+
+            <!-- HORAS -->
+
+            <div class="card">
+
+                <div class="icone">
+                    ⏱️
+                </div>
+
+                <h2>
+                    184h
+                </h2>
+
+                <p>
+                    Horas trabalhadas
+                </p>
+
+            </div>
+
+
+            <!-- COMBUSTÍVEL -->
+
+            <div class="card">
+
+                <div class="icone">
+                    ⛽
+                </div>
+
+                <h2>
+                    350L
+                </h2>
+
+                <p>
+                    Diesel
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             ATALHOS
+        ========================== -->
+
+        <section class="atalhos">
+
+            <h2>
+                Acesso rápido
+            </h2>
+
+            <div class="botoes">
+
+
+                <!-- TRATORES -->
+
+                <a
+                    href="tratores.html"
+                    class="botao"
+                >
+
+                    <span class="icone-botao">
+                        🚜
+                    </span>
+
+                    <span>
+                        Tratores
+                    </span>
+
+                </a>
+
+
+                <!-- OFICINA -->
+
+                <a
+                    href="manutencao.html"
+                    class="botao"
+                >
+
+                    <span class="icone-botao">
+                        🔧
+                    </span>
+
+                    <span>
+                        Oficina
+                    </span>
+
+                </a>
+
+
+                <!-- MAPA -->
+
+                <a
+                    href="mapa.html"
+                    class="botao"
+                >
+
+                    <span class="icone-botao">
+                        📍
+                    </span>
+
+                    <span>
+                        GPS
+                    </span>
+
+                </a>
+
+
+                <!-- RELATÓRIOS -->
+
+                <a
+                    href="relatorios.html"
+                    class="botao"
+                >
+
+                    <span class="icone-botao">
+                        📊
+                    </span>
+
+                    <span>
+                        Relatórios
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         MENU INFERIOR
+    ========================== -->
+
+    <nav class="menu-inferior">
+
+
+        <!-- PRINCIPAL -->
+
+        <a
+            href="principal.html"
+            class="menu-item ativo"
+        >
+
+            <span class="menu-icone">
+                🏠
+            </span>
+
+            Início
+
+        </a>
+
+
+        <!-- TRATORES -->
+
+        <a
+            href="tratores.html"
+            class="menu-item"
+        >
+
+            <span class="menu-icone">
+                🚜
+            </span>
+
+            Tratores
+
+        </a>
+
+
+        <!-- OFICINA -->
+
+        <a
+            href="manutencao.html"
+            class="menu-item"
+        >
+
+            <span class="menu-icone">
+                🔧
+            </span>
+
+            Oficina
+
+        </a>
+
+
+        <!-- MAPA -->
+
+        <a
+            href="mapa.html"
+            class="menu-item"
+        >
+
+            <span class="menu-icone">
+                📍
+            </span>
+
+            GPS
+
+        </a>
+
+
+        <!-- PERFIL -->
+
+        <a
+            href="perfil.html"
+            class="menu-item"
+        >
+
+            <span class="menu-icone">
+                👤
+            </span>
+
+            Perfil
+
+        </a>
+
+    </nav>
+
+</div>
+
+</body>
+</html>
