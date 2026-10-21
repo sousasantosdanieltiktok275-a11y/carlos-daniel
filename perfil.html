@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Perfil</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f5f4;
+      color: #252b27;
+      min-height: 100vh;
+    }
+
+    .topo {
+      background: #237b43;
+      color: white;
+      padding: 22px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    .topo a {
+      color: white;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .pagina {
+      width: min(1000px, 92%);
+      margin: 35px auto;
+    }
+
+    .titulo {
+      margin-bottom: 25px;
+    }
+
+    .titulo h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .titulo p {
+      color: #69736d;
+      font-size: 15px;
+    }
+
+    .perfil-card {
+      background: white;
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      box-shadow: 0 4px 16px #00000008;
+      margin-bottom: 25px;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #d9efdf;
+      color: #237b43;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
+      border: 4px solid #edf7ef;
+    }
+
+    .perfil-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .perfil-info h2 {
+      font-size: 23px;
+      margin-bottom: 8px;
+      overflow-wrap: anywhere;
+    }
+
+    .perfil-info p {
+      color: #69736d;
+      margin-bottom: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .etiqueta {
+      display: inline-block;
+      padding: 6px 12px;
+      background: #e5f5e9;
+      color: #237b43;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    button {
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .botao {
+      border: none;
+      border-radius: 9px;
+      padding: 13px 18px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .botao-principal {
+      background: #237b43;
+      color: white;
+    }
+
+    .botao-principal:hover {
+      background: #195e32;
+    }
+
+    .botao-secundario {
+      background: #edf1ee;
+      color: #27352b;
+    }
+
+    .botao-secundario:hover {
+      background: #dfe7e1;
+    }
+
+    .grade {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .cartao {
+      background: white;
+      padding: 26px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px #00000008;
+    }
+
+    .cartao h3 {
+      font-size: 19px;
+      margin-bottom: 22px;
+    }
+
+    .campo {
+      margin-bottom: 18px;
+    }
+
+    .campo label {
+      display: block;
+      color: #59645d;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 9px;
+    }
+
+    .campo input {
+      width: 100%;
+      height: 47px;
+      padding: 0 13px;
+      border-radius: 8px;
+      border: 1px solid #d6ded8;
+      background: #f8faf8;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .campo input:focus {
+      border-color: #237b43;
+      box-shadow: 0 0 0 3px #237b4318;
+    }
+
+    .campo input:read-only {
+      color: #505a53;
+      background: #f3f5f4;
+    }
+
+    .opcao {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid #edf0ed;
+    }
+
+    .opcao:last-child {
+      border-bottom: none;
+    }
+
+    .icone {
+      width: 45px;
+      height: 45px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: #e8f5eb;
+      color: #237b43;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+    }
+
+    .opcao-texto {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .opcao-texto strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .opcao-texto span {
+      display: block;
+      color: #778078;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .seta {
+      font-size: 24px;
+      color: #8b968e;
+    }
+
+    .link-opcao {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: inherit;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .link-opcao:hover .opcao-texto strong {
+      color: #237b43;
+    }
+
+    .interruptor {
+      position: relative;
+      width: 45px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+
+    .interruptor input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .trilho {
+      position: absolute;
+      inset: 0;
+      background: #c8d0ca;
+      border-radius: 20px;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+
+    .trilho::before {
+      content: "";
+      width: 19px;
+      height: 19px;
+      background: white;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+
+    .interruptor input:checked + .trilho {
+      background: #237b43;
+    }
+
+    .interruptor input:checked + .trilho::before {
+      transform: translateX(20px);
+    }
+
+    .acoes {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    #mensagem {
+      display: none;
+      padding: 13px;
+      margin-top: 16px;
+      border-radius: 8px;
+      background: #e5f5e9;
+      color: #237b43;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .sair {
+      margin-top: 25px;
+      background: white;
+      color: #b42318;
+      border: 1px solid #f0d8d5;
+      padding: 15px 20px;
+      border-radius: 10px;
+      font-weight: bold;
+      width: 100%;
+      text-align: left;
+    }
+
+    .sair:hover {
+      background: #fff4f2;
+    }
+
+    footer {
+      text-align: center;
+      color: #778078;
+      font-size: 13px;
+      padding: 25px 15px;
+    }
+
+    @media (max-width: 700px) {
+      .topo {
+        padding: 18px 5%;
+      }
+
+      .logo {
+        font-size: 19px;
+      }
+
+      .pagina {
+        width: 92%;
+        margin: 25px auto;
+      }
+
+      .titulo h1 {
+        font-size: 25px;
+      }
+
+      .perfil-card {
+        padding: 22px;
+        flex-wrap: wrap;
+      }
+
+      .avatar {
+        width: 78px;
+        height: 78px;
+        font-size: 26px;
+      }
+
+      .perfil-info h2 {
+        font-size: 19px;
+      }
+
+      .perfil-card .botao {
+        width: 100%;
+      }
+
+      .grade {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .cartao {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .topo a {
+        font-size: 13px;
+      }
+
+      .perfil-card {
+        gap: 14px;
+      }
+
+      .acoes .botao {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topo">
+    <div class="logo">Meu Perfil</div>
+    <a href="index.html">← Voltar ao início</a>
+  </header>
+
+  <main class="pagina">
+
+    <section class="titulo">
+      <h1>Perfil do usuário</h1>
+      <p>Gerencie suas informações e preferências.</p>
+    </section>
+
+    <section class="perfil-card">
+
+      <div class="avatar" id="avatar">US</div>
+
+      <div class="perfil-info">
+        <h2 id="nome-exibido">Seu Nome</h2>
+        <p id="email-exibido">seuemail@email.com</p>
+        <span class="etiqueta">Conta ativa</span>
+      </div>
+
+      <button
+        class="botao botao-principal"
+        id="editar"
+        type="button">
+        ✎ Editar perfil
+      </button>
+
+    </section>
+
+    <div class="grade">
+
+      <!-- DADOS PESSOAIS -->
+      <section class="cartao">
+        <h3>Informações pessoais</h3>
+
+        <form id="form-perfil">
+
+          <div class="campo">
+            <label for="nome">Nome completo</label>
+            <input
+              id="nome"
+              type="text"
+              value="Seu Nome"
+              readonly
+              required>
+          </div>
+
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              value="seuemail@email.com"
+              readonly
+              required>
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input
+              id="telefone"
+              type="tel"
+              placeholder="Digite seu telefone"
+              readonly>
+          </div>
+
+          <div class="campo">
+            <label for="cidade">Cidade</label>
+            <input
+              id="cidade"
+              type="text"
+              placeholder="Digite sua cidade"
+              readonly>
+          </div>
+
+          <div class="acoes">
+            <button
+              class="botao botao-principal"
+              type="submit"
+              id="salvar"
+              hidden>
+              Salvar alterações
+            </button>
+
+            <button
+              class="botao botao-secundario"
+              type="button"
+              id="cancelar"
+              hidden>
+              Cancelar
+            </button>
+          </div>
+
+          <div id="mensagem" role="status"></div>
+        </form>
+      </section>
+
+      <!-- CONFIGURAÇÕES -->
+      <section class="cartao">
+        <h3>Configurações</h3>
+
+        <div class="opcao">
+          <div class="icone">🔔</div>
+
+          <div class="opcao-texto">
+            <strong>Notificações</strong>
+            <span>Receber avisos e novidades</span>
+          </div>
+
+          <label class="interruptor" aria-label="Ativar notificações">
+            <input id="notificacoes" type="checkbox" checked>
+            <span class="trilho"></span>
+          </label>
+        </div>
+
+        <a class="link-opcao" href="seguranca.html">
+          <div class="opcao">
+            <div class="icone">🔒</div>
+
+            <div class="opcao-texto">
+              <strong>Segurança</strong>
+              <span>Proteção e senha da conta</span>
+            </div>
+
+            <span class="seta">›</span>
+          </div>
+        </a>
+
+        <a class="link-opcao" href="ajuda.html">
+          <div class="opcao">
+            <div class="icone">❔</div>
+
+            <div class="opcao-texto">
+              <strong>Ajuda e suporte</strong>
+              <span>Encontre respostas e ajuda</span>
+            </div>
+
+            <span class="seta">›</span>
+          </div>
+        </a>
+
+        <button class="sair" id="sair" type="button">
+          ↪ &nbsp; Sair da conta
+        </button>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    Meu Perfil · Todos os direitos reservados
+  </footer>
+
+  <script>
+    const form = document.getElementById("form-perfil");
+    const nome = document.getElementById("nome");
+    const email = document.getElementById("email");
+    const telefone = document.getElementById("telefone");
+    const cidade = document.getElementById("cidade");
+
+    const editar = document.getElementById("editar");
+    const salvar = document.getElementById("salvar");
+    const cancelar = document.getElementById("cancelar");
+    const mensagem = document.getElementById("mensagem");
+
+    const campos = [nome, email, telefone, cidade];
+
+    let dadosOriginais = {};
+
+    function guardarDados() {
+      dadosOriginais = {
+        nome: nome.value,
+        email: email.value,
+        telefone: telefone.value,
+        cidade: cidade.value
+      };
+    }
+
+    function mostrarMensagem(texto) {
+      mensagem.textContent = texto;
+      mensagem.style.display = "block";
+    }
+
+    function atualizarCabecalho() {
+      document.getElementById("nome-exibido").textContent =
+        nome.value.trim() || "Seu Nome";
+
+      document.getElementById("email-exibido").textContent =
+        email.value.trim() || "sousasantosdanieltiktok275@gmail.com";
+
+      const partes = (nome.value.trim() || "US").split(/\s+/);
+      const iniciais = partes.length > 1
+        ? partes[0][0] + partes[partes.length - 1][0]
+        : partes[0].substring(0, 2);
+
+      document.getElementById("avatar").textContent =
+        iniciais.toUpperCase();
+    }
+
+    editar.addEventListener("click", function () {
+      guardarDados();
+
+      campos.forEach(function (campo) {
+        campo.readOnly = false;
+      });
+
+      editar.hidden = true;
+      salvar.hidden = false;
+      cancelar.hidden = false;
+      mensagem.style.display = "none";
+
+      nome.focus();
+    });
+
+    cancelar.addEventListener("click", function () {
+      nome.value = dadosOriginais.nome;
+      email.value = dadosOriginais.email;
+      telefone.value = dadosOriginais.telefone;
+      cidade.value = dadosOriginais.cidade;
+
+      campos.forEach(function (campo) {
+        campo.readOnly = true;
+      });
+
+      editar.hidden = false;
+      salvar.hidden = true;
+      cancelar.hidden = true;
+      mensagem.style.display = "none";
+
+      atualizarCabecalho();
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      campos.forEach(function (campo) {
+        campo.readOnly = true;
+      });
+
+      editar.hidden = false;
+      salvar.hidden = true;
+      cancelar.hidden = true;
+
+      atualizarCabecalho();
+      guardarDados();
+
+      mostrarMensagem(
+        "Informações atualizadas nesta tela com sucesso."
+      );
+    });
+
+    document.getElementById("notificacoes")
+      .addEventListener("change", function (event) {
+        mostrarMensagem(
+          event.target.checked
+            ? "Preferência de notificações ativada."
+            : "Preferência de notificações desativada."
+        );
+      });
+
+    document.getElementById("sair")
+      .addEventListener("click", function () {
+        const confirmar = window.confirm(
+          "Deseja realmente sair da conta?"
+        );
+
+        if (confirmar) {
+          mostrarMensagem(
+            "Para sair de verdade, conecte este botão ao sistema de login do seu projeto."
+          );
+        }
+      });
+
+    atualizarCabecalho();
+    guardarDados();
+  </script>
+
+</body>
+</html>

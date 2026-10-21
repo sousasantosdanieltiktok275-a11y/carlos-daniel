@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroTrator - Relatórios</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #edf1ed;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .celular {
+            width: 390px;
+            height: 100vh;
+            min-height: 700px;
+            max-height: 950px;
+            position: relative;
+            overflow: hidden;
+            background: #f5f7f5;
+            box-shadow: 0 0 15px #0002;
+        }
+
+        header {
+            height: 75px;
+            background: #087a35;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            font-size: 30px;
+        }
+
+        header h1 {
+            font-size: 21px;
+        }
+
+        main {
+            height: calc(100% - 140px);
+            overflow-y: auto;
+            padding: 16px;
+        }
+
+        .titulo {
+            color: #087a35;
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        .descricao {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 18px;
+        }
+
+        .filtro {
+            background: white;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #00000008;
+        }
+
+        .filtro label {
+            display: block;
+            color: #333;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .filtro select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d5ddd5;
+            border-radius: 8px;
+            background: white;
+            font-size: 14px;
+        }
+
+        .grade {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .cartao {
+            padding: 15px 12px;
+            border-radius: 13px;
+            background: white;
+            box-shadow: 0 2px 8px #00000008;
+            min-width: 0;
+        }
+
+        .icone {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .rotulo {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .valor {
+            color: #087a35;
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .unidade {
+            font-size: 11px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .secao-titulo {
+            color: #087a35;
+            font-size: 19px;
+            margin: 20px 0 12px;
+        }
+
+        .grafico {
+            background: white;
+            border-radius: 13px;
+            padding: 15px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #00000008;
+        }
+
+        .grafico h3 {
+            color: #333;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .area-grafico {
+            position: relative;
+            height: 220px;
+        }
+
+        .registro {
+            background: white;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 2px 8px #00000008;
+        }
+
+        .registro-icone {
+            width: 43px;
+            height: 43px;
+            border-radius: 10px;
+            background: #e6f4e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .registro-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .registro-info h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .registro-info p {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .botao {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 9px;
+            background: #087a35;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px 0 20px;
+        }
+
+        .aviso {
+            color: #777;
+            font-size: 11px;
+            line-height: 1.5;
+            margin: 8px 0 20px;
+        }
+
+        .menu {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 65px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .menu a {
+            color: #777;
+            font-size: 11px;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .menu a span {
+            display: block;
+            font-size: 21px;
+            margin-bottom: 3px;
+        }
+
+        .menu .ativo {
+            color: #087a35;
+            font-weight: bold;
+        }
+
+        @media (max-width: 390px) {
+            .celular {
+                width: 100%;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .celular {
+                min-height: 0;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .celular {
+                width: 100%;
+                height: auto;
+                max-height: none;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            main {
+                height: auto;
+                overflow: visible;
+            }
+
+            .menu, header a, .filtro, .botao {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="celular">
+
+    <header>
+        <a href="principal.html" aria-label="Voltar">←</a>
+        <h1>Relatórios</h1>
+    </header>
+
+    <main>
+        <h2 class="titulo">Resumo da fazenda</h2>
+
+        <p class="descricao">
+            Acompanhe as informações de utilização e manutenção
+            das suas máquinas agrícolas.
+        </p>
+
+        <section class="filtro">
+            <label for="periodo">Período do relatório</label>
+
+            <select id="periodo">
+                <option value="7">Últimos 7 dias</option>
+                <option value="30" selected>Últimos 30 dias</option>
+                <option value="90">Últimos 90 dias</option>
+            </select>
+        </section>
+
+        <section class="grade">
+            <div class="cartao">
+                <div class="icone">🚜</div>
+                <p class="rotulo">Tratores cadastrados</p>
+                <p class="valor" id="totalTratores">4</p>
+                <p class="unidade">Máquinas</p>
+            </div>
+
+            <div class="cartao">
+                <div class="icone">⏱️</div>
+                <p class="rotulo">Horas trabalhadas</p>
+                <p class="valor" id="totalHoras">128 h</p>
+                <p class="unidade">No período</p>
+            </div>
+
+            <div class="cartao">
+                <div class="icone">⛽</div>
+                <p class="rotulo">Combustível utilizado</p>
+                <p class="valor" id="totalCombustivel">240 L</p>
+                <p class="unidade">Litros registrados</p>
+            </div>
+
+            <div class="cartao">
+                <div class="icone">🔧</div>
+                <p class="rotulo">Manutenções</p>
+                <p class="valor" id="totalManutencoes">6</p>
+                <p class="unidade">Registros</p>
+            </div>
+        </section>
+
+        <h2 class="secao-titulo">Uso das máquinas</h2>
+
+        <section class="grafico">
+            <h3>Horas trabalhadas por trator</h3>
+            <div class="area-grafico">
+                <canvas id="graficoHoras"></canvas>
+            </div>
+        </section>
+
+        <h2 class="secao-titulo">Abastecimento</h2>
+
+        <section class="grafico">
+            <h3>Consumo de combustível por período</h3>
+            <div class="area-grafico">
+                <canvas id="graficoCombustivel"></canvas>
+            </div>
+        </section>
+
+        <h2 class="secao-titulo">Últimos registros</h2>
+
+        <div id="listaRegistros"></div>
+
+        <button class="botao" onclick="window.print()">
+            Imprimir / Salvar relatório em PDF
+        </button>
+
+        <p class="aviso">
+            Os números apresentados nesta versão são demonstrativos.
+            Para mostrar resultados reais, os relatórios precisam ser
+            conectados aos registros de horas, abastecimento e manutenção
+            do AgroTrator.
+        </p>
+    </main>
+
+    <nav class="menu">
+        <a href="principal.html">
+            <span>⌂</span>Início
+        </a>
+
+        <a href="tratores.html">
+            <span>🚜</span>Tratores
+        </a>
+
+        <a href="manutencao.html">
+            <span>🔧</span>Manutenção
+        </a>
+
+        <a href="mapa.html">
+            <span>📍</span>Mapa
+        </a>
+
+        <a href="perfil.html">
+            <span>👤</span>Perfil
+        </a>
+    </nav>
+</div>
+
+<script>
+    // Dados demonstrativos para visualizar a tela.
+    // Substitua por dados reais quando conectar o servidor.
+
+    const dados = {
+        7: {
+            horas: [8, 12, 10, 6],
+            combustivel: [25, 32, 28, 20],
+            totalHoras: 36,
+            totalCombustivel: 105,
+            manutencoes: 2
+        },
+        30: {
+            horas: [32, 40, 28, 28],
+            combustivel: [70, 65, 55, 50],
+            totalHoras: 128,
+            totalCombustivel: 240,
+            manutencoes: 6
+        },
+        90: {
+            horas: [95, 110, 80, 75],
+            combustivel: [210, 195, 175, 160],
+            totalHoras: 360,
+            totalCombustivel: 740,
+            manutencoes: 14
+        }
+    };
+
+    const nomesTratores = [
+        "Valtra",
+        "New Holland",
+        "John Deere",
+        "Massey Ferguson"
+    ];
+
+    const registros = [
+        {
+            icone: "⛽",
+            titulo: "Abastecimento",
+            descricao: "New Holland • 60 litros • Exemplo"
+        },
+        {
+            icone: "🔧",
+            titulo: "Troca de óleo",
+            descricao: "Massey Ferguson • Serviço demonstrativo"
+        },
+        {
+            icone: "⏱️",
+            titulo: "Horas trabalhadas",
+            descricao: "Valtra • Registro demonstrativo"
+        }
+    ];
+
+    let graficoHoras;
+    let graficoCombustivel;
+
+    function montarRegistros() {
+        const lista = document.getElementById("listaRegistros");
+        lista.replaceChildren();
+
+        registros.forEach(registro => {
+            const item = document.createElement("div");
+            item.className = "registro";
+
+            const icone = document.createElement("div");
+            icone.className = "registro-icone";
+            icone.textContent = registro.icone;
+
+            const info = document.createElement("div");
+            info.className = "registro-info";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = registro.titulo;
+
+            const descricao = document.createElement("p");
+            descricao.textContent = registro.descricao;
+
+            info.append(titulo, descricao);
+            item.append(icone, info);
+            lista.appendChild(item);
+        });
+    }
+
+    function atualizarRelatorio() {
+        const periodo = document.getElementById("periodo").value;
+        const dadosPeriodo = dados[periodo];
+
+        document.getElementById("totalTratores").textContent = "4";
+        document.getElementById("totalHoras").textContent =
+            dadosPeriodo.totalHoras + " h";
+        document.getElementById("totalCombustivel").textContent =
+            dadosPeriodo.totalCombustivel + " L";
+        document.getElementById("totalManutencoes").textContent =
+            dadosPeriodo.manutencoes;
+
+        if (graficoHoras) {
+            graficoHoras.destroy();
+        }
+
+        if (graficoCombustivel) {
+            graficoCombustivel.destroy();
+        }
+
+        graficoHoras = new Chart(
+            document.getElementById("graficoHoras"),
+            {
+                type: "bar",
+                data: {
+                    labels: nomesTratores,
+                    datasets: [{
+                        label: "Horas trabalhadas",
+                        data: dadosPeriodo.horas,
+                        backgroundColor: [
+                            "#087a35",
+                            "#37a85b",
+                            "#82c995",
+                            "#b2dfbd"
+                        ],
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Horas"
+                            }
+                        }
+                    }
+                }
+            }
+        );
+
+        graficoCombustivel = new Chart(
+            document.getElementById("graficoCombustivel"),
+            {
+                type: "line",
+                data: {
+                    labels: ["Valtra", "New Holland", "John Deere", "Massey Ferguson"],
+                    datasets: [{
+                        label: "Combustível em litros",
+                        data: dadosPeriodo.combustivel,
+                        borderColor: "#087a35",
+                        backgroundColor: "#b2dfbd",
+                        pointBackgroundColor: "#087a35",
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "Litros"
+                            }
+                        }
+                    }
+                }
+            }
+        );
+    }
+
+    document.getElementById("periodo").addEventListener(
+        "change",
+        atualizarRelatorio
+    );
+
+    montarRegistros();
+    atualizarRelatorio();
+</script>
+
+</body>
+</html>

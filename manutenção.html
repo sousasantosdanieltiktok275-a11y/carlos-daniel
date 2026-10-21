@@ -1,0 +1,398 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção - AgroTrator</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f5;
+            color: #263329;
+        }
+
+        header {
+            background: #087a35;
+            color: white;
+            padding: 22px 18px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        header h1 {
+            margin-top: 20px;
+            font-size: 27px;
+        }
+
+        header p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        main {
+            max-width: 650px;
+            margin: 20px auto;
+            padding: 0 15px 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px #0000000d;
+        }
+
+        h2 {
+            color: #087a35;
+            font-size: 21px;
+            margin-bottom: 15px;
+        }
+
+        .aviso {
+            background: #e8f5eb;
+            padding: 12px;
+            border-left: 4px solid #087a35;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd5cd;
+            border-radius: 8px;
+            background: white;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 85px;
+            resize: vertical;
+        }
+
+        button, .botao {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 16px;
+            border: none;
+            border-radius: 9px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .verde {
+            background: #087a35;
+            color: white;
+        }
+
+        .claro {
+            background: #e8f5eb;
+            color: #087a35;
+        }
+
+        .registro {
+            padding: 14px;
+            border: 1px solid #e0e6e0;
+            border-radius: 10px;
+            margin-top: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .registro h3 {
+            color: #087a35;
+            margin-bottom: 8px;
+            font-size: 17px;
+        }
+
+        .registro p {
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .vazio {
+            color: #68746b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #68746b;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a id="voltar" href="detalhes.html">← Voltar para os detalhes</a>
+    <h1>🔧 Manutenção</h1>
+    <p>AgroTrator — controle das máquinas agrícolas</p>
+</header>
+
+<main>
+
+    <section class="card">
+        <h2>Registrar manutenção</h2>
+
+        <div class="aviso">
+            Cadastre as manutenções dos seus tratores para organizar
+            os serviços e acompanhar as horas de uso.
+        </div>
+
+        <form id="formManutencao">
+
+            <label for="trator">Trator</label>
+            <select id="trator" required>
+                <option value="">Selecione o trator</option>
+                <option value="valtra">Valtra</option>
+                <option value="new-holland">New Holland</option>
+                <option value="john-deere">John Deere</option>
+                <option value="massey-ferguson">Massey Ferguson</option>
+            </select>
+
+            <label for="tipo">Tipo de manutenção</label>
+            <select id="tipo" required>
+                <option value="">Selecione o serviço</option>
+                <option value="Preventiva">Manutenção preventiva</option>
+                <option value="Corretiva">Manutenção corretiva</option>
+                <option value="Troca de óleo">Troca de óleo</option>
+                <option value="Troca de filtros">Troca de filtros</option>
+                <option value="Revisão geral">Revisão geral</option>
+                <option value="Reparo mecânico">Reparo mecânico</option>
+                <option value="Outro">Outro serviço</option>
+            </select>
+
+            <label for="data">Data da manutenção</label>
+            <input type="date" id="data" required>
+
+            <label for="horas">Horas de uso</label>
+            <input
+                type="number"
+                id="horas"
+                min="0"
+                step="0.1"
+                placeholder="Ex.: 1250"
+                required
+            >
+
+            <label for="descricao">Descrição do serviço</label>
+            <textarea
+                id="descricao"
+                placeholder="Descreva o serviço realizado..."
+            ></textarea>
+
+            <button type="submit" class="verde">
+                Salvar manutenção
+            </button>
+
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>Histórico de manutenções</h2>
+
+        <div id="historico">
+            <p class="vazio">Carregando registros...</p>
+        </div>
+
+        <button type="button" id="limpar" class="claro">
+            Apagar histórico deste trator
+        </button>
+    </section>
+
+    <a href="tratores.html" class="botao claro">
+        Voltar para os tratores
+    </a>
+
+</main>
+
+<footer>
+    AgroTrator © 2026 — Gestão de máquinas agrícolas
+</footer>
+
+<script>
+    const CHAVE = "agroTratorManutencoes";
+
+    const nomes = {
+        "valtra": "Valtra",
+        "new-holland": "New Holland",
+        "john-deere": "John Deere",
+        "massey-ferguson": "Massey Ferguson"
+    };
+
+    const parametros = new URLSearchParams(window.location.search);
+    const tratorURL = parametros.get("trator");
+
+    const campoTrator = document.getElementById("trator");
+    const formulario = document.getElementById("formManutencao");
+    const historico = document.getElementById("historico");
+
+    // Aceita tanto identificadores como nomes dos tratores.
+    function normalizarTrator(valor) {
+        if (!valor) return "";
+
+        const texto = valor.toLowerCase().trim();
+
+        if (nomes[texto]) return texto;
+
+        const encontrado = Object.keys(nomes).find(
+            chave => nomes[chave].toLowerCase() === texto
+        );
+
+        return encontrado || "";
+    }
+
+    const tratorInicial = normalizarTrator(tratorURL);
+
+    if (tratorInicial) {
+        campoTrator.value = tratorInicial;
+    }
+
+    // Preserva o trator ao voltar para a página de detalhes.
+    document.getElementById("voltar").href =
+        "detalhes.html" + window.location.search;
+
+    function obterRegistros() {
+        try {
+            return JSON.parse(localStorage.getItem(CHAVE)) || [];
+        } catch (erro) {
+            return [];
+        }
+    }
+
+    function formatarData(data) {
+        if (!data) return "Não informada";
+        return data.split("-").reverse().join("/");
+    }
+
+    function mostrarHistorico() {
+        historico.innerHTML = "";
+
+        const registros = obterRegistros().filter(
+            registro => registro.trator === campoTrator.value
+        );
+
+        if (!campoTrator.value || registros.length === 0) {
+            historico.innerHTML =
+                '<p class="vazio">Nenhuma manutenção cadastrada para este trator.</p>';
+            return;
+        }
+
+        registros.slice().reverse().forEach(registro => {
+            const item = document.createElement("div");
+            item.className = "registro";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent =
+                (nomes[registro.trator] || registro.trator) +
+                " — " + registro.tipo;
+
+            const data = document.createElement("p");
+            data.textContent = "Data: " + formatarData(registro.data);
+
+            const horas = document.createElement("p");
+            horas.textContent = "Horas de uso: " + registro.horas + " h";
+
+            const descricao = document.createElement("p");
+            descricao.textContent =
+                "Descrição: " + (registro.descricao || "Não informada");
+
+            item.append(titulo, data, horas, descricao);
+            historico.appendChild(item);
+        });
+    }
+
+    formulario.addEventListener("submit", function(evento) {
+        evento.preventDefault();
+
+        const registro = {
+            id: Date.now(),
+            trator: campoTrator.value,
+            tipo: document.getElementById("tipo").value,
+            data: document.getElementById("data").value,
+            horas: document.getElementById("horas").value,
+            descricao: document.getElementById("descricao").value.trim()
+        };
+
+        const registros = obterRegistros();
+        registros.push(registro);
+
+        try {
+            localStorage.setItem(CHAVE, JSON.stringify(registros));
+        } catch (erro) {
+            alert("Não foi possível salvar os dados no navegador.");
+            return;
+        }
+
+        formulario.reset();
+
+        if (tratorInicial) {
+            campoTrator.value = tratorInicial;
+        }
+
+        mostrarHistorico();
+        alert("Manutenção salva com sucesso!");
+    });
+
+    campoTrator.addEventListener("change", mostrarHistorico);
+
+    document.getElementById("limpar").addEventListener("click", function() {
+        const trator = campoTrator.value;
+
+        if (!trator) {
+            alert("Selecione um trator primeiro.");
+            return;
+        }
+
+        const registros = obterRegistros();
+        const existem = registros.some(item => item.trator === trator);
+
+        if (!existem) {
+            alert("Não há registros para apagar deste trator.");
+            return;
+        }
+
+        if (confirm("Deseja apagar o histórico deste trator?")) {
+            const restantes = registros.filter(
+                item => item.trator !== trator
+            );
+
+            localStorage.setItem(CHAVE, JSON.stringify(restantes));
+            mostrarHistorico();
+        }
+    });
+
+    mostrarHistorico();
+</script>
+
+</body>
+</html>
+```

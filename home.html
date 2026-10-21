@@ -1,654 +1,562 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AgroTrator - Login</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f2f2f2;
-
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* =========================
-           TELA
-        ========================= */
-
-        .tela {
-            width: 390px;
-            height: 844px;
-
-            background: #ffffff;
-
-            border-radius: 30px;
-
-            overflow: hidden;
-
-            position: relative;
-
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        /* =========================
-           BARRA SUPERIOR
-        ========================= */
-
-        .status {
-            height: 35px;
-
-            padding: 10px 20px;
-
-            display: flex;
-            justify-content: space-between;
-
-            font-size: 12px;
-
-            font-weight: bold;
-
-            color: #222;
-        }
-
-        /* =========================
-           CONTEÚDO
-        ========================= */
-
-        .conteudo {
-            position: relative;
-
-            z-index: 2;
-
-            padding: 20px 35px;
-
-            text-align: center;
-        }
-
-        /* =========================
-           LOGO
-        ========================= */
-
-        .logo {
-            width: 180px;
-
-            height: auto;
-
-            display: block;
-
-            margin: 20px auto 10px;
-
-            object-fit: contain;
-        }
-
-        /* =========================
-           TÍTULO
-        ========================= */
-
-        .titulo {
-            color: #2E7D32;
-
-            font-size: 32px;
-
-            font-weight: bold;
-
-            margin-top: 5px;
-        }
-
-        .subtitulo {
-            color: #777;
-
-            font-size: 14px;
-
-            margin-top: 7px;
-
-            margin-bottom: 35px;
-        }
-
-        /* =========================
-           CAMPOS
-        ========================= */
-
-        .campo {
-            text-align: left;
-
-            margin-bottom: 20px;
-        }
-
-        .campo label {
-            display: block;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            color: #333;
-
-            margin-bottom: 8px;
-        }
-
-        .campo label span {
-            color: #2E7D32;
-
-            margin-right: 5px;
-        }
-
-        .campo input {
-            width: 100%;
-
-            height: 48px;
-
-            border: 1px solid #d5d5d5;
-
-            border-radius: 8px;
-
-            padding: 0 14px;
-
-            font-size: 14px;
-
-            outline: none;
-
-            background: #fff;
-        }
-
-        .campo input:focus {
-            border-color: #2E7D32;
-        }
-
-        /* =========================
-           SENHA
-        ========================= */
-
-        .senha-container {
-            position: relative;
-        }
-
-        .senha-container input {
-            padding-right: 45px;
-        }
-
-        .olho {
-            position: absolute;
-
-            right: 14px;
-
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            color: #777;
-
-            cursor: pointer;
-
-            font-size: 18px;
-        }
-
-        /* =========================
-           ESQUECEU SENHA
-        ========================= */
-
-        .esqueceu {
-            display: block;
-
-            text-align: right;
-
-            color: #2E7D32;
-
-            font-size: 12px;
-
-            margin-top: -8px;
-
-            margin-bottom: 25px;
-
-            cursor: pointer;
-        }
-
-        /* =========================
-           BOTÃO ENTRAR
-        ========================= */
-
-        .botao {
-            width: 100%;
-
-            height: 48px;
-
-            background: #2E7D32;
-
-            color: white;
-
-            border: none;
-
-            border-radius: 8px;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-        }
-
-        .botao:hover {
-            background: #256628;
-        }
-
-        /* =========================
-           DIVISOR
-        ========================= */
-
-        .divisor {
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-            margin: 28px 0 20px;
-
-            color: #999;
-
-            font-size: 13px;
-        }
-
-        .linha {
-            flex: 1;
-
-            height: 1px;
-
-            background: #ddd;
-        }
-
-        /* =========================
-           CRIAR CONTA
-        ========================= */
-
-        .pergunta {
-            color: #777;
-
-            font-size: 12px;
-
-            margin-bottom: 8px;
-        }
-
-        .criar {
-            color: #F57C00;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            text-decoration: none;
-        }
-
-        /* =========================
-           FUNDO AGRÍCOLA
-        ========================= */
-
-        .paisagem {
-            position: absolute;
-
-            bottom: 0;
-
-            left: 0;
-
-            width: 100%;
-
-            height: 145px;
-
-            overflow: hidden;
-
-            z-index: 1;
-
-            background: #eef6eb;
-        }
-
-        .morro1 {
-            position: absolute;
-
-            bottom: -70px;
-
-            left: -50px;
-
-            width: 500px;
-
-            height: 160px;
-
-            background: #d8ead3;
-
-            border-radius: 50%;
-        }
-
-        .morro2 {
-            position: absolute;
-
-            bottom: -90px;
-
-            right: -100px;
-
-            width: 500px;
-
-            height: 170px;
-
-            background: #c5dfbd;
-
-            border-radius: 50%;
-        }
-
-        .plantacao {
-            position: absolute;
-
-            bottom: 15px;
-
-            left: -40px;
-
-            width: 470px;
-
-            height: 50px;
-
-            border-top: 4px solid #b1d2a8;
-
-            border-radius: 50%;
-
-            transform: rotate(7deg);
-        }
-
-        .plantacao2 {
-            position: absolute;
-
-            bottom: 5px;
-
-            left: -20px;
-
-            width: 450px;
-
-            height: 40px;
-
-            border-top: 3px solid #c1ddba;
-
-            border-radius: 50%;
-
-            transform: rotate(5deg);
-        }
-
-        /* =========================
-           RESPONSIVO
-        ========================= */
-
-        @media (max-width: 500px) {
-
-            .tela {
-                width: 92vw;
-
-                height: 92vh;
-
-                max-width: 390px;
-
-                max-height: 844px;
-
-                border-radius: 25px;
-            }
-
-            .conteudo {
-                padding-left: 25px;
-                padding-right: 25px;
-            }
-
-        }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroTrator - Entrar</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --green: #2e7d32;
+      --green-dark: #1e5d2a;
+      --orange: #f57c00;
+      --ink: #26332a;
+      --muted: #6d786f;
+    }
+
+    html, body {
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #edf4ed;
+    }
+
+    .page {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      grid-template-columns: minmax(330px, 1fr) minmax(380px, 0.9fr);
+      background: #f7faf7;
+    }
+
+    .welcome {
+      position: relative;
+      min-height: 100vh;
+      overflow: hidden;
+      padding: 34px clamp(28px, 5vw, 72px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      background: linear-gradient(
+        145deg,
+        #154f27 0%,
+        #2e7d32 48%,
+        #689d50 100%
+      );
+      isolation: isolate;
+    }
+
+    .welcome::before,
+    .welcome::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .welcome::before {
+      width: 760px;
+      height: 380px;
+      left: -150px;
+      bottom: -190px;
+      background: rgba(184, 220, 151, .2);
+      transform: rotate(-12deg);
+    }
+
+    .welcome::after {
+      width: 690px;
+      height: 330px;
+      right: -250px;
+      bottom: -225px;
+      background: rgba(9, 65, 31, .25);
+      transform: rotate(12deg);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      color: var(--green-dark);
+      background: white;
+      font-size: 24px;
+    }
+
+    .brand-name {
+      color: white;
+    }
+
+    .brand-name span {
+      color: #ffcb84;
+    }
+
+    .welcome-copy {
+      width: min(520px, 100%);
+      margin: 55px 0 65px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 24px;
+      background: rgba(255,255,255,.09);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      margin-bottom: 19px;
+    }
+
+    .welcome-copy h1 {
+      max-width: 500px;
+      font-size: clamp(34px, 4vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -1.2px;
+      margin-bottom: 18px;
+    }
+
+    .welcome-copy p {
+      max-width: 450px;
+      color: rgba(255,255,255,.86);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .welcome-foot {
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+    }
+
+    /* FORMULÁRIO */
+
+    .login-side {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 38px clamp(22px, 4vw, 60px);
+      min-width: 0;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+      padding: 32px;
+      background: white;
+      border: 1px solid #e6ece6;
+      border-radius: 18px;
+      box-shadow: 0 12px 40px rgba(31, 68, 37, .09);
+    }
+
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .logo {
+      display: block;
+      width: 100px;
+      height: 74px;
+      object-fit: contain;
+    }
+
+    .login-card h2 {
+      text-align: center;
+      color: var(--green);
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 25px;
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #38433a;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .field input {
+      width: 100%;
+      height: 47px;
+      border: 1px solid #d4ded5;
+      border-radius: 8px;
+      background: #fcfdfc;
+      color: var(--ink);
+      padding: 0 13px;
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(46,125,50,.12);
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 48px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 13px;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      color: #637066;
+      cursor: pointer;
+      font-size: 18px;
+      padding: 3px;
+    }
+
+    .forgot-row {
+      display: flex;
+      justify-content: flex-end;
+      margin: -2px 0 19px;
+    }
+
+    .text-link {
+      border: 0;
+      background: none;
+      color: var(--green);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    .submit-button {
+      width: 100%;
+      min-height: 48px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--green);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .submit-button:hover {
+      background: var(--green-dark);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 22px 0 18px;
+      color: #9aa39b;
+      font-size: 12px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #e4e9e4;
+    }
+
+    .signup {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .signup button {
+      display: block;
+      margin: 8px auto 0;
+      border: 0;
+      background: transparent;
+      color: var(--orange);
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .message {
+      display: none;
+      margin-top: 14px;
+      border-radius: 8px;
+      padding: 11px 12px;
+      background: #fff3e6;
+      color: #884600;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    /* TABLETS E CELULARES */
+
+    @media (max-width: 850px) {
+      .page {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .welcome {
+        min-height: auto;
+        padding: 23px 6%;
+      }
+
+      .welcome-copy {
+        margin: 40px 0 15px;
+      }
+
+      .welcome-copy h1 {
+        font-size: 34px;
+      }
+
+      .welcome-copy p {
+        font-size: 14px;
+      }
+
+      .welcome-foot {
+        display: none;
+      }
+
+      .login-side {
+        padding: 28px 18px 40px;
+      }
+
+      .login-card {
+        max-width: 440px;
+        padding: 28px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .welcome-copy h1 {
+        font-size: 29px;
+      }
+
+      .login-card {
+        padding: 24px 20px;
+      }
+    }
+  </style>
 </head>
 
-
 <body>
+  <main class="page">
 
+    <!-- LADO VERDE -->
+    <section class="welcome">
 
-    <div class="tela">
+      <a class="brand" href="index.html" aria-label="AgroTrator - início">
+        <span class="brand-mark">🌱</span>
+        <span class="brand-name">Agro<span>Trator</span></span>
+      </a>
 
+      <div class="welcome-copy">
+        <div class="eyebrow">Gestão agrícola</div>
 
-        <!-- =========================
-             BARRA SUPERIOR
-        ========================= -->
+        <h1>Seu campo, sua frota, tudo sob controle.</h1>
 
-        <div class="status">
+        <p>
+          Organize seus tratores, acompanhe a manutenção e tenha
+          as informações da sua operação agrícola em um só lugar.
+        </p>
+      </div>
 
-            <span></span>
+      <div class="welcome-foot">
+        AgroTrator · Gestão inteligente da sua frota
+      </div>
 
-            <span></span>
+    </section>
 
+    <!-- LADO DO LOGIN -->
+    <section class="login-side">
+
+      <div class="login-card">
+
+        <div class="logo-wrap">
+          <img
+            src="imagens/imagens/logo trator.png"
+            alt="Logo AgroTrator"
+            class="logo"
+            onerror="this.style.display='none'"
+          >
         </div>
 
+        <h2>Bem-vindo!</h2>
 
-        <!-- =========================
-             CONTEÚDO
-        ========================= -->
+        <p class="subtitle">
+          Entre na sua conta para continuar.
+        </p>
 
-        <div class="conteudo">
+        <form id="login-form">
 
+          <div class="field">
+            <label for="email">E-mail</label>
 
-            <!--
-                =============================
-                LOGO
-
-                COLOQUE SUA IMAGEM AQUI:
-
-                imagens/logo.png
-                =============================
-            -->
-
-            <img
-                src="imagens/imagens/logo trator.png"
-                alt="Logo AgroTrator"
-                class="logo"
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Digite seu e-mail"
+              autocomplete="username"
+              required
             >
+          </div>
 
+          <div class="field">
+            <label for="senha">Senha</label>
 
-            <h1 class="titulo">
-                AgroTrator
-            </h1>
+            <div class="password-wrap">
+              <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Digite sua senha"
+                autocomplete="current-password"
+                required
+              >
 
-
-            <p class="subtitulo">
-                Gestão inteligente da sua frota.
-            </p>
-
-
-            <!-- =========================
-                 E-MAIL
-            ========================= -->
-
-            <div class="campo">
-
-                <label>
-                    <span>✉</span>
-                    E-mail
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="Digite seu e-mail"
-                >
-
+              <button
+                class="toggle-password"
+                id="toggle-password"
+                type="button"
+                aria-label="Mostrar senha"
+              >👁</button>
             </div>
+          </div>
 
-
-            <!-- =========================
-                 SENHA
-            ========================= -->
-
-            <div class="campo">
-
-                <label>
-                    <span>🔒</span>
-                    Senha
-                </label>
-
-                <div class="senha-container">
-
-                    <input
-                        type="password"
-                        id="senha"
-                        placeholder="Digite sua senha"
-                    >
-
-                    <span
-                        class="olho"
-                        onclick="mostrarSenha()"
-                    >
-                        👁
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- Esqueceu a senha -->
-
-            <a class="esqueceu">
-                Esqueceu a senha?
-            </a>
-
-
-            <!-- =========================
-                 BOTÃO ENTRAR
-            ========================= -->
-
+          <div class="forgot-row">
             <button
-                class="botao"
-                onclick="entrar()"
-            >
-                Entrar
+              class="text-link"
+              id="forgot-password"
+              type="button"
+            >Esqueceu a senha?</button>
+          </div>
+
+          <button class="submit-button" type="submit">
+            Entrar
+          </button>
+
+          <div class="divider">ou</div>
+
+          <div class="signup">
+            Ainda não possui uma conta?
+
+            <button id="create-account" type="button">
+              Criar Conta
             </button>
+          </div>
 
+          <div class="message" id="message" role="status"></div>
 
-            <!-- =========================
-                 DIVISOR
-            ========================= -->
+        </form>
+      </div>
 
-            <div class="divisor">
+    </section>
+  </main>
 
-                <span class="linha"></span>
+  <script>
+    const passwordInput = document.getElementById("senha");
+    const message = document.getElementById("message");
 
-                <span>ou</span>
+    // Mostrar ou ocultar a senha
+    document
+      .getElementById("toggle-password")
+      .addEventListener("click", function () {
 
-                <span class="linha"></span>
+        const show = passwordInput.type === "password";
 
-            </div>
+        passwordInput.type = show ? "text" : "password";
 
+        this.setAttribute(
+          "aria-label",
+          show ? "Ocultar senha" : "Mostrar senha"
+        );
+      });
 
-            <!-- =========================
-                 CRIAR CONTA
-            ========================= -->
+    // Ao entrar, abre a página principal
+    document
+      .getElementById("login-form")
+      .addEventListener("submit", function (event) {
 
-            <p class="pergunta">
-                Ainda não possui uma conta?
-            </p>
+        event.preventDefault();
 
-            <a class="criar">
-                Criar Conta
-            </a>
-
-
-        </div>
-
-
-        <!-- =========================
-             FUNDO DA FAZENDA
-        ========================= -->
-
-        <div class="paisagem">
-
-            <div class="morro1"></div>
-
-            <div class="morro2"></div>
-
-            <div class="plantacao"></div>
-
-            <div class="plantacao2"></div>
-
-        </div>
-
-
-    </div>
-
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
-
-    <script>
-
-        function mostrarSenha() {
-
-            const senha =
-                document.getElementById("senha");
-
-            if (senha.type === "password") {
-
-                senha.type = "text";
-
-            } else {
-
-                senha.type = "password";
-
-            }
-
+        if (!this.checkValidity()) {
+          this.reportValidity();
+          return;
         }
 
+        window.location.href = "./principal.html";
+      });
 
-        function entrar() {
+    // Recuperação de senha demonstrativa
+    document
+      .getElementById("forgot-password")
+      .addEventListener("click", function () {
 
-            const email =
-                document.getElementById("email").value;
+        message.textContent =
+          "A recuperação de senha precisa ser conectada ao sistema de cadastro.";
 
-            const senha =
-                document.getElementById("senha").value;
+        message.classList.add("show");
+      });
 
+    // Cadastro demonstrativo
+    document
+      .getElementById("create-account")
+      .addEventListener("click", function () {
 
-            if (email === "" || senha === "") {
+        message.textContent =
+          "Conecte este botão à página de cadastro do projeto.";
 
-                alert("Digite seu e-mail e sua senha.");
-
-                return;
-            }
-
-
-            /*
-              Depois de preencher o login,
-              vai para a página principal.
-
-              Se sua página principal tiver
-              outro nome, troque aqui.
-            */
-
-            window.location.href = "principal.html";
-
-        }
-
-
-
-
-</script>
-
-
+        message.classList.add("show");
+      });
+  </script>
 </body>
-
 </html>

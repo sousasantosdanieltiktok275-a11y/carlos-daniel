@@ -1,13 +1,12 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>AgroTrator - Detalhes</title>
+    <title>Detalhes do Trator - AgroTrator</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,501 +15,300 @@
         }
 
         body {
-            background: #f5f7f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background: #f3f6f3;
+            color: #263329;
         }
-
-        .celular {
-            width: 390px;
-            height: 844px;
-            background: #f5f7f5;
-            overflow: hidden;
-            position: relative;
-            border-radius: 25px;
-        }
-
-
-        /* CABEÇALHO */
 
         header {
-            height: 85px;
             background: #087a35;
             color: white;
-
-            display: flex;
-            align-items: center;
-
-            padding: 15px 20px;
-            gap: 15px;
+            padding: 22px 18px;
         }
 
-        .botao-voltar {
+        header a {
             color: white;
             text-decoration: none;
-            font-size: 30px;
-            line-height: 1;
+            font-size: 15px;
         }
 
         header h1 {
-            font-size: 21px;
+            margin-top: 18px;
+            font-size: 27px;
         }
 
+        header p {
+            margin-top: 8px;
+            font-size: 14px;
+        }
 
-        /* CONTEÚDO */
+        main {
+            width: 100%;
+            max-width: 650px;
+            margin: 20px auto;
+            padding: 0 15px 30px;
+        }
 
-        .conteudo {
-            height: calc(100% - 85px);
-            overflow-y: auto;
-
+        .card {
+            background: white;
             padding: 20px;
-            padding-bottom: 30px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            box-shadow: 0 3px 12px #0000000d;
         }
 
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-        /* IMAGEM */
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccd5cd;
+            border-radius: 9px;
+            background: white;
+            font-size: 15px;
+        }
 
-        .area-imagem {
+        .foto-trator {
             width: 100%;
             height: 220px;
-
-            background: white;
-
-            border-radius: 18px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            margin-bottom: 18px;
-
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        }
-
-        .area-imagem img {
-            width: 100%;
-            height: 100%;
             object-fit: contain;
-            border-radius: 18px;
+            background: #edf2ed;
+            border-radius: 10px;
+            margin-bottom: 16px;
         }
 
-
-        /* NOME */
-
-        .nome-trator {
-            font-size: 26px;
-            color: #176b35;
-
-            margin-bottom: 18px;
-        }
-
-
-        /* INFORMAÇÕES */
-
-        .grid-informacoes {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
+        h2 {
+            color: #087a35;
+            font-size: 22px;
+            margin-bottom: 16px;
         }
 
         .informacao {
-            background: white;
-
-            border-radius: 14px;
-
-            padding: 15px;
-
-            box-shadow: 0 3px 10px rgba(0,0,0,0.07);
-        }
-
-        .informacao span {
-            display: block;
-
-            font-size: 13px;
-            color: #777;
-
-            margin-bottom: 7px;
+            padding: 14px 0;
+            border-bottom: 1px solid #e0e6e0;
+            font-size: 15px;
         }
 
         .informacao strong {
-            font-size: 17px;
-            color: #222;
+            color: #087a35;
         }
 
-
-        /* BOTÕES */
-
         .botoes {
+            display: grid;
+            gap: 12px;
             margin-top: 20px;
         }
 
         .botao {
             display: block;
-
             width: 100%;
-
+            padding: 16px 12px;
+            border: none;
+            border-radius: 9px;
             text-align: center;
-
             text-decoration: none;
-
-            padding: 13px;
-
-            border-radius: 11px;
-
-            margin-bottom: 10px;
-
+            font-size: 16px;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        .botao-manutencao {
+        .verde {
             background: #087a35;
             color: white;
         }
 
-        .botao-abastecimento {
-            background: #e9a900;
-            color: white;
+        .claro {
+            background: #e5f3e8;
+            color: #087a35;
         }
 
-        .botao-historico {
-            background: #444;
-            color: white;
+        footer {
+            padding: 20px;
+            text-align: center;
+            color: #68746b;
+            font-size: 12px;
         }
-
     </style>
 </head>
 
-
 <body>
 
-<div class="celular">
+<header>
+    <a href="tratores.html">← Voltar para os tratores</a>
+    <h1>Detalhes do trator</h1>
+    <p>AgroTrator — informações da máquina agrícola</p>
+</header>
 
+<main>
 
-    <!-- CABEÇALHO -->
+    <section class="card">
+        <label for="escolherTrator">Selecionar trator</label>
 
-    <header>
+        <select id="escolherTrator">
+            <option value="valtra">Valtra</option>
+            <option value="new-holland">New Holland</option>
+            <option value="john-deere">John Deere</option>
+            <option value="massey-ferguson">Massey Ferguson</option>
+        </select>
+    </section>
 
-        <a
-            href="tratores.html"
-            class="botao-voltar"
+    <section class="card">
+
+        <img
+            id="fotoTrator"
+            class="foto-trator"
+            src="imagens/imagens/trator valtra.jpg"
+            alt="Trator selecionado"
         >
-            ←
-        </a>
 
-        <h1>Detalhes do trator</h1>
+        <h2 id="nomeTrator">Valtra</h2>
 
-    </header>
-
-
-
-    <!-- CONTEÚDO -->
-
-    <main class="conteudo">
-
-
-        <!-- IMAGEM DO TRATOR -->
-
-        <div class="area-imagem">
-
-            <img
-                id="imagemTrator"
-                src="imageens/imagens/John Deere 6110.jpg"
-                alt="Trator"
-            >
-
+        <div class="informacao">
+            <strong>Marca:</strong>
+            <span id="marcaTrator">Valtra</span>
         </div>
 
-
-        <!-- NOME -->
-
-        <h2
-            id="nomeTrator"
-            class="nome-trator"
-        >
-            John Deere 6110
-        </h2>
-
-
-
-        <!-- INFORMAÇÕES -->
-
-        <div class="grid-informacoes">
-
-
-            <div class="informacao">
-
-                <span>Modelo</span>
-
-                <strong id="modeloTrator">
-                    6110
-                </strong>
-
-            </div>
-
-
-            <div class="informacao">
-
-                <span>Ano</span>
-
-                <strong id="anoTrator">
-                    2022
-                </strong>
-
-            </div>
-
-
-            <div class="informacao">
-
-                <span>Potência</span>
-
-                <strong id="potenciaTrator">
-                    110 CV
-                </strong>
-
-            </div>
-
-
-            <div class="informacao">
-
-                <span>Motor</span>
-
-                <strong id="motorTrator">
-                    Diesel
-                </strong>
-
-            </div>
-
-
-            <div class="informacao">
-
-                <span>Horas trabalhadas</span>
-
-                <strong id="horasTrator">
-                    1450 h
-                </strong>
-
-            </div>
-
-
-            <div class="informacao">
-
-                <span>Consumo</span>
-
-                <strong id="consumoTrator">
-                    12 L/h
-                </strong>
-
-            </div>
-
+        <div class="informacao">
+            <strong>Modelo:</strong>
+            <span id="modeloTrator">Modelo não informado</span>
         </div>
 
+        <div class="informacao">
+            <strong>Ano:</strong>
+            <span id="anoTrator">Não informado</span>
+        </div>
 
-
-        <!-- BOTÕES -->
+        <div class="informacao">
+            <strong>Horas de uso:</strong>
+            <span id="horasTrator">Não informado</span>
+        </div>
 
         <div class="botoes">
 
-
+            <!-- BOTÃO DE MANUTENÇÃO -->
             <a
-                href="manutencao.html"
-                class="botao botao-manutencao"
-            >
-                🔧 Manutenção
+               ```html
+     
+              id="botaoManutencao"
+   href="./manutencao.html"
+   class="botao verde">
+    🔧 Abrir manutenção
+</a>
             </a>
 
-
-            <a
-                href="abastecimento.html"
-                class="botao botao-abastecimento"
-            >
-                ⛽ Abastecimento
-            </a>
-
-
-            <a
-                href="historico.html"
-                class="botao botao-historico"
-            >
+            <a href="./historico.html" class="botao claro">
                 📋 Histórico
             </a>
 
+            <a href="./abastecimento.html" class="botao claro">
+                ⛽ Abastecimento
+            </a>
+
+            <a href="./tratores.html" class="botao claro">
+                🚜 Voltar para os tratores
+            </a>
 
         </div>
+    </section>
 
-    </main>
+</main>
 
-</div>
-
-
+<footer>
+    AgroTrator © 2026 — Gestão de máquinas agrícolas
+</footer>
 
 <script>
-
-    /*
-    =====================================================
-    PEGAR QUAL TRATOR FOI CLICADO
-    =====================================================
-    */
-
-    const parametros =
-        new URLSearchParams(window.location.search);
-
-    const numeroTrator =
-        parametros.get("trator");
-
-
-
-    /*
-    =====================================================
-    DADOS DOS TRATORES
-    =====================================================
-    */
-
-    const tratores = {
-
-        1: {
-
-            nome: "John Deere 6110",
-
-            modelo: "6110",
-
-            ano: "2022",
-
-            potencia: "110 CV",
-
-            motor: "Diesel",
-
-            horas: "1450 h",
-
-            consumo: "12 L/h",
-
-            imagem:
-                "imagens/imagens/john-deere.jpg"
-        },
-
-
-        2: {
-
-            nome: "Massey Ferguson",
-
-            modelo: "4297",
-
-            ano: "2021",
-
-            potencia: "140 CV",
-
-            motor: "Diesel",
-
-            horas: "1200 h",
-
-            consumo: "15 L/h",
-
-            imagem:
-                "imagens/imagens/Massey ferguson 4297.jpg"
-        },
-
-
-        3: {
-
-            nome: "New Holland",
-
-            modelo: "T7",
-
-            ano: "2023",
-
-            potencia: "210 CV",
-
-            motor: "Diesel",
-
-            horas: "980 h",
-
-            consumo: "18 L/h",
-
-            imagem:
-                "imagens/imagens/Massey ferguson 4297.jpg"
-        },
-
-
-        4: {
-
+    const dadosTratores = {
+        "valtra": {
             nome: "Valtra",
+            modelo: "Modelo não informado",
+            ano: "Não informado",
+            horas: "Não informado",
+            imagem: "imagens/imagens/trator valtra.jpg"
+        },
 
-            modelo: "A134",
+        "new-holland": {
+            nome: "New Holland",
+            modelo: "Modelo não informado",
+            ano: "Não informado",
+            horas: "Não informado",
+            imagem: "imagens/imagens/New Holland.jpg"
+        },
 
-            ano: "2020",
+        "john-deere": {
+            nome: "John Deere",
+            modelo: "Modelo não informado",
+            ano: "Não informado",
+            horas: "Não informado",
+            imagem: "imagens/imagens/john-deere.jpg"
+        },
 
-            potencia: "135 CV",
-
-            motor: "Diesel",
-
-            horas: "1750 h",
-
-            consumo: "14 L/h",
-
-            imagem:
-                "imagens/imagens/trator valtra.jpg"
+        "massey-ferguson": {
+            nome: "Massey Ferguson",
+            modelo: "Modelo não informado",
+            ano: "Não informado",
+            horas: "Não informado",
+            imagem: "imagens/imagens/Massey ferguson 4297.jpg"
         }
-
     };
 
+    const seletor = document.getElementById("escolherTrator");
 
+    function carregarDetalhes() {
+        const parametros = new URLSearchParams(window.location.search);
+        let id = parametros.get("trator");
 
-    /*
-    =====================================================
-    ESCOLHER O TRATOR
-    =====================================================
-    */
+        // Compatibilidade com links antigos ?trator=1, 2, 3 ou 4.
+        const antigos = {
+            "1": "valtra",
+            "2": "new-holland",
+            "3": "john-deere",
+            "4": "massey-ferguson"
+        };
 
-    const trator =
-        tratores[numeroTrator] || tratores[1];
+        if (id) {
+            id = antigos[id] || id.toLowerCase();
+        }
 
+        if (!dadosTratores[id]) {
+            id = seletor.value;
+        }
 
+        seletor.value = id;
 
-    /*
-    =====================================================
-    PREENCHER A PÁGINA
-    =====================================================
-    */
+        const trator = dadosTratores[id];
 
-    document.getElementById("nomeTrator").textContent =
-        trator.nome;
+        document.getElementById("nomeTrator").textContent = trator.nome;
+        document.getElementById("marcaTrator").textContent = trator.nome;
+        document.getElementById("modeloTrator").textContent = trator.modelo;
+        document.getElementById("anoTrator").textContent = trator.ano;
+        document.getElementById("horasTrator").textContent = trator.horas;
 
+        const imagem = document.getElementById("fotoTrator");
+        imagem.style.display = "block";
+        imagem.src = trator.imagem;
+        imagem.alt = "Trator " + trator.nome;
 
-    document.getElementById("modeloTrator").textContent =
-        trator.modelo;
+        imagem.onerror = function() {
+            this.style.display = "none";
+        };
 
+        // Atualiza o endereço do botão para o trator escolhido.
+        document.getElementById("botaoManutencao").href =
+            "./manutencao.html?trator=" + encodeURIComponent(id);
+    }
 
-    document.getElementById("anoTrator").textContent =
-        trator.ano;
+    seletor.addEventListener("change", function() {
+        window.location.href =
+            "./detalhes.html?trator=" + encodeURIComponent(this.value);
+    });
 
-
-    document.getElementById("potenciaTrator").textContent =
-        trator.potencia;
-
-
-    document.getElementById("motorTrator").textContent =
-        trator.motor;
-
-
-    document.getElementById("horasTrator").textContent =
-        trator.horas;
-
-
-    document.getElementById("consumoTrator").textContent =
-        trator.consumo;
-
-
-    document.getElementById("imagemTrator").src =
-        trator.imagem;
-
-
-    document.getElementById("imagemTrator").alt =
-        trator.nome;
-
+    carregarDetalhes();
 </script>
-
 
 </body>
 </html>
+``` 

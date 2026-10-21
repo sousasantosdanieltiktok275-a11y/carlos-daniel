@@ -1,0 +1,604 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroTrator - Mapa GPS</title>
+
+    <!-- Biblioteca do mapa -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #eef2ee;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .celular {
+            width: 390px;
+            height: 100vh;
+            min-height: 700px;
+            max-height: 950px;
+            position: relative;
+            background: #f5f7f5;
+            overflow: hidden;
+            box-shadow: 0 0 15px #0002;
+        }
+
+        header {
+            height: 75px;
+            background: #087a35;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        .voltar {
+            color: white;
+            text-decoration: none;
+            font-size: 30px;
+        }
+
+        header h1 {
+            font-size: 21px;
+        }
+
+        main {
+            height: calc(100% - 140px);
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .titulo {
+            color: #087a35;
+            font-size: 23px;
+            margin-bottom: 7px;
+        }
+
+        .subtitulo {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        #mapa {
+            width: 100%;
+            height: 340px;
+            border-radius: 15px;
+            border: 1px solid #d5ddd5;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .status {
+            background: white;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 10px;
+            color: #444;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .titulo-lista {
+            color: #087a35;
+            font-size: 20px;
+            margin: 20px 0 12px;
+        }
+
+        .trator-card {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 2px 8px #0000000d;
+        }
+
+        .trator-card img {
+            width: 86px;
+            height: 76px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #f5f7f5;
+            flex-shrink: 0;
+        }
+
+        .trator-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .trator-info h3 {
+            color: #087a35;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .trator-info p {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+        }
+
+        .botao {
+            margin-top: 8px;
+            background: #087a35;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .sem-posicao {
+            color: #a05a00 !important;
+        }
+
+        .menu {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 65px;
+            background: white;
+            border-top: 1px solid #ddd;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .menu a {
+            text-decoration: none;
+            text-align: center;
+            color: #777;
+            font-size: 11px;
+        }
+
+        .menu a span {
+            display: block;
+            font-size: 21px;
+            margin-bottom: 3px;
+        }
+
+        .menu .ativo {
+            color: #087a35;
+            font-weight: bold;
+        }
+
+        /* Imagem personalizada de cada trator no mapa */
+        .icone-trator {
+            width: 58px;
+            height: 58px;
+            border: 3px solid #087a35;
+            border-radius: 50%;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 2px 8px #0005;
+        }
+
+        .icone-trator img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 390px) {
+            .celular {
+                width: 100%;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .celular {
+                min-height: 0;
+            }
+
+            #mapa {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="celular">
+
+    <header>
+        <a class="voltar" href="principal.html" aria-label="Voltar">←</a>
+        <h1>GPS dos tratores</h1>
+    </header>
+
+    <main>
+        <h2 class="titulo">Mapa em tempo real</h2>
+
+        <p class="subtitulo">
+            Acompanhe a localização das máquinas agrícolas
+            que estejam enviando dados GPS.
+        </p>
+
+        <div id="mapa"></div>
+
+        <div id="status" class="status" role="status" aria-live="polite">
+            Conectando ao servidor GPS...
+        </div>
+
+        <h2 class="titulo-lista">Meus tratores</h2>
+
+        <div id="lista">
+            Carregando dispositivos...
+        </div>
+    </main>
+
+    <nav class="menu">
+        <a href="principal.html">
+            <span>⌂</span>Início
+        </a>
+
+        <a href="tratores.html">
+            <span>🚜</span>Tratores
+        </a>
+
+        <a href="manutencao.html">
+            <span>🔧</span>Manutenção
+        </a>
+
+        <a href="mapa.html" class="ativo">
+            <span>📍</span>Mapa
+        </a>
+
+        <a href="perfil.html">
+            <span>👤</span>Perfil
+        </a>
+    </nav>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+    // --------------------------------------------------
+    // 1. CONFIGURAÇÃO DO MAPA
+    // --------------------------------------------------
+
+    const mapa = L.map("mapa").setView([-14.2, -51.9], 4);
+
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">' +
+            'OpenStreetMap</a>'
+    }).addTo(mapa);
+
+    const marcadores = new Map();
+
+    const status = document.getElementById("status");
+    const lista = document.getElementById("lista");
+
+    let enquadrouMapa = false;
+    let consultaEmAndamento = false;
+
+    // --------------------------------------------------
+    // 2. IMAGENS DOS TRATORES
+    // Os caminhos devem corresponder aos arquivos reais.
+    // --------------------------------------------------
+
+    function obterImagemTrator(nome) {
+        const nomeNormalizado = String(nome || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+
+        if (
+            nomeNormalizado.includes("john deere") ||
+            nomeNormalizado.includes("john") ||
+            nomeNormalizado.includes("deere") ||
+            nomeNormalizado.includes("jhoo")
+        ) {
+            return "imagens/imagens/john-deere.jpg";
+        }
+
+        if (nomeNormalizado.includes("valtra")) {
+            return "imagens/imagens/trator valtra.jpg";
+        }
+
+        if (nomeNormalizado.includes("new holland")) {
+            return "imagens/imagens/New Holland.jpg";
+        }
+
+        if (
+            nomeNormalizado.includes("massey") ||
+            nomeNormalizado.includes("ferguson")
+        ) {
+            return "imagens/imagens/Massey ferguson 4297.jpg";
+        }
+
+        return "imagens/imagens/logo trator.png";
+    }
+
+    // --------------------------------------------------
+    // 3. CRIAR O ÍCONE COM A FOTO DO TRATOR
+    // --------------------------------------------------
+
+    function criarIconeTrator(nome) {
+        const imagem = obterImagemTrator(nome);
+
+        const conteudo = document.createElement("div");
+        conteudo.className = "icone-trator";
+
+        const foto = document.createElement("img");
+        foto.src = imagem;
+        foto.alt = nome || "Trator";
+
+        foto.onerror = function () {
+            foto.onerror = null;
+            foto.src = "imagens/imagens/logo trator.png";
+        };
+
+        conteudo.appendChild(foto);
+
+        return L.divIcon({
+            className: "",
+            html: conteudo,
+            iconSize: [58, 58],
+            iconAnchor: [29, 29],
+            popupAnchor: [0, -30]
+        });
+    }
+
+    // --------------------------------------------------
+    // 4. FORMATAR DATA E HORÁRIO
+    // --------------------------------------------------
+
+    function formatarData(data) {
+        if (!data) {
+            return "Horário não informado";
+        }
+
+        const valor = new Date(data);
+
+        if (Number.isNaN(valor.getTime())) {
+            return "Horário não informado";
+        }
+
+        return valor.toLocaleString("pt-BR");
+    }
+
+    // --------------------------------------------------
+    // 5. ATUALIZAR OS TRATORES DA API
+    // --------------------------------------------------
+
+    async function atualizarTratores() {
+        if (consultaEmAndamento) return;
+
+        consultaEmAndamento = true;
+
+        try {
+            const resposta = await fetch("/api/tractors", {
+                cache: "no-store"
+            });
+
+            if (!resposta.ok) {
+                throw new Error("Falha ao consultar a API GPS.");
+            }
+
+            const tratores = await resposta.json();
+
+            if (!Array.isArray(tratores)) {
+                throw new Error("A API não retornou uma lista de tratores.");
+            }
+
+            lista.replaceChildren();
+
+            const limites = [];
+            let quantidadeComGps = 0;
+
+            // Percorre cada dispositivo devolvido pela API.
+            for (const trator of tratores) {
+                const nome = trator.name || "Trator sem nome";
+
+                const latitude = Number(trator.latitude);
+                const longitude = Number(trator.longitude);
+
+                const temPosicao =
+                    trator.hasPosition === true &&
+                    Number.isFinite(latitude) &&
+                    Number.isFinite(longitude) &&
+                    latitude >= -90 &&
+                    latitude <= 90 &&
+                    longitude >= -180 &&
+                    longitude <= 180;
+
+                // Cria o cartão de cada trator.
+                const cartao = document.createElement("div");
+                cartao.className = "trator-card";
+
+                const foto = document.createElement("img");
+                foto.src = obterImagemTrator(nome);
+                foto.alt = nome;
+
+                foto.onerror = function () {
+                    foto.onerror = null;
+                    foto.src = "imagens/imagens/logo trator.png";
+                };
+
+                cartao.appendChild(foto);
+
+                const informacoes = document.createElement("div");
+                informacoes.className = "trator-info";
+
+                const titulo = document.createElement("h3");
+                titulo.textContent = nome;
+                informacoes.appendChild(titulo);
+
+                const situacao = document.createElement("p");
+
+                if (temPosicao) {
+                    situacao.textContent = "GPS recebido";
+                    quantidadeComGps++;
+                } else {
+                    situacao.textContent = "Sem posição GPS válida";
+                    situacao.className = "sem-posicao";
+                }
+
+                informacoes.appendChild(situacao);
+
+                const horario = document.createElement("p");
+                horario.textContent =
+                    "Último sinal: " + formatarData(trator.fixTime);
+
+                informacoes.appendChild(horario);
+
+                // Se houver posição válida, cria ou atualiza o marcador.
+                if (temPosicao) {
+                    const coordenadas = [latitude, longitude];
+
+                    limites.push(coordenadas);
+
+                    const popup = document.createElement("div");
+
+                    const nomePopup = document.createElement("strong");
+                    nomePopup.textContent = nome;
+                    popup.appendChild(nomePopup);
+
+                    const latitudePopup = document.createElement("p");
+                    latitudePopup.textContent =
+                        "Latitude: " + latitude.toFixed(6);
+                    popup.appendChild(latitudePopup);
+
+                    const longitudePopup = document.createElement("p");
+                    longitudePopup.textContent =
+                        "Longitude: " + longitude.toFixed(6);
+                    popup.appendChild(longitudePopup);
+
+                    const horarioPopup = document.createElement("p");
+                    horarioPopup.textContent =
+                        "Último sinal: " + formatarData(trator.fixTime);
+                    popup.appendChild(horarioPopup);
+
+                    let marcador = marcadores.get(trator.id);
+
+                    if (marcador) {
+                        // Atualiza a posição e a imagem.
+                        marcador.setLatLng(coordenadas);
+                        marcador.setIcon(criarIconeTrator(nome));
+                        marcador.setPopupContent(popup);
+                    } else {
+                        // Cria um marcador para este trator.
+                        marcador = L.marker(coordenadas, {
+                            icon: criarIconeTrator(nome)
+                        }).addTo(mapa);
+
+                        marcador.bindPopup(popup);
+                        marcadores.set(trator.id, marcador);
+                    }
+
+                    const botao = document.createElement("button");
+                    botao.className = "botao";
+                    botao.textContent = "Ver no mapa";
+
+                    botao.addEventListener("click", function () {
+                        mapa.setView(coordenadas, 16);
+                        marcador.openPopup();
+                    });
+
+                    informacoes.appendChild(botao);
+                }
+
+                cartao.appendChild(informacoes);
+                lista.appendChild(cartao);
+            }
+
+            // Enquadra as posições recebidas na primeira atualização.
+            if (limites.length > 0 && !enquadrouMapa) {
+                if (limites.length === 1) {
+                    mapa.setView(limites[0], 16);
+                } else {
+                    mapa.fitBounds(limites, {
+                        padding: [30, 30],
+                        maxZoom: 15
+                    });
+                }
+
+                enquadrouMapa = true;
+            }
+
+            // Não deixa marcadores antigos de dispositivos removidos.
+            const idsAtuais = new Set(tratores.map(trator => trator.id));
+
+            for (const [id, marcador] of marcadores.entries()) {
+                if (!idsAtuais.has(id)) {
+                    mapa.removeLayer(marcador);
+                    marcadores.delete(id);
+                }
+            }
+
+            const horarioConsulta = new Date().toLocaleTimeString("pt-BR");
+
+            status.textContent =
+                "Consulta realizada às " + horarioConsulta + ". " +
+                quantidadeComGps + " de " + tratores.length +
+                " tratores com posição GPS válida.";
+
+            if (tratores.length === 0) {
+                const mensagem = document.createElement("p");
+                mensagem.textContent =
+                    "Nenhum rastreador cadastrado na API.";
+                lista.appendChild(mensagem);
+            }
+
+            if (quantidadeComGps === 0) {
+                status.textContent +=
+                    " Verifique se os rastreadores estão enviando coordenadas.";
+            }
+
+        } catch (erro) {
+            console.error("Erro no GPS:", erro);
+
+            status.textContent =
+                "Não foi possível obter as posições GPS. " +
+                "Verifique se o servidor Node.js está ativo, " +
+                "se o Traccar está configurado e se a API responde.";
+
+            if (lista.children.length === 0) {
+                lista.textContent =
+                    "Não foi possível carregar os tratores.";
+            }
+
+        } finally {
+            consultaEmAndamento = false;
+        }
+    }
+
+    // --------------------------------------------------
+    // 6. INICIAR E ATUALIZAR AUTOMATICAMENTE
+    // --------------------------------------------------
+
+    atualizarTratores();
+
+    // Consulta novamente a API a cada 10 segundos.
+    setInterval(atualizarTratores, 10000);
+</script>
+
+</body>
+</html>

@@ -2,353 +2,245 @@
 <html lang="pt-BR">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>AgroTrator</title>
-
+    <title>AgroTrator - Início</title>
 
     <style>
-
-        /* ==============================
-           CONFIGURAÇÃO GERAL
-        ============================== */
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
 
         body {
-
-            min-height: 100vh;
-
-            background: #f2f2f2;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
             font-family: Arial, Helvetica, sans-serif;
-
-        }
-
-
-        /* ==============================
-           TELA DO APLICATIVO
-        ============================== */
-
-        .celular {
-
-            width: 390px;
-
-            height: 844px;
-
-            position: relative;
-
-            overflow: hidden;
-
-            border-radius: 31px;
-
             background: #004d20;
-
-            box-shadow:
-                0 5px 20px rgba(0, 0, 0, 0.20);
-
+            overflow-x: hidden;
         }
 
+        /* TELA INICIAL EM TAMANHO DE COMPUTADOR */
 
-        /* ==============================
-           IMAGEM DE FUNDO
-        ============================== */
+        .tela {
+            position: relative;
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow: hidden;
+            background: #004d20;
+            isolation: isolate;
+        }
+
+        /* IMAGEM DE FUNDO */
 
         .fundo {
-
             position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            width: 100%;
-
-            height: 100%;
-
-            object-fit: cover;
-
-            object-position: center;
-
             z-index: 1;
-
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
         }
 
+        /* CAMADA SOBRE O FUNDO */
 
-        /* ==============================
-           CONTEÚDO
-        ============================== */
+        .sombra {
+            position: absolute;
+            z-index: 2;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0.08),
+                transparent 45%,
+                rgba(0, 0, 0, 0.25)
+            );
+            pointer-events: none;
+        }
+
+        /* CONTEÚDO DA TELA */
 
         .conteudo {
-
             position: relative;
-
+            z-index: 3;
             width: 100%;
-
-            height: 100%;
-
-            z-index: 2;
-
+            min-height: 100vh;
+            min-height: 100dvh;
         }
 
+        /* NOME DO PROJETO */
 
-        /* ==============================
-           BARRA SUPERIOR
-        ============================== */
-
-        .status {
-
+        .marca {
             position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            width: 100%;
-
-            height: 35px;
-
-            padding: 10px 16px;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
+            top: 28px;
+            left: 5%;
             color: white;
-
-            font-size: 10px;
-
+            font-size: 28px;
             font-weight: bold;
-
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
 
+        .marca span {
+            color: #ff9800;
+        }
 
-        /* ==============================
-           LOGO
-        ============================== */
+        /* LOGOTIPO */
 
         .logo {
-
             position: absolute;
-
-            top: 105px;
-
+            top: 12%;
             left: 50%;
-
             transform: translateX(-50%);
-
-            width: 180px;
-
-            height: auto;
-
+            width: clamp(180px, 22vw, 300px);
+            max-height: 32vh;
             object-fit: contain;
-
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
 
+        /* BOTÃO ENTRAR */
 
-        /* ==============================
-           BOTÃO ENTRAR
-        ============================== */
+        .area-botao {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10%;
+            display: flex;
+            justify-content: center;
+            padding: 0 20px;
+        }
 
         .botao-entrar {
+            width: 220px;
+            min-height: 56px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
 
-            position: absolute;
-
-            bottom: 47px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            width: 184px;
-
-            height: 42px;
-
-            background: #F57C00;
-
+            background: #f57c00;
             color: white;
 
-            border-radius: 8px;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            gap: 10px;
-
-            font-size: 14px;
-
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 18px;
             font-weight: bold;
 
-            text-decoration: none;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 3px 6px rgba(0, 0, 0, 0.20);
-
-            transition: 0.2s;
-
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: background 0.2s, transform 0.2s;
         }
-
 
         .botao-entrar:hover {
-
             background: #d96500;
-
-            transform:
-                translateX(-50%)
-                scale(1.03);
-
+            transform: translateY(-3px);
         }
 
-
-        /* ==============================
-           ÍCONE DO BOTÃO
-        ============================== */
+        .botao-entrar:focus-visible {
+            outline: 3px solid white;
+            outline-offset: 4px;
+        }
 
         .icone-entrar {
-
-            font-size: 21px;
-
-            line-height: 1;
-
+            font-size: 24px;
         }
 
+        /* COMPUTADORES */
 
-        /* ==============================
-           RESPONSIVO
-        ============================== */
-
-        @media (max-width: 500px) {
-
-            .celular {
-
-                width: 92vw;
-
-                max-width: 255px;
-
-                height: 90vh;
-
-                max-height: 553px;
-
+        @media (min-width: 1000px) {
+            .marca {
+                font-size: 32px;
+                top: 32px;
+                left: 6%;
             }
 
+            .logo {
+                top: 9%;
+                width: clamp(230px, 23vw, 340px);
+            }
+
+            .area-botao {
+                bottom: 12%;
+            }
+
+            .botao-entrar {
+                width: 250px;
+                min-height: 62px;
+                font-size: 20px;
+            }
         }
 
+        /* CELULARES */
+
+        @media (max-width: 600px) {
+            .marca {
+                top: 20px;
+                left: 20px;
+                font-size: 22px;
+            }
+
+            .logo {
+                top: 18%;
+                width: 190px;
+                max-width: 65vw;
+            }
+
+            .area-botao {
+                bottom: 9%;
+            }
+
+            .botao-entrar {
+                width: 190px;
+                min-height: 50px;
+                font-size: 16px;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+    <main class="tela">
 
-    <!-- =================================
-         TELA DO APLICATIVO
-    ================================== -->
-
-    <div class="celular">
-
-
-        <!-- =================================
-             IMAGEM DE FUNDO
-
-             Arquivo:
-
-             imagens/fundo-agro.png
-        ================================== -->
-
+        <!-- FUNDO AGRÍCOLA -->
         <img
             src="imagens/imagens/fundo-agro.png.png"
-            alt="Fundo agrícola do AgroTrator"
+            alt=""
             class="fundo"
         >
 
-
-        <!-- =================================
-             CONTEÚDO
-        ================================== -->
+        <div class="sombra"></div>
 
         <div class="conteudo">
 
-
-            <!-- BARRA SUPERIOR -->
-
-            <div class="status">
-
-                <span>9:41</span>
-
-                <span>●● ▰</span>
-
+            <!-- NOME DO PROJETO -->
+            <div class="marca">
+                Agro<span>Trator</span>
             </div>
 
-
-            <!-- =================================
-                 LOGO
-
-                 Arquivo:
-
-                 imagens/logo.png
-            ================================== -->
-
+            <!-- LOGOTIPO -->
             <img
                 src="imagens/imagens/logo.png.png"
                 alt="Logo AgroTrator"
                 class="logo"
             >
 
-
-            <!-- =================================
-                 BOTÃO ENTRAR
-
-                 Ao clicar:
-
-                 index.html
-                       ↓
-                 home.html
-            ================================== -->
-
-            <a
-                href="home.html"
-                class="botao-entrar"
-            >
-
-                <span class="icone-entrar">
-                    ⇥
-                </span>
-
-                <span>
-                    Entrar
-                </span>
-
-            </a>
-
+            <!-- BOTÃO QUE ABRE A TELA HOME -->
+            <div class="area-botao">
+                <a href="home.html" class="botao-entrar">
+                    <span class="icone-entrar">⇥</span>
+                    <span>Entrar</span>
+                </a>
+            </div>
 
         </div>
 
-    </div>
-
+    </main>
 
 </body>
-
 </html>

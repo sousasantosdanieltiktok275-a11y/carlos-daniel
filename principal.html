@@ -1,585 +1,1184 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgroTrator - Painel principal</title>
+  <style>
+    :root {
+      --green: #287b35;
+      --green-dark: #1d5e2a;
+      --green-light: #e8f4e9;
+      --orange: #f57c00;
+      --page: #f4f6f4;
+      --ink: #202a23;
+      --muted: #6d776f;
+      --border: #e4e9e4;
+      --white: #fff;
+      --shadow: 0 4px 16px rgba(25, 53, 31, .07);
+    }
 
-    <title>AgroTrator - Principal</title>
+    * {
+      box-sizing: border-box;
+    }
 
-    <style>
+    html, body {
+      min-height: 100%;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--page);
+    }
 
-        body {
-            background: #F5F5F5;
-            color: #212121;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        /* CONTAINER PRINCIPAL */
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
 
-        .app {
-            width: 100%;
-            max-width: 430px;
-            min-height: 100vh;
-            margin: auto;
-            background: #F5F5F5;
-            padding-bottom: 90px;
-        }
+    .app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+    }
 
-        /* CABEÇALHO */
+    /* MENU LATERAL PARA COMPUTADOR */
+    .sidebar {
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      min-height: 100vh;
+      padding: 27px 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
 
-        header {
-            background: #2E7D32;
-            color: white;
-            padding: 25px 20px;
-            border-radius: 0 0 25px 25px;
-        }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 9px;
+      font-size: 23px;
+      font-weight: 800;
+      color: var(--green-dark);
+      white-space: nowrap;
+    }
 
-        .topo {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green-light);
+      font-size: 24px;
+    }
 
-        .logo {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-            background: white;
-            border-radius: 50%;
-            padding: 5px;
-        }
+    .brand span:last-child span {
+      color: var(--orange);
+    }
 
-        .notificacao {
-            font-size: 25px;
-            cursor: pointer;
-        }
+    .nav-label {
+      padding: 0 12px;
+      margin: 0 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #98a19a;
+      font-size: 11px;
+      font-weight: 800;
+    }
 
-        .saudacao {
-            margin-top: 20px;
-        }
+    .nav-list {
+      display: grid;
+      gap: 7px;
+    }
 
-        .saudacao h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 47px;
+      padding: 0 13px;
+      color: #566158;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: background .15s, color .15s;
+    }
 
-        .saudacao p {
-            font-size: 15px;
-            opacity: 0.9;
-        }
+    .nav-link:hover {
+      background: #f2f7f2;
+      color: var(--green-dark);
+    }
 
-        /* CONTEÚDO */
+    .nav-link.active {
+      color: var(--green-dark);
+      background: var(--green-light);
+      font-weight: 700;
+    }
 
-        main {
-            padding: 20px;
-        }
+    .nav-icon {
+      width: 25px;
+      text-align: center;
+      font-size: 20px;
+    }
 
-        .titulo {
-            font-size: 20px;
-            margin-bottom: 15px;
-            color: #212121;
-        }
+    .sidebar-bottom {
+      margin-top: auto;
+    }
 
-        /* IMAGEM DO TRATOR */
+    .help-card {
+      padding: 17px;
+      border-radius: 13px;
+      background: #f1f7f1;
+      border: 1px solid #e0ecdf;
+    }
 
-        .imagem-trator {
-            width: 100%;
-            height: 170px;
-            background: white;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
-        }
+    .help-card strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
 
-        .imagem-trator img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .help-card p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 0 0 13px;
+    }
 
-        /* SE VOCÊ AINDA NÃO TIVER A IMAGEM */
+    .help-card a {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
 
-        .imagem-trator .sem-imagem {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-size: 16px;
-        }
+    /* ÁREA PRINCIPAL */
+    .main-column {
+      min-width: 0;
+    }
 
-        /* CARDS */
+    .topbar {
+      height: 82px;
+      padding: 0 clamp(24px, 3.2vw, 54px);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
 
-        .cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
+    .page-heading small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
 
-        .card {
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            min-height: 125px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-        }
+    .page-heading strong {
+      font-size: 18px;
+    }
 
-        .icone {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
 
-        .card h2 {
-            font-size: 22px;
-            color: #2E7D32;
-            margin-bottom: 5px;
-        }
+    .notification {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 12px;
+      font-size: 20px;
+      position: relative;
+    }
 
-        .card p {
-            font-size: 13px;
-            color: #666;
-        }
+    .notification::after {
+      content: "";
+      position: absolute;
+      right: 9px;
+      top: 8px;
+      width: 7px;
+      height: 7px;
+      border: 2px solid white;
+      border-radius: 50%;
+      background: var(--orange);
+    }
 
-        /* SEÇÃO DE ATALHOS */
+    .user-top {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
 
-        .atalhos {
-            margin-top: 25px;
-        }
+    .avatar {
+      width: 43px;
+      height: 43px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--green-dark);
+      background: #e4f1e5;
+      font-weight: 800;
+    }
 
-        .atalhos h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
-        }
+    .user-top strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
 
-        .botoes {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+    .user-top span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+    }
 
-        .botao {
-            background: white;
-            border: none;
-            border-radius: 16px;
-            padding: 18px 10px;
-            text-align: center;
-            text-decoration: none;
-            color: #212121;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            cursor: pointer;
-            transition: 0.2s;
-        }
+    .content {
+      width: 100%;
+      max-width: 1700px;
+      margin: 0 auto;
+      padding: 30px clamp(24px, 3.2vw, 54px) 42px;
+    }
 
-        .botao:hover {
-            transform: scale(1.03);
-        }
+    .welcome-title {
+      margin-bottom: 23px;
+    }
 
-        .botao .icone-botao {
-            display: block;
-            font-size: 27px;
-            margin-bottom: 7px;
-        }
+    .welcome-title h1 {
+      font-size: clamp(25px, 2.2vw, 34px);
+      margin: 0 0 8px;
+      letter-spacing: -.6px;
+    }
 
-        .botao span:last-child {
-            font-size: 14px;
-        }
+    .welcome-title p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+    }
 
-        /* MENU INFERIOR */
+    /* BANNER DO TRATOR */
+    .hero {
+      min-height: 275px;
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 27px;
+      background: linear-gradient(110deg, #1e5e2d, #468c45 58%, #97bd82);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
 
-        .menu-inferior {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 430px;
-            height: 75px;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-top: 1px solid #ddd;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.08);
-            z-index: 10;
-        }
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      padding: 34px clamp(25px, 3vw, 48px);
+      color: white;
+    }
 
-        .menu-item {
-            text-decoration: none;
-            color: #666;
-            text-align: center;
-            font-size: 12px;
-        }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.24);
+      padding: 7px 11px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 15px;
+    }
 
-        .menu-item .menu-icone {
-            display: block;
-            font-size: 24px;
-            margin-bottom: 3px;
-        }
+    .hero-copy h2 {
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.15;
+      max-width: 470px;
+      margin: 0 0 13px;
+    }
 
-        .menu-item.ativo {
-            color: #2E7D32;
-            font-weight: bold;
-        }
+    .hero-copy p {
+      color: rgba(255,255,255,.86);
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 440px;
+      margin: 0 0 21px;
+    }
 
-    </style>
+    .hero-button {
+      min-height: 43px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 17px;
+      background: var(--orange);
+      color: white;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 13px;
+      transition: background .2s;
+    }
+
+    .hero-button:hover {
+      background: #dc6e00;
+    }
+
+    .hero-image-wrap {
+      height: 100%;
+      min-height: 275px;
+      position: relative;
+    }
+
+    .hero-image-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        #2f773b 0%,
+        rgba(47,119,59,.08) 36%,
+        rgba(0,0,0,.02) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .tractor-image {
+      width: 100%;
+      height: 100%;
+      min-height: 275px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .image-fallback {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 100px;
+      background:
+        radial-gradient(circle at 65% 35%, #8fbd68, transparent 50%),
+        linear-gradient(130deg, #2c7538, #8bad6d);
+    }
+
+    /* INDICADORES */
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 15px;
+      margin: 0 0 16px;
+    }
+
+    .section-title h2 {
+      font-size: 21px;
+      margin: 0;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 5px 0 0;
+    }
+
+    .text-link {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      min-height: 137px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 21px 23px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    a.stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(25,53,31,.10);
+    }
+
+    .stat-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--green-light);
+      font-size: 23px;
+      margin-bottom: 13px;
+    }
+
+    .stat-number {
+      color: var(--green);
+      font-size: 27px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ACESSO RÁPIDO */
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 17px;
+      margin-bottom: 30px;
+    }
+
+    .quick-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: var(--shadow);
+      transition: transform .18s, border-color .18s;
+    }
+
+    .quick-card:hover {
+      transform: translateY(-2px);
+      border-color: #bdd9c0;
+    }
+
+    .quick-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: var(--green-light);
+      font-size: 25px;
+      flex-shrink: 0;
+    }
+
+    .quick-card strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .quick-card span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* PAINÉIS INFERIORES */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 23px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .panel-heading a {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .maintenance-row {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 13px;
+      padding: 14px 0;
+      border-bottom: 1px solid #edf0ed;
+    }
+
+    .maintenance-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .maintenance-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 11px;
+      background: #fff3e5;
+      font-size: 21px;
+    }
+
+    .maintenance-row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .maintenance-row span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .status-pill {
+      background: #fff4df;
+      color: #946000 !important;
+      padding: 6px 9px;
+      border-radius: 20px;
+      font-size: 11px !important;
+      white-space: nowrap;
+    }
+
+    .activity {
+      display: grid;
+      gap: 17px;
+    }
+
+    .activity-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .activity-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      margin-top: 4px;
+      box-shadow: 0 0 0 4px var(--green-light);
+      flex-shrink: 0;
+    }
+
+    .activity-row strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .activity-row p {
+      margin: 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      right: 25px;
+      bottom: 25px;
+      z-index: 50;
+      max-width: min(370px, calc(100vw - 35px));
+      padding: 15px 18px;
+      border-radius: 12px;
+      color: white;
+      background: #233c28;
+      box-shadow: 0 8px 24px #0002;
+      display: none;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    /* TABLET */
+    @media (max-width: 1150px) {
+      .app {
+        grid-template-columns: 215px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .brand {
+        font-size: 20px;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .quick-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero {
+        grid-template-columns: 1fr .8fr;
+      }
+
+      .hero-copy {
+        padding: 27px;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .topbar {
+        height: 70px;
+        padding: 0 20px;
+      }
+
+      .content {
+        padding: 24px 20px 95px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image-wrap {
+        min-height: 220px;
+        max-height: 250px;
+      }
+
+      .hero-image-wrap::before {
+        background: linear-gradient(
+          180deg,
+          #2f773b 0%,
+          rgba(47,119,59,0) 50%
+        );
+      }
+
+      .tractor-image {
+        min-height: 220px;
+      }
+
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mobile-nav {
+        display: flex !important;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .topbar {
+        padding: 0 15px;
+      }
+
+      .page-heading small {
+        display: none;
+      }
+
+      .page-heading strong {
+        font-size: 16px;
+      }
+
+      .top-actions {
+        gap: 10px;
+      }
+
+      .user-top .user-meta {
+        display: none;
+      }
+
+      .content {
+        padding: 20px 14px 95px;
+      }
+
+      .welcome-title h1 {
+        font-size: 25px;
+      }
+
+      .welcome-title p {
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .hero {
+        margin-bottom: 23px;
+      }
+
+      .hero-copy {
+        padding: 24px 20px;
+      }
+
+      .hero-copy h2 {
+        font-size: 27px;
+      }
+
+      .hero-copy p {
+        font-size: 13px;
+      }
+
+      .stats-grid {
+        gap: 11px;
+      }
+
+      .stat-card {
+        min-height: 120px;
+        padding: 15px;
+      }
+
+      .stat-number {
+        font-size: 23px;
+      }
+
+      .stat-label {
+        font-size: 12px;
+      }
+
+      .quick-grid {
+        gap: 10px;
+      }
+
+      .quick-card {
+        padding: 14px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .quick-card strong {
+        font-size: 13px;
+      }
+
+      .quick-card span {
+        font-size: 11px;
+      }
+
+      .panel {
+        padding: 17px;
+      }
+
+      .maintenance-row {
+        grid-template-columns: 36px minmax(0,1fr);
+      }
+
+      .maintenance-icon {
+        width: 36px;
+        height: 36px;
+      }
+
+      .status-pill {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .mobile-nav {
+        padding: 9px 5px calc(9px + env(safe-area-inset-bottom)) !important;
+      }
+
+      .mobile-nav a {
+        font-size: 10px !important;
+      }
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      background: rgba(255,255,255,.97);
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      justify-content: space-around;
+      gap: 4px;
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      min-width: 48px;
+    }
+
+    .mobile-nav a span {
+      font-size: 21px;
+    }
+
+    .mobile-nav a.active {
+      color: var(--green);
+      font-weight: 800;
+    }
+
+    @media (max-width: 800px) {
+      .mobile-nav {
+        display: flex;
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <div class="app">
 
-<div class="app">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+      <a class="brand" href="principal.html">
+        <span class="brand-mark">🌱</span>
+        <span>Agro<span>Trator</span></span>
+      </a>
 
-    <!-- =========================
-         CABEÇALHO
-    ========================== -->
+      <nav aria-label="Menu principal">
+        <p class="nav-label">Menu principal</p>
 
-    <header>
+        <div class="nav-list">
+          <a class="nav-link active" href="principal.html">
+            <span class="nav-icon">🏠</span>Início
+          </a>
 
-        <div class="topo">
+          <a class="nav-link" href="tratores.html">
+            <span class="nav-icon">🚜</span>Tratores
+          </a>
 
-            <!--
-                COLOQUE A LOGO AQUI
+          <a class="nav-link" href="manutencao.html">
+            <span class="nav-icon">🔧</span>Manutenção
+          </a>
 
-                Arquivo:
-                imagens/logo.png
-            -->
+          <a class="nav-link" href="abastecimento.html">
+            <span class="nav-icon">⛽</span>Abastecimento
+          </a>
 
-            <img
-                src="imagens/logo.png"
-                alt="Logo AgroTrator"
-                class="logo"
-            >
+          <a class="nav-link" href="oficina.html">
+            <span class="nav-icon">🛠️</span>Oficina
+          </a>
 
-            <div class="notificacao">
-                🔔
-            </div>
+          <a class="nav-link" href="mapa.html">
+            <span class="nav-icon">📍</span>GPS e mapa
+          </a>
 
+          <a class="nav-link" href="perfil.html">
+            <span class="nav-icon">👤</span>Perfil
+          </a>
+        </div>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <strong>Precisa de ajuda?</strong>
+          <p>Acesse as oficinas para encontrar suporte para seu maquinário.</p>
+          <a href="oficina.html">Ver oficinas →</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ÁREA PRINCIPAL -->
+    <div class="main-column">
+
+      <header class="topbar">
+        <div class="page-heading">
+          <small>Painel de controle</small>
+          <strong>Visão geral da fazenda</strong>
         </div>
 
-        <div class="saudacao">
+        <div class="top-actions">
+          <button
+            class="notification"
+            id="notifications"
+            type="button"
+            aria-label="Notificações"
+          >🔔</button>
 
-            <h1>Bom dia, Carlos 👋</h1>
+          <a class="user-top" href="perfil.html">
+            <div class="avatar">CD</div>
 
-            <p>
-                Bem-vindo ao AgroTrator
-            </p>
-
+            <div class="user-meta">
+              <strong>Carlos</strong>
+              <span>Administrador</span>
+            </div>
+          </a>
         </div>
+      </header>
 
-    </header>
+      <main class="content">
 
-
-    <!-- =========================
-         CONTEÚDO
-    ========================== -->
-
-    <main>
-
-        <h2 class="titulo">
-            Visão geral
-        </h2>
-
-
-        <!-- =========================
-             IMAGEM DO TRATOR
-        ========================== -->
-
-        <div class="imagem-trator">
-
-            <!--
-                COLOQUE A IMAGEM DO TRATOR AQUI.
-
-                Salve a imagem dentro da pasta:
-
-                imagens/
-
-                Por exemplo:
-
-                imagens/trator.png
-
-                Depois deixe o src assim:
-            -->
-
-            <img
-                src="imagens/imagens/tela trator.png"
-                alt="Trator agrícola"
-            >
-
-        </div>
-
-
-        <!-- =========================
-             CARDS
-        ========================== -->
-
-        <div class="cards">
-
-
-            <!-- TRATORES -->
-
-            <div class="card">
-
-                <div class="icone">
-                    🚜
-                </div>
-
-                <h2>
-                    8
-                </h2>
-
-                <p>
-                    Tratores
-                </p>
-
-            </div>
-
-
-            <!-- MANUTENÇÕES -->
-
-            <div class="card">
-
-                <div class="icone">
-                    🔧
-                </div>
-
-                <h2>
-                    2
-                </h2>
-
-                <p>
-                    Manutenções
-                </p>
-
-            </div>
-
-
-            <!-- HORAS -->
-
-            <div class="card">
-
-                <div class="icone">
-                    ⏱️
-                </div>
-
-                <h2>
-                    184h
-                </h2>
-
-                <p>
-                    Horas trabalhadas
-                </p>
-
-            </div>
-
-
-            <!-- COMBUSTÍVEL -->
-
-            <div class="card">
-
-                <div class="icone">
-                    ⛽
-                </div>
-
-                <h2>
-                    350L
-                </h2>
-
-                <p>
-                    Diesel
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================
-             ATALHOS
-        ========================== -->
-
-        <section class="atalhos">
-
-            <h2>
-                Acesso rápido
-            </h2>
-
-            <div class="botoes">
-
-
-                <!-- TRATORES -->
-
-                <a
-                    href="tratores.html"
-                    class="botao"
-                >
-
-                    <span class="icone-botao">
-                        🚜
-                    </span>
-
-                    <span>
-                        Tratores
-                    </span>
-
-                </a>
-
-
-                <!-- OFICINA -->
-
-                <a
-                    href="manutencao.html"
-                    class="botao"
-                >
-
-                    <span class="icone-botao">
-                        🔧
-                    </span>
-
-                    <span>
-                        Oficina
-                    </span>
-
-                </a>
-
-
-                <!-- MAPA -->
-
-                <a
-                    href="mapa.html"
-                    class="botao"
-                >
-
-                    <span class="icone-botao">
-                        📍
-                    </span>
-
-                    <span>
-                        GPS
-                    </span>
-
-                </a>
-
-
-                <!-- RELATÓRIOS -->
-
-                <a
-                    href="relatorios.html"
-                    class="botao"
-                >
-
-                    <span class="icone-botao">
-                        📊
-                    </span>
-
-                    <span>
-                        Relatórios
-                    </span>
-
-                </a>
-
-            </div>
-
+        <section class="welcome-title">
+          <h1>Bom dia, Carlos 👋</h1>
+          <p>Bem-vindo ao AgroTrator. Aqui está o resumo da sua frota.</p>
         </section>
 
-    </main>
+        <!-- BANNER DO TRATOR -->
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="hero-tag">Sua fazenda em um só lugar</span>
 
+            <h2>Mais produtividade para o seu campo.</h2>
 
-    <!-- =========================
-         MENU INFERIOR
-    ========================== -->
+            <p>
+              Organize os tratores, acompanhe manutenções e mantenha
+              sua frota preparada para o trabalho.
+            </p>
 
-    <nav class="menu-inferior">
+            <a class="hero-button" href="tratores.html">
+              Ver meus tratores&nbsp; →
+            </a>
+          </div>
 
+          <div class="hero-image-wrap">
+            <img
+              class="tractor-image"
+              id="tractor-image"
+              src="imagens/imagens/logo trator.png"
+              alt="Trator agrícola no campo"
+            >
 
-        <!-- PRINCIPAL -->
+            <div
+              class="image-fallback"
+              id="image-fallback"
+              aria-hidden="true"
+            >🚜</div>
+          </div>
+        </section>
 
-        <a
-            href="principal.html"
-            class="menu-item ativo"
-        >
+        <!-- INDICADORES -->
+        <section aria-labelledby="overview-heading">
+          <div class="section-title">
+            <div>
+              <h2 id="overview-heading">Visão geral</h2>
+              <p>Indicadores rápidos da sua operação</p>
+            </div>
 
-            <span class="menu-icone">
-                🏠
-            </span>
+            <a class="text-link" href="tratores.html">Ver frota →</a>
+          </div>
 
-            Início
+          <div class="stats-grid">
 
-        </a>
+            <a class="stat-card" href="tratores.html">
+              <div class="stat-icon">🚜</div>
+              <div class="stat-number">4</div>
+              <div class="stat-label">Tratores cadastrados</div>
+            </a>
 
+            <a class="stat-card" href="manutencao.html">
+              <div class="stat-icon">🔧</div>
+              <div class="stat-number">2</div>
+              <div class="stat-label">Manutenções pendentes</div>
+            </a>
 
-        <!-- TRATORES -->
+            <div class="stat-card">
+              <div class="stat-icon">⏱️</div>
+              <div class="stat-number">184h</div>
+              <div class="stat-label">Horas trabalhadas</div>
+            </div>
 
-        <a
-            href="tratores.html"
-            class="menu-item"
-        >
+            <a class="stat-card" href="abastecimento.html">
+              <div class="stat-icon">⛽</div>
+              <div class="stat-number">350 L</div>
+              <div class="stat-label">Diesel registrado</div>
+            </a>
 
-            <span class="menu-icone">
-                🚜
-            </span>
+          </div>
+        </section>
 
-            Tratores
+        <!-- ACESSO RÁPIDO -->
+        <section aria-labelledby="quick-heading">
+          <div class="section-title">
+            <div>
+              <h2 id="quick-heading">Acesso rápido</h2>
+              <p>Entre diretamente nas áreas mais usadas</p>
+            </div>
+          </div>
 
-        </a>
+          <div class="quick-grid">
 
+            <a class="quick-card" href="tratores.html">
+              <div class="quick-icon">🚜</div>
+              <div>
+                <strong>Tratores</strong>
+                <span>Consulte sua frota</span>
+              </div>
+            </a>
 
-        <!-- OFICINA -->
+            <a class="quick-card" href="manutencao.html">
+              <div class="quick-icon">🔧</div>
+              <div>
+                <strong>Manutenção</strong>
+                <span>Veja revisões e serviços</span>
+              </div>
+            </a>
 
-        <a
-            href="manutencao.html"
-            class="menu-item"
-        >
+            <a class="quick-card" href="oficina.html">
+              <div class="quick-icon">🛠️</div>
+              <div>
+                <strong>Oficina</strong>
+                <span>Encontre assistência</span>
+              </div>
+            </a>
 
-            <span class="menu-icone">
-                🔧
-            </span>
+            <a class="quick-card" href="mapa.html">
+              <div class="quick-icon">📍</div>
+              <div>
+                <strong>GPS e mapa</strong>
+                <span>Acompanhe a localização</span>
+              </div>
+            </a>
 
-            Oficina
+          </div>
+        </section>
 
-        </a>
+        <!-- PAINÉIS INFERIORES -->
+        <section class="bottom-grid">
 
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Manutenções recentes</h2>
+              <a href="manutencao.html">Ver todas →</a>
+            </div>
 
-        <!-- MAPA -->
+            <div class="maintenance-row">
+              <div class="maintenance-icon">🛢️</div>
 
-        <a
-            href="mapa.html"
-            class="menu-item"
-        >
+              <div>
+                <strong>Troca de óleo</strong>
+                <span>Valtra · Trator 01</span>
+              </div>
 
-            <span class="menu-icone">
-                📍
-            </span>
+              <span class="status-pill">Programada</span>
+            </div>
 
-            GPS
+            <div class="maintenance-row">
+              <div class="maintenance-icon">⚙️</div>
 
-        </a>
+              <div>
+                <strong>Revisão do motor</strong>
+                <span>John Deere · Trator 03</span>
+              </div>
 
+              <span class="status-pill">Pendente</span>
+            </div>
+          </div>
 
-        <!-- PERFIL -->
+          <div class="panel">
+            <div class="panel-heading">
+              <h2>Atividade da frota</h2>
+            </div>
 
-        <a
-            href="perfil.html"
-            class="menu-item"
-        >
+            <div class="activity">
 
-            <span class="menu-icone">
-                👤
-            </span>
+              <div class="activity-row">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>Frota cadastrada</strong>
+                  <p>Os dados dos tratores ficam disponíveis na área Tratores.</p>
+                </div>
+              </div>
 
-            Perfil
+              <div class="activity-row">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>Manutenção em acompanhamento</strong>
+                  <p>Confira os itens pendentes antes de iniciar o trabalho.</p>
+                </div>
+              </div>
 
-        </a>
+              <div class="activity-row">
+                <span class="activity-dot"></span>
+                <div>
+                  <strong>Controle de abastecimento</strong>
+                  <p>Acesse Abastecimento para registrar consumo de diesel.</p>
+                </div>
+              </div>
 
-    </nav>
+            </div>
+          </div>
 
-</div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- MENU INFERIOR PARA TELAS PEQUENAS -->
+  <nav class="mobile-nav" aria-label="Navegação móvel">
+    <a class="active" href="principal.html"><span>🏠</span>Início</a>
+    <a href="tratores.html"><span>🚜</span>Tratores</a>
+    <a href="oficina.html"><span>🛠️</span>Oficina</a>
+    <a href="mapa.html"><span>📍</span>GPS</a>
+    <a href="perfil.html"><span>👤</span>Perfil</a>
+  </nav>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // Mostra uma alternativa se a foto do trator não for encontrada.
+    const tractorImage = document.getElementById("tractor-image");
+    const imageFallback = document.getElementById("image-fallback");
+
+    tractorImage.addEventListener("error", function () {
+      tractorImage.style.display = "none";
+      imageFallback.style.display = "flex";
+    });
+
+    // Notificação demonstrativa.
+    const toast = document.getElementById("toast");
+
+    document.getElementById("notifications").addEventListener("click", function () {
+      toast.textContent =
+        "Você tem 2 manutenções para conferir. Acesse Manutenção para ver os detalhes.";
+
+      toast.classList.add("show");
+
+      window.setTimeout(function () {
+        toast.classList.remove("show");
+      }, 4000);
+    });
+  </script>
 
 </body>
 </html>
