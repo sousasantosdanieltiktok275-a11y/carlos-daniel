@@ -2,603 +2,1316 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgroTrator - Mapa GPS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroTrator - GPS e Mapa</title>
 
-    <!-- Biblioteca do mapa -->
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    >
+<link rel="stylesheet"
+ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+<style>
+:root {
+  --verde: #2e7d32;
+  --escuro: #1d5e2a;
+  --claro: #e8f4e9;
+  --laranja: #f57c00;
+  --fundo: #f4f6f4;
+  --texto: #202a23;
+  --cinza: #68736a;
+  --borda: #e1e8e1;
+}
 
-        body {
-            background: #eef2ee;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-        }
+* {
+  box-sizing: border-box;
+}
 
-        .celular {
-            width: 390px;
-            height: 100vh;
-            min-height: 700px;
-            max-height: 950px;
-            position: relative;
-            background: #f5f7f5;
-            overflow: hidden;
-            box-shadow: 0 0 15px #0002;
-        }
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-        header {
-            height: 75px;
-            background: #087a35;
-            color: white;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            gap: 15px;
-        }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-        .voltar {
-            color: white;
-            text-decoration: none;
-            font-size: 30px;
-        }
+button, input, select {
+  font: inherit;
+}
 
-        header h1 {
-            font-size: 21px;
-        }
+button {
+  cursor: pointer;
+}
 
-        main {
-            height: calc(100% - 140px);
-            overflow-y: auto;
-            padding: 15px;
-        }
+.layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+}
 
-        .titulo {
-            color: #087a35;
-            font-size: 23px;
-            margin-bottom: 7px;
-        }
+.sidebar {
+  background: white;
+  border-right: 1px solid var(--borda);
+  padding: 23px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
 
-        .subtitulo {
-            color: #666;
-            font-size: 13px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  color: var(--escuro);
+  font-size: 22px;
+  font-weight: 800;
+}
 
-        #mapa {
-            width: 100%;
-            height: 340px;
-            border-radius: 15px;
-            border: 1px solid #d5ddd5;
-            overflow: hidden;
-            z-index: 1;
-        }
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--claro);
+}
 
-        .status {
-            background: white;
-            padding: 12px;
-            margin-top: 12px;
-            border-radius: 10px;
-            color: #444;
-            font-size: 13px;
-            line-height: 1.5;
-            overflow-wrap: anywhere;
-        }
+.laranja {
+  color: var(--laranja);
+}
 
-        .titulo-lista {
-            color: #087a35;
-            font-size: 20px;
-            margin: 20px 0 12px;
-        }
+.label {
+  padding: 0 10px;
+  color: #909990;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-        .trator-card {
-            background: white;
-            padding: 12px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            box-shadow: 0 2px 8px #0000000d;
-        }
+.nav {
+  display: grid;
+  gap: 5px;
+}
 
-        .trator-card img {
-            width: 86px;
-            height: 76px;
-            object-fit: contain;
-            border-radius: 8px;
-            background: #f5f7f5;
-            flex-shrink: 0;
-        }
+.nav a {
+  display: block;
+  padding: 12px 10px;
+  border-radius: 9px;
+  color: #566158;
+  font-size: 13px;
+}
 
-        .trator-info {
-            min-width: 0;
-            flex: 1;
-        }
+.nav a:hover,
+.nav a.active {
+  background: var(--claro);
+  color: var(--escuro);
+}
 
-        .trator-info h3 {
-            color: #087a35;
-            font-size: 15px;
-            margin-bottom: 6px;
-        }
+.nav a.active {
+  font-weight: bold;
+}
 
-        .trator-info p {
-            font-size: 12px;
-            color: #666;
-            line-height: 1.5;
-            overflow-wrap: anywhere;
-        }
+.help {
+  margin-top: auto;
+  padding: 15px;
+  background: #f1f7f1;
+  border-radius: 12px;
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1.5;
+}
 
-        .botao {
-            margin-top: 8px;
-            background: #087a35;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 7px;
-            cursor: pointer;
-        }
+.help strong {
+  display: block;
+  color: var(--texto);
+  margin-bottom: 5px;
+  font-size: 14px;
+}
 
-        .sem-posicao {
-            color: #a05a00 !important;
-        }
+.help a {
+  display: block;
+  margin-top: 10px;
+  color: var(--verde);
+  font-weight: bold;
+}
 
-        .menu {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 65px;
-            background: white;
-            border-top: 1px solid #ddd;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-        }
+.main {
+  min-width: 0;
+}
 
-        .menu a {
-            text-decoration: none;
-            text-align: center;
-            color: #777;
-            font-size: 11px;
-        }
+.topbar {
+  min-height: 76px;
+  background: white;
+  border-bottom: 1px solid var(--borda);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  gap: 12px;
+}
 
-        .menu a span {
-            display: block;
-            font-size: 21px;
-            margin-bottom: 3px;
-        }
+.topbar small {
+  display: block;
+  color: var(--cinza);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
 
-        .menu .ativo {
-            color: #087a35;
-            font-weight: bold;
-        }
+.topbar strong {
+  font-size: 16px;
+}
 
-        /* Imagem personalizada de cada trator no mapa */
-        .icone-trator {
-            width: 58px;
-            height: 58px;
-            border: 3px solid #087a35;
-            border-radius: 50%;
-            overflow: hidden;
-            background: white;
-            box-shadow: 0 2px 8px #0005;
-        }
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--claro);
+  color: var(--escuro);
+  font-weight: bold;
+}
 
-        .icone-trator img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-        @media (max-width: 390px) {
-            .celular {
-                width: 100%;
-            }
-        }
+.content {
+  max-width: 1600px;
+  margin: auto;
+  padding: 28px 30px 45px;
+}
 
-        @media (max-height: 700px) {
-            .celular {
-                min-height: 0;
-            }
+.intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
 
-            #mapa {
-                height: 280px;
-            }
-        }
-    </style>
+.eyebrow {
+  color: var(--verde);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+}
+
+.intro p {
+  margin: 0;
+  color: var(--cinza);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.btn-verde {
+  background: var(--verde);
+  color: white;
+}
+
+.btn-verde:hover {
+  background: var(--escuro);
+}
+
+.btn-claro {
+  background: var(--claro);
+  color: var(--escuro);
+  border: 1px solid #cfe2d1;
+}
+
+.btn-branco {
+  background: white;
+  color: var(--texto);
+  border: 1px solid var(--borda);
+}
+
+.banner {
+  background: linear-gradient(110deg, #1e672d, #398747 70%, #80ac6e);
+  color: white;
+  border-radius: 15px;
+  padding: 25px 32px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid #ffffff45;
+  background: #ffffff25;
+  border-radius: 18px;
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+
+.banner h2 {
+  margin: 0 0 8px;
+  font-size: 26px;
+}
+
+.banner p {
+  margin: 0;
+  font-size: 13px;
+  color: #ffffffdf;
+  line-height: 1.6;
+}
+
+.aviso {
+  background: #fff8e8;
+  border: 1px solid #f2dfb2;
+  color: #705019;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 11px;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.aviso strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: var(--claro);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 19px;
+}
+
+.stat strong {
+  color: var(--verde);
+  display: block;
+  font-size: 20px;
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  color: var(--cinza);
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(290px, .9fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.painel {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 13px;
+  padding: 19px;
+  min-width: 0;
+}
+
+.painel-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.painel-cabecalho h2 {
+  font-size: 18px;
+  margin: 0 0 5px;
+}
+
+.painel-cabecalho p {
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+#mapa {
+  width: 100%;
+  height: 480px;
+  border-radius: 10px;
+  border: 1px solid var(--borda);
+  background: #e8eee7;
+  z-index: 1;
+}
+
+.legenda {
+  color: var(--cinza);
+  font-size: 11px;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.lista-tratores {
+  display: grid;
+  gap: 10px;
+}
+
+.trator {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 11px;
+  padding: 10px;
+}
+
+.trator:hover,
+.trator.selecionado {
+  border-color: var(--verde);
+  background: #f2f8f2;
+}
+
+.trator-imagem {
+  width: 56px;
+  height: 50px;
+  flex-shrink: 0;
+  background: #f1f5f0;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: var(--verde);
+  font-size: 12px;
+  font-weight: bold;
+  overflow: hidden;
+}
+
+.trator-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.trator-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.trator-info strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.trator-info span {
+  display: block;
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.pill {
+  color: #8b5700;
+  background: #fff0d9;
+  border-radius: 20px;
+  padding: 5px 7px;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.formulario {
+  margin-top: 16px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+
+.campo {
+  min-width: 0;
+}
+
+.campo.completo {
+  grid-column: 1 / -1;
+}
+
+.campo label {
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  height: 41px;
+  border: 1px solid #d5ded6;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 0 10px;
+  font-size: 13px;
+  outline: none;
+}
+
+.campo input:focus,
+.campo select:focus {
+  border-color: var(--verde);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.ajuda {
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  background: #203d27;
+  color: white;
+  border-radius: 9px;
+  padding: 13px 17px;
+  z-index: 9999;
+  font-size: 13px;
+}
+
+.toast.show {
+  display: block;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media(max-width: 1200px) {
+  .layout {
+    grid-template-columns: 205px minmax(0, 1fr);
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .lista-tratores {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media(max-width: 760px) {
+  .layout {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 20px 13px 85px;
+  }
+
+  .intro {
+    flex-direction: column;
+  }
+
+  .banner {
+    padding: 22px;
+  }
+
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--borda);
+    display: flex;
+    justify-content: space-around;
+    padding: 9px 3px;
+    z-index: 1000;
+  }
+
+  .mobile-nav a {
+    color: var(--cinza);
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mobile-nav span {
+    font-size: 19px;
+  }
+
+  .user-meta {
+    display: none;
+  }
+}
+
+@media(max-width: 480px) {
+  .stats {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 10px;
+    gap: 7px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stat strong {
+    font-size: 16px;
+  }
+
+  .painel {
+    padding: 13px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .campo.completo {
+    grid-column: auto;
+  }
+
+  #mapa {
+    height: 350px;
+  }
+
+  .lista-tratores {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 
 <body>
-<div class="celular">
+<div class="layout">
 
-    <header>
-        <a class="voltar" href="principal.html" aria-label="Voltar">←</a>
-        <h1>GPS dos tratores</h1>
+  <aside class="sidebar">
+    <a class="brand" href="principal.html">
+      <span class="brand-icon">AT</span>
+      <span>Agro<span class="laranja">Trator</span></span>
+    </a>
+
+    <div>
+      <p class="label">Menu principal</p>
+
+      <nav class="nav">
+        <a href="principal.html">⌂ &nbsp; Início</a>
+        <a href="tratores.html">▣ &nbsp; Tratores</a>
+        <a href="manutencao.html">⚙ &nbsp; Manutenção</a>
+        <a href="abastecimento.html">◉ &nbsp; Abastecimento</a>
+        <a href="oficina.html">⌁ &nbsp; Oficina</a>
+        <a class="active" href="mapa.html">⌖ &nbsp; GPS e mapa</a>
+        <a href="perfil.html">♙ &nbsp; Perfil</a>
+        <a href="historico.html">▤ &nbsp; Histórico</a>
+        <a href="relatorios.html">▥ &nbsp; Relatórios</a>
+      </nav>
+    </div>
+
+    <div class="help">
+      <strong>Localização da frota</strong>
+      Consulte as posições cadastradas dos tratores.
+      <a href="#formulario">+ Atualizar posição</a>
+    </div>
+  </aside>
+
+  <div class="main">
+
+    <header class="topbar">
+      <div>
+        <small>Monitoramento da frota</small>
+        <strong>GPS e mapa</strong>
+      </div>
+
+      <a class="user" href="perfil.html">
+        <div class="avatar">AT</div>
+        <div class="user-meta">
+          <strong>AgroTrator</strong>
+          <small>Monitoramento</small>
+        </div>
+      </a>
     </header>
 
-    <main>
-        <h2 class="titulo">Mapa em tempo real</h2>
+    <main class="content">
 
-        <p class="subtitulo">
-            Acompanhe a localização das máquinas agrícolas
-            que estejam enviando dados GPS.
+      <section class="intro">
+        <div>
+          <div class="eyebrow">Localização dos equipamentos</div>
+          <h1>GPS dos tratores</h1>
+          <p>Visualize o mapa, selecione um trator e atualize suas coordenadas.</p>
+        </div>
+
+        <button class="btn btn-verde" id="localizar">
+          Localizar este dispositivo
+        </button>
+      </section>
+
+      <section class="banner">
+        <span class="tag">Central de rastreamento</span>
+        <h2>Veja onde sua frota está.</h2>
+        <p>
+          As posições de demonstração estão identificadas.
+          Cadastre as coordenadas reais para atualizar o mapa.
         </p>
+      </section>
 
-        <div id="mapa"></div>
+      <div class="aviso">
+        <strong>Importante sobre o GPS real</strong>
+        Esta página exibe o mapa e permite cadastrar coordenadas.
+        Para rastrear cada trator em tempo real, o rastreador instalado
+        na máquina precisa enviar latitude e longitude para um servidor
+        ou API. As posições de exemplo não são GPS real.
+      </div>
 
-        <div id="status" class="status" role="status" aria-live="polite">
-            Conectando ao servidor GPS...
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-icon">▣</div>
+          <div><strong id="quantidade">4</strong><span>Tratores na lista</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">⌖</div>
+          <div><strong id="localizados">4</strong><span>Com posição cadastrada</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">◷</div>
+          <div><strong id="atualizacao">Exemplo</strong><span>Última atualização</span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-icon">↻</div>
+          <div><strong id="origem">Demonstração</strong><span>Origem das coordenadas</span></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+
+        <div class="painel">
+          <div class="painel-cabecalho">
+            <div>
+              <h2>Mapa da frota</h2>
+              <p>Selecione um marcador para ver os detalhes.</p>
+            </div>
+          </div>
+
+          <div class="controles">
+            <button class="btn btn-claro" id="verTodos">Ver todos os tratores</button>
+            <button class="btn btn-branco" id="recarregar">Recarregar exemplos</button>
+          </div>
+
+          <div id="mapa"></div>
+
+          <p class="legenda" id="statusMapa">
+            Mapa © OpenStreetMap contributors.
+          </p>
         </div>
 
-        <h2 class="titulo-lista">Meus tratores</h2>
+        <div>
+          <section class="painel">
+            <div class="painel-cabecalho">
+              <div>
+                <h2>Tratores monitorados</h2>
+                <p>Escolha um trator para atualizar sua posição.</p>
+              </div>
+            </div>
 
-        <div id="lista">
-            Carregando dispositivos...
+            <div class="lista-tratores" id="listaTratores"></div>
+          </section>
+
+          <section class="painel formulario" id="formulario">
+            <div class="painel-cabecalho">
+              <div>
+                <h2>Atualizar posição</h2>
+                <p>Informe as coordenadas do trator selecionado.</p>
+              </div>
+            </div>
+
+            <form id="formGPS">
+              <div class="form-grid">
+
+                <div class="campo completo">
+                  <label for="tratorSelect">Trator</label>
+                  <select id="tratorSelect" required></select>
+                </div>
+
+                <div class="campo">
+                  <label for="latitude">Latitude</label>
+                  <input id="latitude" type="number" step="any"
+                    min="-90" max="90" placeholder="-15.7801" required>
+                </div>
+
+                <div class="campo">
+                  <label for="longitude">Longitude</label>
+                  <input id="longitude" type="number" step="any"
+                    min="-180" max="180" placeholder="-47.9292" required>
+                </div>
+
+                <div class="campo completo">
+                  <label for="tipoGPS">Origem da posição</label>
+                  <select id="tipoGPS">
+                    <option value="manual">Coordenada informada manualmente</option>
+                    <option value="device">GPS deste dispositivo</option>
+                    <option value="real">GPS/rastreador integrado</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="acoes">
+                <button class="btn btn-verde" type="submit">
+                  Salvar posição
+                </button>
+                <button class="btn btn-claro" id="usarGPS" type="button">
+                  Usar GPS do dispositivo
+                </button>
+              </div>
+            </form>
+
+            <p class="ajuda">
+              O GPS do dispositivo informa a localização deste computador
+              ou celular. Ele não localiza automaticamente um trator
+              que esteja em outro lugar.
+            </p>
+          </section>
         </div>
+
+      </section>
     </main>
-
-    <nav class="menu">
-        <a href="principal.html">
-            <span>⌂</span>Início
-        </a>
-
-        <a href="tratores.html">
-            <span>🚜</span>Tratores
-        </a>
-
-        <a href="manutencao.html">
-            <span>🔧</span>Manutenção
-        </a>
-
-        <a href="mapa.html" class="ativo">
-            <span>📍</span>Mapa
-        </a>
-
-        <a href="perfil.html">
-            <span>👤</span>Perfil
-        </a>
-    </nav>
+  </div>
 </div>
 
+<nav class="mobile-nav">
+  <a href="principal.html"><span>⌂</span>Início</a>
+  <a href="tratores.html"><span>▣</span>Tratores</a>
+  <a href="abastecimento.html"><span>◉</span>Abastecer</a>
+  <a href="mapa.html"><span>⌖</span>GPS</a>
+  <a href="perfil.html"><span>♙</span>Perfil</a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
-    // --------------------------------------------------
-    // 1. CONFIGURAÇÃO DO MAPA
-    // --------------------------------------------------
+(function () {
+  "use strict";
 
-    const mapa = L.map("mapa").setView([-14.2, -51.9], 4);
+  const CHAVE = "agrotrator_gps_tractors";
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">' +
-            'OpenStreetMap</a>'
+  const exemplos = [
+    {
+      id: "valtra",
+      nome: "Valtra",
+      modelo: "Valtra Série A",
+      ano: "2022",
+      imagem: "imagens/valtra.png",
+      lat: -15.7801,
+      lng: -47.9292,
+      origem: "demo",
+      atualizado: ""
+    },
+    {
+      id: "new-holland",
+      nome: "New Holland",
+      modelo: "New Holland T7",
+      ano: "2023",
+      imagem: "imagens/new-holland.png",
+      lat: -15.7950,
+      lng: -47.9100,
+      origem: "demo",
+      atualizado: ""
+    },
+    {
+      id: "john-deere",
+      nome: "John Deere",
+      modelo: "John Deere 6110J",
+      ano: "2021",
+      imagem: "imagens/john-deere.png",
+      lat: -15.7650,
+      lng: -47.9500,
+      origem: "demo",
+      atualizado: ""
+    },
+    {
+      id: "massey-ferguson",
+      nome: "Massey Ferguson",
+      modelo: "Massey Ferguson 6713",
+      ano: "2024",
+      imagem: "imagens/massey-ferguson.png",
+      lat: -15.8100,
+      lng: -47.9400,
+      origem: "demo",
+      atualizado: ""
+    }
+  ];
+
+  const $ = id => document.getElementById(id);
+
+  let tratores = carregar();
+  let selecionado = tratores.length ? tratores[0].id : "";
+  let mapa = null;
+  let marcadores = {};
+  let marcadorDispositivo = null;
+
+  function carregar() {
+    try {
+      const salvo = localStorage.getItem(CHAVE);
+
+      if (!salvo) return exemplos.map(t => ({...t}));
+
+      const dados = JSON.parse(salvo);
+
+      if (!Array.isArray(dados)) {
+        return exemplos.map(t => ({...t}));
+      }
+
+      return dados.filter(t => t && t.id && t.nome);
+    } catch (e) {
+      return exemplos.map(t => ({...t}));
+    }
+  }
+
+  function salvar() {
+    try {
+      localStorage.setItem(CHAVE, JSON.stringify(tratores));
+      return true;
+    } catch (e) {
+      mensagem("O navegador não permitiu salvar os dados.");
+      return false;
+    }
+  }
+
+  function temCoordenadas(t) {
+    return t &&
+      t.lat !== "" &&
+      t.lng !== "" &&
+      Number.isFinite(Number(t.lat)) &&
+      Number.isFinite(Number(t.lng)) &&
+      Number(t.lat) >= -90 && Number(t.lat) <= 90 &&
+      Number(t.lng) >= -180 && Number(t.lng) <= 180;
+  }
+
+  function moedaOrigem(origem) {
+    if (origem === "demo") return "Demonstração";
+    if (origem === "device") return "GPS do dispositivo";
+    if (origem === "real") return "Rastreador integrado";
+    return "Manual";
+  }
+
+  function mensagem(texto) {
+    const el = $("toast");
+    el.textContent = texto;
+    el.classList.add("show");
+    setTimeout(() => el.classList.remove("show"), 2800);
+  }
+
+  function tratorAtual() {
+    return tratores.find(t => t.id === selecionado) || tratores[0] || null;
+  }
+
+  function renderizarLista() {
+    const lista = $("listaTratores");
+    const select = $("tratorSelect");
+    lista.replaceChildren();
+    select.replaceChildren();
+
+    tratores.forEach((t, i) => {
+      const option = document.createElement("option");
+      option.value = t.id;
+      option.textContent = t.nome;
+      select.appendChild(option);
+
+      const botao = document.createElement("button");
+      botao.type = "button";
+      botao.className = "trator" + (t.id === selecionado ? " selecionado" : "");
+
+      const foto = document.createElement("div");
+      foto.className = "trator-imagem";
+
+      if (t.imagem) {
+        const img = document.createElement("img");
+        img.src = t.imagem;
+        img.alt = t.nome;
+        img.onerror = function () {
+          foto.textContent = t.nome.split(/\s+/)
+            .map(p => p[0]).join("").slice(0, 3).toUpperCase();
+        };
+        foto.appendChild(img);
+      } else {
+        foto.textContent = t.nome.substring(0, 3).toUpperCase();
+      }
+
+      const info = document.createElement("div");
+      info.className = "trator-info";
+
+      const nome = document.createElement("strong");
+      nome.textContent = t.nome;
+
+      const modelo = document.createElement("span");
+      modelo.textContent = t.modelo + " · " + t.ano;
+
+      const coordenadas = document.createElement("span");
+      coordenadas.textContent = temCoordenadas(t)
+        ? Number(t.lat).toFixed(5) + ", " + Number(t.lng).toFixed(5)
+        : "Posição não cadastrada";
+
+      info.append(nome, modelo, coordenadas);
+
+      const pill = document.createElement("span");
+      pill.className = "pill";
+      pill.textContent = moedaOrigem(t.origem);
+
+      botao.append(foto, info, pill);
+
+      botao.addEventListener("click", function () {
+        selecionar(t.id, true);
+      });
+
+      lista.appendChild(botao);
+    });
+
+    if (selecionado && tratores.some(t => t.id === selecionado)) {
+      select.value = selecionado;
+    }
+
+    const t = tratorAtual();
+    $("latitude").value = t && temCoordenadas(t) ? t.lat : "";
+    $("longitude").value = t && temCoordenadas(t) ? t.lng : "";
+
+    atualizarResumo();
+  }
+
+  function atualizarResumo() {
+    $("quantidade").textContent = tratores.length;
+    $("localizados").textContent = tratores.filter(temCoordenadas).length;
+
+    const origens = new Set(tratores.map(t => t.origem));
+
+    $("origem").textContent =
+      origens.size === 1 && origens.has("demo")
+        ? "Demonstração"
+        : origens.has("real")
+          ? "GPS integrado"
+          : "Misto";
+
+    const datas = tratores.map(t => t.atualizado).filter(Boolean).sort();
+    $("atualizacao").textContent = datas.length
+      ? new Date(datas[datas.length - 1]).toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      : "Exemplo";
+  }
+
+  function popup(t) {
+    const coordenadas = temCoordenadas(t)
+      ? Number(t.lat).toFixed(6) + ", " + Number(t.lng).toFixed(6)
+      : "Sem coordenadas";
+
+    const textoDemo = t.origem === "demo"
+      ? "<br><b>Posição de demonstração — não é GPS real.</b>"
+      : "";
+
+    return "<b>" + t.nome + "</b><br>" +
+      t.modelo + "<br>Coordenadas: " + coordenadas +
+      "<br>Origem: " + moedaOrigem(t.origem) + textoDemo;
+  }
+
+  function criarMapa() {
+    if (!window.L) {
+      $("mapa").innerHTML =
+        "Não foi possível carregar o mapa. Verifique a conexão com a internet.";
+      $("statusMapa").textContent = "Biblioteca do mapa indisponível.";
+      return;
+    }
+
+    mapa = L.map("mapa").setView([-15.79, -47.93], 12);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: "&copy; OpenStreetMap contributors"
     }).addTo(mapa);
 
-    const marcadores = new Map();
+    renderizarMarcadores();
+    setTimeout(() => mapa.invalidateSize(), 250);
+  }
 
-    const status = document.getElementById("status");
-    const lista = document.getElementById("lista");
+  function renderizarMarcadores() {
+    if (!mapa) return;
 
-    let enquadrouMapa = false;
-    let consultaEmAndamento = false;
+    Object.values(marcadores).forEach(m => mapa.removeLayer(m));
+    marcadores = {};
 
-    // --------------------------------------------------
-    // 2. IMAGENS DOS TRATORES
-    // Os caminhos devem corresponder aos arquivos reais.
-    // --------------------------------------------------
+    const pontos = [];
 
-    function obterImagemTrator(nome) {
-        const nomeNormalizado = String(nome || "")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .toLowerCase();
+    tratores.forEach((t, i) => {
+      if (!temCoordenadas(t)) return;
 
-        if (
-            nomeNormalizado.includes("john deere") ||
-            nomeNormalizado.includes("john") ||
-            nomeNormalizado.includes("deere") ||
-            nomeNormalizado.includes("jhoo")
-        ) {
-            return "imagens/imagens/john-deere.jpg";
-        }
+      const icone = L.divIcon({
+        className: "",
+        html:
+          '<div style="' +
+          'width:30px;height:30px;' +
+          'background:#2e7d32;border:3px solid white;' +
+          'border-radius:50%;display:grid;place-items:center;' +
+          'color:white;font-weight:bold;font-size:12px;' +
+          'box-shadow:0 2px 7px #0004;">' + (i + 1) + '</div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
 
-        if (nomeNormalizado.includes("valtra")) {
-            return "imagens/imagens/trator valtra.jpg";
-        }
+      const marker = L.marker([Number(t.lat), Number(t.lng)], {
+        icon: icone
+      }).addTo(mapa);
 
-        if (nomeNormalizado.includes("new holland")) {
-            return "imagens/imagens/New Holland.jpg";
-        }
+      marker.bindPopup(popup(t));
+      marker.on("click", () => selecionar(t.id, false));
 
-        if (
-            nomeNormalizado.includes("massey") ||
-            nomeNormalizado.includes("ferguson")
-        ) {
-            return "imagens/imagens/Massey ferguson 4297.jpg";
-        }
+      marcadores[t.id] = marker;
+      pontos.push([Number(t.lat), Number(t.lng)]);
+    });
 
-        return "imagens/imagens/logo trator.png";
+    if (pontos.length === 1) {
+      mapa.setView(pontos[0], 14);
+    } else if (pontos.length > 1) {
+      mapa.fitBounds(pontos, {padding: [30, 30], maxZoom: 13});
     }
 
-    // --------------------------------------------------
-    // 3. CRIAR O ÍCONE COM A FOTO DO TRATOR
-    // --------------------------------------------------
+    $("statusMapa").textContent =
+      pontos.length + " posição(ões) exibida(s). As demonstrações não são GPS real.";
+  }
 
-    function criarIconeTrator(nome) {
-        const imagem = obterImagemTrator(nome);
+  function selecionar(id, moverMapa) {
+    selecionado = id;
+    renderizarLista();
 
-        const conteudo = document.createElement("div");
-        conteudo.className = "icone-trator";
+    const t = tratorAtual();
 
-        const foto = document.createElement("img");
-        foto.src = imagem;
-        foto.alt = nome || "Trator";
+    if (moverMapa && t && temCoordenadas(t) && mapa && marcadores[t.id]) {
+      mapa.setView([Number(t.lat), Number(t.lng)], 15);
+      marcadores[t.id].openPopup();
+    }
+  }
 
-        foto.onerror = function () {
-            foto.onerror = null;
-            foto.src = "imagens/imagens/logo trator.png";
-        };
-
-        conteudo.appendChild(foto);
-
-        return L.divIcon({
-            className: "",
-            html: conteudo,
-            iconSize: [58, 58],
-            iconAnchor: [29, 29],
-            popupAnchor: [0, -30]
-        });
+  function obterGPS(callback) {
+    if (!navigator.geolocation) {
+      mensagem("Este navegador não oferece localização GPS.");
+      return;
     }
 
-    // --------------------------------------------------
-    // 4. FORMATAR DATA E HORÁRIO
-    // --------------------------------------------------
+    mensagem("Solicitando acesso à localização...");
 
-    function formatarData(data) {
-        if (!data) {
-            return "Horário não informado";
+    navigator.geolocation.getCurrentPosition(
+      pos => callback(pos.coords.latitude, pos.coords.longitude),
+      erro => {
+        if (erro.code === 1) {
+          mensagem("Permita a localização nas configurações do navegador.");
+        } else {
+          mensagem("Não foi possível obter a localização deste dispositivo.");
         }
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 0}
+    );
+  }
 
-        const valor = new Date(data);
+  $("tratorSelect").addEventListener("change", function () {
+    selecionar(this.value, false);
+  });
 
-        if (Number.isNaN(valor.getTime())) {
-            return "Horário não informado";
-        }
+  $("formGPS").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        return valor.toLocaleString("pt-BR");
+    const t = tratores.find(x => x.id === $("tratorSelect").value);
+    const latTexto = $("latitude").value.trim();
+    const lngTexto = $("longitude").value.trim();
+    const lat = Number(latTexto);
+    const lng = Number(lngTexto);
+
+    if (!t) {
+      mensagem("Selecione um trator.");
+      return;
     }
 
-    // --------------------------------------------------
-    // 5. ATUALIZAR OS TRATORES DA API
-    // --------------------------------------------------
-
-    async function atualizarTratores() {
-        if (consultaEmAndamento) return;
-
-        consultaEmAndamento = true;
-
-        try {
-            const resposta = await fetch("/api/tractors", {
-                cache: "no-store"
-            });
-
-            if (!resposta.ok) {
-                throw new Error("Falha ao consultar a API GPS.");
-            }
-
-            const tratores = await resposta.json();
-
-            if (!Array.isArray(tratores)) {
-                throw new Error("A API não retornou uma lista de tratores.");
-            }
-
-            lista.replaceChildren();
-
-            const limites = [];
-            let quantidadeComGps = 0;
-
-            // Percorre cada dispositivo devolvido pela API.
-            for (const trator of tratores) {
-                const nome = trator.name || "Trator sem nome";
-
-                const latitude = Number(trator.latitude);
-                const longitude = Number(trator.longitude);
-
-                const temPosicao =
-                    trator.hasPosition === true &&
-                    Number.isFinite(latitude) &&
-                    Number.isFinite(longitude) &&
-                    latitude >= -90 &&
-                    latitude <= 90 &&
-                    longitude >= -180 &&
-                    longitude <= 180;
-
-                // Cria o cartão de cada trator.
-                const cartao = document.createElement("div");
-                cartao.className = "trator-card";
-
-                const foto = document.createElement("img");
-                foto.src = obterImagemTrator(nome);
-                foto.alt = nome;
-
-                foto.onerror = function () {
-                    foto.onerror = null;
-                    foto.src = "imagens/imagens/logo trator.png";
-                };
-
-                cartao.appendChild(foto);
-
-                const informacoes = document.createElement("div");
-                informacoes.className = "trator-info";
-
-                const titulo = document.createElement("h3");
-                titulo.textContent = nome;
-                informacoes.appendChild(titulo);
-
-                const situacao = document.createElement("p");
-
-                if (temPosicao) {
-                    situacao.textContent = "GPS recebido";
-                    quantidadeComGps++;
-                } else {
-                    situacao.textContent = "Sem posição GPS válida";
-                    situacao.className = "sem-posicao";
-                }
-
-                informacoes.appendChild(situacao);
-
-                const horario = document.createElement("p");
-                horario.textContent =
-                    "Último sinal: " + formatarData(trator.fixTime);
-
-                informacoes.appendChild(horario);
-
-                // Se houver posição válida, cria ou atualiza o marcador.
-                if (temPosicao) {
-                    const coordenadas = [latitude, longitude];
-
-                    limites.push(coordenadas);
-
-                    const popup = document.createElement("div");
-
-                    const nomePopup = document.createElement("strong");
-                    nomePopup.textContent = nome;
-                    popup.appendChild(nomePopup);
-
-                    const latitudePopup = document.createElement("p");
-                    latitudePopup.textContent =
-                        "Latitude: " + latitude.toFixed(6);
-                    popup.appendChild(latitudePopup);
-
-                    const longitudePopup = document.createElement("p");
-                    longitudePopup.textContent =
-                        "Longitude: " + longitude.toFixed(6);
-                    popup.appendChild(longitudePopup);
-
-                    const horarioPopup = document.createElement("p");
-                    horarioPopup.textContent =
-                        "Último sinal: " + formatarData(trator.fixTime);
-                    popup.appendChild(horarioPopup);
-
-                    let marcador = marcadores.get(trator.id);
-
-                    if (marcador) {
-                        // Atualiza a posição e a imagem.
-                        marcador.setLatLng(coordenadas);
-                        marcador.setIcon(criarIconeTrator(nome));
-                        marcador.setPopupContent(popup);
-                    } else {
-                        // Cria um marcador para este trator.
-                        marcador = L.marker(coordenadas, {
-                            icon: criarIconeTrator(nome)
-                        }).addTo(mapa);
-
-                        marcador.bindPopup(popup);
-                        marcadores.set(trator.id, marcador);
-                    }
-
-                    const botao = document.createElement("button");
-                    botao.className = "botao";
-                    botao.textContent = "Ver no mapa";
-
-                    botao.addEventListener("click", function () {
-                        mapa.setView(coordenadas, 16);
-                        marcador.openPopup();
-                    });
-
-                    informacoes.appendChild(botao);
-                }
-
-                cartao.appendChild(informacoes);
-                lista.appendChild(cartao);
-            }
-
-            // Enquadra as posições recebidas na primeira atualização.
-            if (limites.length > 0 && !enquadrouMapa) {
-                if (limites.length === 1) {
-                    mapa.setView(limites[0], 16);
-                } else {
-                    mapa.fitBounds(limites, {
-                        padding: [30, 30],
-                        maxZoom: 15
-                    });
-                }
-
-                enquadrouMapa = true;
-            }
-
-            // Não deixa marcadores antigos de dispositivos removidos.
-            const idsAtuais = new Set(tratores.map(trator => trator.id));
-
-            for (const [id, marcador] of marcadores.entries()) {
-                if (!idsAtuais.has(id)) {
-                    mapa.removeLayer(marcador);
-                    marcadores.delete(id);
-                }
-            }
-
-            const horarioConsulta = new Date().toLocaleTimeString("pt-BR");
-
-            status.textContent =
-                "Consulta realizada às " + horarioConsulta + ". " +
-                quantidadeComGps + " de " + tratores.length +
-                " tratores com posição GPS válida.";
-
-            if (tratores.length === 0) {
-                const mensagem = document.createElement("p");
-                mensagem.textContent =
-                    "Nenhum rastreador cadastrado na API.";
-                lista.appendChild(mensagem);
-            }
-
-            if (quantidadeComGps === 0) {
-                status.textContent +=
-                    " Verifique se os rastreadores estão enviando coordenadas.";
-            }
-
-        } catch (erro) {
-            console.error("Erro no GPS:", erro);
-
-            status.textContent =
-                "Não foi possível obter as posições GPS. " +
-                "Verifique se o servidor Node.js está ativo, " +
-                "se o Traccar está configurado e se a API responde.";
-
-            if (lista.children.length === 0) {
-                lista.textContent =
-                    "Não foi possível carregar os tratores.";
-            }
-
-        } finally {
-            consultaEmAndamento = false;
-        }
+    if (
+      !latTexto || !lngTexto ||
+      !Number.isFinite(lat) || !Number.isFinite(lng) ||
+      lat < -90 || lat > 90 || lng < -180 || lng > 180
+    ) {
+      mensagem("Informe latitude e longitude válidas.");
+      return;
     }
 
-    // --------------------------------------------------
-    // 6. INICIAR E ATUALIZAR AUTOMATICAMENTE
-    // --------------------------------------------------
+    t.lat = lat;
+    t.lng = lng;
+    t.origem = $("tipoGPS").value;
+    t.atualizado = new Date().toISOString();
 
-    atualizarTratores();
+    if (salvar()) {
+      renderizarLista();
+      renderizarMarcadores();
 
-    // Consulta novamente a API a cada 10 segundos.
-    setInterval(atualizarTratores, 10000);
+      if (mapa && marcadores[t.id]) {
+        mapa.setView([lat, lng], 15);
+        marcadores[t.id].openPopup();
+      }
+
+      mensagem("Posição de " + t.nome + " salva.");
+    }
+  });
+
+  $("usarGPS").addEventListener("click", function () {
+    obterGPS(function (lat, lng) {
+      $("latitude").value = lat.toFixed(6);
+      $("longitude").value = lng.toFixed(6);
+      $("tipoGPS").value = "device";
+
+      if (mapa) {
+        if (marcadorDispositivo) {
+          mapa.removeLayer(marcadorDispositivo);
+        }
+
+        marcadorDispositivo = L.circleMarker([lat, lng], {
+          radius: 8,
+          color: "#1565c0",
+          fillColor: "#42a5f5",
+          fillOpacity: 0.9
+        }).addTo(mapa);
+
+        mapa.setView([lat, lng], 15);
+      }
+
+      mensagem("Coordenadas preenchidas. Clique em Salvar posição.");
+    });
+  });
+
+  $("localizar").addEventListener("click", function () {
+    obterGPS(function (lat, lng) {
+      if (mapa) {
+        if (marcadorDispositivo) {
+          mapa.removeLayer(marcadorDispositivo);
+        }
+
+        marcadorDispositivo = L.circleMarker([lat, lng], {
+          radius: 8,
+          color: "#1565c0",
+          fillColor: "#42a5f5",
+          fillOpacity: 0.9
+        }).addTo(mapa).bindPopup("Localização deste dispositivo.");
+
+        mapa.setView([lat, lng], 15);
+        marcadorDispositivo.openPopup();
+      }
+
+      mensagem("Localização do dispositivo encontrada.");
+    });
+  });
+
+  $("verTodos").addEventListener("click", function () {
+    if (!mapa) {
+      mensagem("O mapa não está disponível.");
+      return;
+    }
+
+    const pontos = tratores
+      .filter(temCoordenadas)
+      .map(t => [Number(t.lat), Number(t.lng)]);
+
+    if (pontos.length === 1) {
+      mapa.setView(pontos[0], 14);
+    } else if (pontos.length > 1) {
+      mapa.fitBounds(pontos, {padding: [30, 30]});
+    } else {
+      mensagem("Nenhum trator tem coordenadas cadastradas.");
+    }
+  });
+
+  $("recarregar").addEventListener("click", function () {
+    if (!confirm("Carregar novamente as posições de demonstração?")) {
+      return;
+    }
+
+    tratores = exemplos.map(t => ({...t}));
+    selecionado = tratores[0].id;
+
+    if (salvar()) {
+      renderizarLista();
+      renderizarMarcadores();
+      mensagem("Posições de exemplo carregadas.");
+    }
+  });
+
+  renderizarLista();
+  criarMapa();
+})();
 </script>
-
 </body>
 </html>

@@ -1,692 +1,1229 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Perfil</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroTrator - Perfil</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+:root {
+  --green: #2e7d32;
+  --dark: #1d5e2a;
+  --light: #e8f4e9;
+  --orange: #f57c00;
+  --page: #f4f6f4;
+  --ink: #202a23;
+  --muted: #6d776f;
+  --border: #e2e9e2;
+  --shadow: 0 4px 16px rgba(25,53,31,.07);
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f3f5f4;
-      color: #252b27;
-      min-height: 100vh;
-    }
+* { box-sizing: border-box; }
 
-    .topo {
-      background: #237b43;
-      color: white;
-      padding: 22px 7%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 15px;
-    }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--page);
+  color: var(--ink);
+}
 
-    .logo {
-      font-size: 23px;
-      font-weight: bold;
-    }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
 
-    .topo a {
-      color: white;
-      text-decoration: none;
-      font-size: 15px;
-    }
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 250px minmax(0,1fr);
+}
 
-    .pagina {
-      width: min(1000px, 92%);
-      margin: 35px auto;
-    }
+/* MENU LATERAL */
+.sidebar {
+  background: #fff;
+  border-right: 1px solid var(--border);
+  min-height: 100vh;
+  padding: 27px 18px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
-    .titulo {
-      margin-bottom: 25px;
-    }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 9px;
+  font-size: 23px;
+  font-weight: 800;
+  color: var(--dark);
+  white-space: nowrap;
+}
 
-    .titulo h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
+.brand-mark {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--light);
+  font-size: 24px;
+}
 
-    .titulo p {
-      color: #69736d;
-      font-size: 15px;
-    }
+.brand-name span { color: var(--orange); }
 
-    .perfil-card {
-      background: white;
-      border-radius: 16px;
-      padding: 28px;
-      display: flex;
-      align-items: center;
-      gap: 22px;
-      box-shadow: 0 4px 16px #00000008;
-      margin-bottom: 25px;
-    }
+.nav-label {
+  padding: 0 12px;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #98a19a;
+  font-size: 11px;
+  font-weight: 800;
+}
 
-    .avatar {
-      width: 100px;
-      height: 100px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      background: #d9efdf;
-      color: #237b43;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: bold;
-      border: 4px solid #edf7ef;
-    }
+.nav-list { display: grid; gap: 7px; }
 
-    .perfil-info {
-      flex: 1;
-      min-width: 0;
-    }
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-height: 47px;
+  padding: 0 13px;
+  color: #566158;
+  border-radius: 10px;
+  font-size: 14px;
+}
 
-    .perfil-info h2 {
-      font-size: 23px;
-      margin-bottom: 8px;
-      overflow-wrap: anywhere;
-    }
+.nav-link:hover {
+  background: #f2f7f2;
+  color: var(--dark);
+}
 
-    .perfil-info p {
-      color: #69736d;
-      margin-bottom: 7px;
-      overflow-wrap: anywhere;
-    }
+.nav-link.active {
+  color: var(--dark);
+  background: var(--light);
+  font-weight: 700;
+}
 
-    .etiqueta {
-      display: inline-block;
-      padding: 6px 12px;
-      background: #e5f5e9;
-      color: #237b43;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-top: 5px;
-    }
+.nav-icon {
+  width: 25px;
+  text-align: center;
+  font-size: 20px;
+}
 
-    button {
-      cursor: pointer;
-      font: inherit;
-    }
+.sidebar-bottom { margin-top: auto; }
 
-    .botao {
-      border: none;
-      border-radius: 9px;
-      padding: 13px 18px;
-      font-weight: bold;
-      transition: 0.2s;
-    }
+.help-card {
+  padding: 17px;
+  border-radius: 13px;
+  background: #f1f7f1;
+  border: 1px solid #e0ecdf;
+}
 
-    .botao-principal {
-      background: #237b43;
-      color: white;
-    }
+.help-card strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
 
-    .botao-principal:hover {
-      background: #195e32;
-    }
+.help-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0 0 13px;
+}
 
-    .botao-secundario {
-      background: #edf1ee;
-      color: #27352b;
-    }
+.help-card a {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+}
 
-    .botao-secundario:hover {
-      background: #dfe7e1;
-    }
+/* CABEÇALHO */
+.main-column { min-width: 0; }
 
-    .grade {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
+.topbar {
+  min-height: 82px;
+  padding: 0 clamp(22px,3vw,48px);
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
 
-    .cartao {
-      background: white;
-      padding: 26px;
-      border-radius: 16px;
-      box-shadow: 0 4px 16px #00000008;
-    }
+.page-heading small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
 
-    .cartao h3 {
-      font-size: 19px;
-      margin-bottom: 22px;
-    }
+.page-heading strong { font-size: 18px; }
 
-    .campo {
-      margin-bottom: 18px;
-    }
+.user-top {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
 
-    .campo label {
-      display: block;
-      color: #59645d;
-      font-size: 14px;
-      font-weight: bold;
-      margin-bottom: 9px;
-    }
+.avatar {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--dark);
+  background: #e4f1e5;
+  font-weight: 800;
+  font-size: 13px;
+  overflow: hidden;
+}
 
-    .campo input {
-      width: 100%;
-      height: 47px;
-      padding: 0 13px;
-      border-radius: 8px;
-      border: 1px solid #d6ded8;
-      background: #f8faf8;
-      font-size: 15px;
-      outline: none;
-    }
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .campo input:focus {
-      border-color: #237b43;
-      box-shadow: 0 0 0 3px #237b4318;
-    }
+.user-top strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
 
-    .campo input:read-only {
-      color: #505a53;
-      background: #f3f5f4;
-    }
+.user-top span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+}
 
-    .opcao {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 16px 0;
-      border-bottom: 1px solid #edf0ed;
-    }
+/* CONTEÚDO */
+.content {
+  width: 100%;
+  max-width: 1650px;
+  margin: 0 auto;
+  padding: 30px clamp(22px,3vw,48px) 50px;
+}
 
-    .opcao:last-child {
-      border-bottom: none;
-    }
+.intro { margin-bottom: 24px; }
 
-    .icone {
-      width: 45px;
-      height: 45px;
-      flex-shrink: 0;
-      border-radius: 12px;
-      background: #e8f5eb;
-      color: #237b43;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 22px;
-    }
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 800;
+  margin-bottom: 9px;
+}
 
-    .opcao-texto {
-      flex: 1;
-      min-width: 0;
-    }
+.intro h1 {
+  font-size: clamp(28px,2.5vw,36px);
+  margin: 0 0 9px;
+}
 
-    .opcao-texto strong {
-      display: block;
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
+.intro p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
+}
 
-    .opcao-texto span {
-      display: block;
-      color: #778078;
-      font-size: 13px;
-      line-height: 1.4;
-    }
+.save-state {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 10px;
+}
 
-    .seta {
-      font-size: 24px;
-      color: #8b968e;
-    }
+/* CARTÃO DO PERFIL */
+.profile-banner {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  padding: 23px 27px;
+  background: linear-gradient(110deg,#1e672d,#398747);
+  border-radius: 16px;
+  color: #fff;
+  margin-bottom: 24px;
+}
 
-    .link-opcao {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      color: inherit;
-      text-decoration: none;
-      border-radius: 8px;
-    }
+.photo-wrap {
+  width: 88px;
+  height: 88px;
+  border: 3px solid rgba(255,255,255,.65);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e7f4e8;
+  color: var(--dark);
+  font-size: 26px;
+  font-weight: 800;
+  flex-shrink: 0;
+  overflow: hidden;
+}
 
-    .link-opcao:hover .opcao-texto strong {
-      color: #237b43;
-    }
+.photo-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-    .interruptor {
-      position: relative;
-      width: 45px;
-      height: 25px;
-      flex-shrink: 0;
-    }
+.banner-info { flex: 1; min-width: 0; }
 
-    .interruptor input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+.banner-info h2 {
+  font-size: 23px;
+  margin: 0 0 6px;
+  overflow-wrap: anywhere;
+}
 
-    .trilho {
-      position: absolute;
-      inset: 0;
-      background: #c8d0ca;
-      border-radius: 20px;
-      transition: 0.2s;
-      cursor: pointer;
-    }
+.banner-info p {
+  font-size: 13px;
+  color: rgba(255,255,255,.85);
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+}
 
-    .trilho::before {
-      content: "";
-      width: 19px;
-      height: 19px;
-      background: white;
-      position: absolute;
-      left: 3px;
-      top: 3px;
-      border-radius: 50%;
-      transition: 0.2s;
-    }
+.badge {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.3);
+  background: rgba(255,255,255,.14);
+  padding: 6px 10px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+}
 
-    .interruptor input:checked + .trilho {
-      background: #237b43;
-    }
+.banner-actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
 
-    .interruptor input:checked + .trilho::before {
-      transform: translateX(20px);
-    }
+/* BOTÕES */
+.button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
 
-    .acoes {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
+.btn-white { background: #fff; color: var(--dark); }
+.btn-white:hover { background: #f0f7f0; }
+.btn-green { background: var(--green); color: #fff; }
+.btn-green:hover { background: var(--dark); }
+.btn-light { background: var(--light); color: var(--dark); border: 1px solid #cfe2d1; }
+.btn-light:hover { background: #dceede; }
+.btn-danger { background: #fff8f7; color: #b42318; border: 1px solid #f0d9d6; }
 
-    #mensagem {
-      display: none;
-      padding: 13px;
-      margin-top: 16px;
-      border-radius: 8px;
-      background: #e5f5e9;
-      color: #237b43;
-      font-size: 14px;
-      line-height: 1.5;
-    }
+/* ABAS */
+.tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  margin-bottom: 18px;
+  padding-bottom: 2px;
+}
 
-    .sair {
-      margin-top: 25px;
-      background: white;
-      color: #b42318;
-      border: 1px solid #f0d8d5;
-      padding: 15px 20px;
-      border-radius: 10px;
-      font-weight: bold;
-      width: 100%;
-      text-align: left;
-    }
+.tab {
+  padding: 11px 15px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  color: #657067;
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+}
 
-    .sair:hover {
-      background: #fff4f2;
-    }
+.tab.active {
+  background: var(--light);
+  border-color: #cde2cf;
+  color: var(--dark);
+}
 
-    footer {
-      text-align: center;
-      color: #778078;
-      font-size: 13px;
-      padding: 25px 15px;
-    }
+/* PAINÉIS */
+.profile-layout {
+  display: grid;
+  grid-template-columns: minmax(0,1.35fr) minmax(300px,.65fr);
+  gap: 22px;
+  align-items: start;
+}
 
-    @media (max-width: 700px) {
-      .topo {
-        padding: 18px 5%;
-      }
+.panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 25px;
+  box-shadow: var(--shadow);
+  min-width: 0;
+  margin-bottom: 20px;
+  scroll-margin-top: 20px;
+}
 
-      .logo {
-        font-size: 19px;
-      }
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
 
-      .pagina {
-        width: 92%;
-        margin: 25px auto;
-      }
+.panel-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
 
-      .titulo h1 {
-        font-size: 25px;
-      }
+.panel-header p {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 6px 0 0;
+  line-height: 1.5;
+}
 
-      .perfil-card {
-        padding: 22px;
-        flex-wrap: wrap;
-      }
+.panel-icon {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--light);
+  font-size: 20px;
+  flex-shrink: 0;
+}
 
-      .avatar {
-        width: 78px;
-        height: 78px;
-        font-size: 26px;
-      }
+/* FORMULÁRIOS */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 17px 19px;
+}
 
-      .perfil-info h2 {
-        font-size: 19px;
-      }
+.field { min-width: 0; }
+.field.full { grid-column: 1/-1; }
 
-      .perfil-card .botao {
-        width: 100%;
-      }
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #3b463d;
+  margin-bottom: 8px;
+}
 
-      .grade {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
+.optional {
+  font-weight: 400;
+  color: #98a19a;
+}
 
-      .cartao {
-        padding: 22px;
-      }
-    }
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #d5ded6;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 11px 12px;
+  outline: none;
+  color: var(--ink);
+  font-size: 13px;
+}
 
-    @media (max-width: 380px) {
-      .topo a {
-        font-size: 13px;
-      }
+.field textarea {
+  min-height: 88px;
+  resize: vertical;
+}
 
-      .perfil-card {
-        gap: 14px;
-      }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px #2e7d3218;
+}
 
-      .acoes .botao {
-        width: 100%;
-      }
-    }
-  </style>
+/* MENSAGENS */
+.form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 2px 0 22px;
+}
+
+.notice {
+  display: none;
+  margin-top: 15px;
+  padding: 12px 13px;
+  border-radius: 8px;
+  background: var(--light);
+  color: var(--dark);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.notice.show { display: block; }
+
+/* CONFIGURAÇÕES */
+.preference-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 16px 0;
+  border-bottom: 1px solid #edf0ed;
+}
+
+.preference-row:last-child { border-bottom: 0; }
+
+.setting-icon {
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: var(--light);
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+}
+
+.setting-copy { flex: 1; min-width: 0; }
+
+.setting-copy strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.setting-copy span {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.switch {
+  position: relative;
+  width: 43px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  border-radius: 30px;
+  background: #c8d1ca;
+  transition: .2s;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 3px;
+  top: 3px;
+  border-radius: 50%;
+  background: white;
+  transition: .2s;
+}
+
+.switch input:checked + .slider { background: var(--green); }
+.switch input:checked + .slider:before { transform: translateX(19px); }
+
+.info-note {
+  display: flex;
+  gap: 11px;
+  padding: 14px;
+  background: #f5f8f5;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: #657067;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 17px;
+}
+
+.info-note strong {
+  color: #39463c;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 0;
+  border-bottom: 1px solid #edf0ed;
+}
+
+.quick-link:last-child { border-bottom: 0; }
+.quick-link strong { font-size: 13px; }
+.quick-link span { margin-left: auto; font-size: 22px; color: #97a198; }
+
+.mobile-nav { display: none; }
+
+/* RESPONSIVIDADE */
+@media(max-width:1250px) {
+  .app { grid-template-columns: 220px minmax(0,1fr); }
+  .profile-layout { grid-template-columns: 1fr; }
+}
+
+@media(max-width:850px) {
+  .app { display: block; }
+  .sidebar { display: none; }
+  .content { padding: 24px 18px 90px; }
+  .profile-banner { flex-wrap: wrap; }
+  .banner-actions { width: 100%; }
+  .banner-actions .button { flex: 1; }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    justify-content: space-around;
+    padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,.97);
+    border-top: 1px solid var(--border);
+  }
+
+  .mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
+  .mobile-nav a span { font-size: 21px; }
+  .mobile-nav a.active { color: var(--green); font-weight: 800; }
+}
+
+@media(max-width:600px) {
+  .topbar { padding: 0 15px; }
+  .user-meta { display: none; }
+  .content { padding: 20px 13px 90px; }
+  .profile-banner { padding: 18px; gap: 14px; }
+  .photo-wrap { width: 68px; height: 68px; font-size: 21px; }
+  .banner-info h2 { font-size: 19px; }
+  .banner-actions .button { padding: 11px 9px; font-size: 12px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .panel { padding: 19px; }
+  .form-actions .button { flex: 1; }
+}
+</style>
 </head>
 
 <body>
+<div class="app">
 
-  <header class="topo">
-    <div class="logo">Meu Perfil</div>
-    <a href="index.html">← Voltar ao início</a>
-  </header>
+  <aside class="sidebar">
+    <a class="brand" href="principal.html">
+      <span class="brand-mark">🌱</span>
+      <span class="brand-name">Agro<span>Trator</span></span>
+    </a>
 
-  <main class="pagina">
+    <nav>
+      <p class="nav-label">Menu principal</p>
+      <div class="nav-list">
+        <a class="nav-link" href="principal.html"><span class="nav-icon">🏠</span>Início</a>
+        <a class="nav-link" href="tratores.html"><span class="nav-icon">🚜</span>Tratores</a>
+        <a class="nav-link" href="manutencao.html"><span class="nav-icon">🔧</span>Manutenção</a>
+        <a class="nav-link" href="abastecimento.html"><span class="nav-icon">⛽</span>Abastecimento</a>
+        <a class="nav-link" href="oficina.html"><span class="nav-icon">🛠️</span>Oficina</a>
+        <a class="nav-link" href="mapa.html"><span class="nav-icon">📍</span>GPS e mapa</a>
+        <a class="nav-link active" href="perfil.html"><span class="nav-icon">👤</span>Meu perfil</a>
+      </div>
+    </nav>
 
-    <section class="titulo">
-      <h1>Perfil do usuário</h1>
-      <p>Gerencie suas informações e preferências.</p>
-    </section>
+    <div class="sidebar-bottom">
+      <div class="help-card">
+        <strong>Precisa de ajuda?</strong>
+        <p>Encontre oficinas e suporte para o seu maquinário.</p>
+        <a href="oficina.html">Ver oficinas →</a>
+      </div>
+    </div>
+  </aside>
 
-    <section class="perfil-card">
-
-      <div class="avatar" id="avatar">US</div>
-
-      <div class="perfil-info">
-        <h2 id="nome-exibido">Seu Nome</h2>
-        <p id="email-exibido">seuemail@email.com</p>
-        <span class="etiqueta">Conta ativa</span>
+  <div class="main-column">
+    <header class="topbar">
+      <div class="page-heading">
+        <small>Conta e preferências</small>
+        <strong>Meu perfil</strong>
       </div>
 
-      <button
-        class="botao botao-principal"
-        id="editar"
-        type="button">
-        ✎ Editar perfil
-      </button>
+      <a class="user-top" href="perfil.html">
+        <div class="avatar" id="top-avatar">US</div>
+        <div class="user-meta">
+          <strong id="top-name">Seu nome</strong>
+          <span>Perfil AgroTrator</span>
+        </div>
+      </a>
+    </header>
 
-    </section>
-
-    <div class="grade">
-
-      <!-- DADOS PESSOAIS -->
-      <section class="cartao">
-        <h3>Informações pessoais</h3>
-
-        <form id="form-perfil">
-
-          <div class="campo">
-            <label for="nome">Nome completo</label>
-            <input
-              id="nome"
-              type="text"
-              value="Seu Nome"
-              readonly
-              required>
-          </div>
-
-          <div class="campo">
-            <label for="email">E-mail</label>
-            <input
-              id="email"
-              type="email"
-              value="seuemail@email.com"
-              readonly
-              required>
-          </div>
-
-          <div class="campo">
-            <label for="telefone">Telefone</label>
-            <input
-              id="telefone"
-              type="tel"
-              placeholder="Digite seu telefone"
-              readonly>
-          </div>
-
-          <div class="campo">
-            <label for="cidade">Cidade</label>
-            <input
-              id="cidade"
-              type="text"
-              placeholder="Digite sua cidade"
-              readonly>
-          </div>
-
-          <div class="acoes">
-            <button
-              class="botao botao-principal"
-              type="submit"
-              id="salvar"
-              hidden>
-              Salvar alterações
-            </button>
-
-            <button
-              class="botao botao-secundario"
-              type="button"
-              id="cancelar"
-              hidden>
-              Cancelar
-            </button>
-          </div>
-
-          <div id="mensagem" role="status"></div>
-        </form>
+    <main class="content">
+      <section class="intro">
+        <div class="eyebrow">Sua conta</div>
+        <h1>Meu perfil</h1>
+        <p>Preencha seus dados pessoais, endereço e informações da propriedade rural.</p>
+        <span class="save-state" id="save-state">Preencha os campos e clique em Salvar todas as informações.</span>
       </section>
 
-      <!-- CONFIGURAÇÕES -->
-      <section class="cartao">
-        <h3>Configurações</h3>
+      <section class="profile-banner">
+        <div class="photo-wrap" id="photo-wrap"><span id="initials">US</span></div>
 
-        <div class="opcao">
-          <div class="icone">🔔</div>
-
-          <div class="opcao-texto">
-            <strong>Notificações</strong>
-            <span>Receber avisos e novidades</span>
-          </div>
-
-          <label class="interruptor" aria-label="Ativar notificações">
-            <input id="notificacoes" type="checkbox" checked>
-            <span class="trilho"></span>
-          </label>
+        <div class="banner-info">
+          <h2 id="banner-name">Seu nome completo</h2>
+          <p id="banner-email">Seu e-mail</p>
+          <span class="badge">● Perfil AgroTrator</span>
         </div>
 
-        <a class="link-opcao" href="seguranca.html">
-          <div class="opcao">
-            <div class="icone">🔒</div>
-
-            <div class="opcao-texto">
-              <strong>Segurança</strong>
-              <span>Proteção e senha da conta</span>
-            </div>
-
-            <span class="seta">›</span>
-          </div>
-        </a>
-
-        <a class="link-opcao" href="ajuda.html">
-          <div class="opcao">
-            <div class="icone">❔</div>
-
-            <div class="opcao-texto">
-              <strong>Ajuda e suporte</strong>
-              <span>Encontre respostas e ajuda</span>
-            </div>
-
-            <span class="seta">›</span>
-          </div>
-        </a>
-
-        <button class="sair" id="sair" type="button">
-          ↪ &nbsp; Sair da conta
-        </button>
+        <div class="banner-actions">
+          <label class="button btn-white" for="profile-photo">📷 Escolher foto</label>
+          <input id="profile-photo" type="file" accept="image/*" hidden>
+        </div>
       </section>
 
-    </div>
-  </main>
+      <div class="tabs">
+        <button type="button" class="tab active" data-target="personal-panel">Dados pessoais</button>
+        <button type="button" class="tab" data-target="address-panel">Endereço</button>
+        <button type="button" class="tab" data-target="farm-panel">Propriedade rural</button>
+        <button type="button" class="tab" data-target="preferences-panel">Preferências</button>
+      </div>
 
-  <footer>
-    Meu Perfil · Todos os direitos reservados
-  </footer>
+      <form id="profile-form">
+        <div class="profile-layout">
+          <div class="main-forms">
 
-  <script>
-    const form = document.getElementById("form-perfil");
-    const nome = document.getElementById("nome");
-    const email = document.getElementById("email");
-    const telefone = document.getElementById("telefone");
-    const cidade = document.getElementById("cidade");
+            <section class="panel profile-section" id="personal-panel">
+              <div class="panel-header">
+                <div><h2>Informações pessoais</h2><p>Dados para identificar e entrar em contato com você.</p></div>
+                <div class="panel-icon">👤</div>
+              </div>
 
-    const editar = document.getElementById("editar");
-    const salvar = document.getElementById("salvar");
-    const cancelar = document.getElementById("cancelar");
-    const mensagem = document.getElementById("mensagem");
+              <div class="form-grid">
+                <div class="field">
+                  <label for="full-name">Nome completo *</label>
+                  <input id="full-name" name="fullName" autocomplete="name" placeholder="Digite seu nome completo" required>
+                </div>
 
-    const campos = [nome, email, telefone, cidade];
+                <div class="field">
+                  <label for="display-name">Como deseja ser chamado?</label>
+                  <input id="display-name" name="displayName" placeholder="Nome de exibição">
+                </div>
 
-    let dadosOriginais = {};
+                <div class="field">
+                  <label for="email">E-mail *</label>
+                  <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" required>
+                </div>
 
-    function guardarDados() {
-      dadosOriginais = {
-        nome: nome.value,
-        email: email.value,
-        telefone: telefone.value,
-        cidade: cidade.value
-      };
+                <div class="field">
+                  <label for="phone">Telefone / WhatsApp</label>
+                  <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(00) 00000-0000">
+                </div>
+
+                <div class="field">
+                  <label for="birth-date">Data de nascimento</label>
+                  <input id="birth-date" name="birthDate" type="date">
+                </div>
+
+                <div class="field">
+                  <label for="occupation">Profissão / função</label>
+                  <select id="occupation" name="occupation">
+                    <option value="">Selecione uma opção</option>
+                    <option>Produtor rural</option>
+                    <option>Proprietário de fazenda</option>
+                    <option>Operador de máquinas</option>
+                    <option>Mecânico agrícola</option>
+                    <option>Administrador de frota</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="about">Sobre você (opcional)</label>
+                  <textarea id="about" name="about" placeholder="Informações que queira registrar sobre você"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel profile-section" id="address-panel">
+              <div class="panel-header">
+                <div><h2>Endereço e localização</h2><p>Endereço de contato e localização geral.</p></div>
+                <div class="panel-icon">📍</div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="cep">CEP</label>
+                  <input id="cep" name="cep" autocomplete="postal-code" placeholder="00000-000">
+                </div>
+
+                <div class="field">
+                  <label for="country">País</label>
+                  <select id="country" name="country">
+                    <option>Brasil</option>
+                    <option>Portugal</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="street">Rua / Avenida / Estrada</label>
+                  <input id="street" name="street" autocomplete="street-address" placeholder="Nome da rua ou estrada">
+                </div>
+
+                <div class="field">
+                  <label for="number">Número</label>
+                  <input id="number" name="number" placeholder="Número">
+                </div>
+
+                <div class="field">
+                  <label for="complement">Complemento</label>
+                  <input id="complement" name="complement" placeholder="Casa, lote, referência">
+                </div>
+
+                <div class="field">
+                  <label for="neighborhood">Bairro / Localidade</label>
+                  <input id="neighborhood" name="neighborhood" placeholder="Bairro ou comunidade">
+                </div>
+
+                <div class="field">
+                  <label for="city">Cidade</label>
+                  <input id="city" name="city" autocomplete="address-level2" placeholder="Sua cidade">
+                </div>
+
+                <div class="field">
+                  <label for="state">Estado</label>
+                  <select id="state" name="state">
+                    <option value="">Selecione</option>
+                    <option>AC</option><option>AL</option><option>AP</option>
+                    <option>AM</option><option>BA</option><option>CE</option>
+                    <option>DF</option><option>ES</option><option>GO</option>
+                    <option>MA</option><option>MT</option><option>MS</option>
+                    <option>MG</option><option>PA</option><option>PB</option>
+                    <option>PR</option><option>PE</option><option>PI</option>
+                    <option>RJ</option><option>RN</option><option>RS</option>
+                    <option>RO</option><option>RR</option><option>SC</option>
+                    <option>SP</option><option>SE</option><option>TO</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel profile-section" id="farm-panel">
+              <div class="panel-header">
+                <div><h2>Propriedade rural e operação</h2><p>Informações da fazenda ou da atividade agrícola.</p></div>
+                <div class="panel-icon">🌾</div>
+              </div>
+
+              <div class="form-grid">
+                <div class="field">
+                  <label for="farm-name">Nome da fazenda / propriedade</label>
+                  <input id="farm-name" name="farmName" placeholder="Nome da propriedade">
+                </div>
+
+                <div class="field">
+                  <label for="farm-city">Município da propriedade</label>
+                  <input id="farm-city" name="farmCity" placeholder="Cidade onde fica a fazenda">
+                </div>
+
+                <div class="field">
+                  <label for="farm-area">Área aproximada (hectares)</label>
+                  <input id="farm-area" name="farmArea" type="number" min="0" step="0.01" placeholder="Ex.: 120">
+                </div>
+
+                <div class="field">
+                  <label for="main-crop">Principal atividade</label>
+                  <select id="main-crop" name="mainCrop">
+                    <option value="">Selecione</option>
+                    <option>Grãos</option>
+                    <option>Milho</option>
+                    <option>Soja</option>
+                    <option>Arroz</option>
+                    <option>Fruticultura</option>
+                    <option>Pecuária</option>
+                    <option>Hortaliças</option>
+                    <option>Serviços agrícolas</option>
+                    <option>Outra</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="fleet-size">Quantidade de tratores</label>
+                  <input id="fleet-size" name="fleetSize" type="number" min="0" step="1" placeholder="Ex.: 4">
+                </div>
+
+                <div class="field">
+                  <label for="preferred-brand">Marca mais utilizada</label>
+                  <select id="preferred-brand" name="preferredBrand">
+                    <option value="">Selecione</option>
+                    <option>Valtra</option>
+                    <option>New Holland</option>
+                    <option>John Deere</option>
+                    <option>Massey Ferguson</option>
+                    <option>Outra</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="farm-notes">Observações da operação</label>
+                  <textarea id="farm-notes" name="farmNotes" placeholder="Informações sobre a propriedade ou frota"></textarea>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <aside class="side-column">
+            <section class="panel profile-section" id="preferences-panel">
+              <div class="panel-header">
+                <div><h2>Preferências</h2><p>Ative ou desative as opções abaixo.</p></div>
+                <div class="panel-icon">⚙️</div>
+              </div>
+
+              <div class="preference-row">
+                <div class="setting-icon">🔔</div>
+                <div class="setting-copy"><strong>Notificações</strong><span>Receber avisos do aplicativo</span></div>
+                <label class="switch"><input type="checkbox" id="notifications" checked><span class="slider"></span></label>
+              </div>
+
+              <div class="preference-row">
+                <div class="setting-icon">🔧</div>
+                <div class="setting-copy"><strong>Alertas de manutenção</strong><span>Lembretes de revisões e serviços</span></div>
+                <label class="switch"><input type="checkbox" id="maintenance-alerts" checked><span class="slider"></span></label>
+              </div>
+
+              <div class="preference-row">
+                <div class="setting-icon">📧</div>
+                <div class="setting-copy"><strong>Contato por e-mail</strong><span>Receber informações por e-mail</span></div>
+                <label class="switch"><input type="checkbox" id="email-updates"><span class="slider"></span></label>
+              </div>
+
+              <div class="info-note">
+                <span>🔒</span>
+                <div><strong>Privacidade</strong>Os dados ficam salvos neste navegador e não são enviados a um servidor.</div>
+              </div>
+
+              <button class="button btn-danger" id="clear-profile" type="button" style="width:100%;margin-top:18px">
+                Apagar dados salvos
+              </button>
+            </section>
+
+            <section class="panel">
+              <div class="panel-header"><div><h2>Acesso rápido</h2><p>Outras áreas do AgroTrator.</p></div></div>
+              <a class="quick-link" href="tratores.html"><div class="setting-icon">🚜</div><strong>Minha frota</strong><span>›</span></a>
+              <a class="quick-link" href="manutencao.html"><div class="setting-icon">🔧</div><strong>Manutenção</strong><span>›</span></a>
+              <a class="quick-link" href="oficina.html"><div class="setting-icon">🛠️</div><strong>Oficinas</strong><span>›</span></a>
+              <a class="quick-link" href="mapa.html"><div class="setting-icon">📍</div><strong>GPS e mapa</strong><span>›</span></a>
+            </section>
+          </aside>
+        </div>
+
+        <div class="form-actions">
+          <button class="button btn-green" type="submit">💾 Salvar todas as informações</button>
+          <button class="button btn-light" id="undo-button" type="button">↶ Desfazer alterações</button>
+        </div>
+
+        <div class="notice" id="notice" role="status"></div>
+      </form>
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav" aria-label="Navegação móvel">
+  <a href="principal.html"><span>🏠</span>Início</a>
+  <a href="tratores.html"><span>🚜</span>Tratores</a>
+  <a href="oficina.html"><span>🛠️</span>Oficina</a>
+  <a href="mapa.html"><span>📍</span>GPS</a>
+  <a class="active" href="perfil.html"><span>👤</span>Perfil</a>
+</nav>
+
+<script>
+(function() {
+  const form = document.getElementById("profile-form");
+  const key = "agrotrator_full_profile";
+
+  const fields = [
+    ...form.querySelectorAll(
+      'input:not([type="checkbox"]):not([type="file"]), select, textarea'
+    )
+  ];
+
+  const toggles = [
+    ...form.querySelectorAll('input[type="checkbox"]')
+  ];
+
+  const notice = document.getElementById("notice");
+  const saveState = document.getElementById("save-state");
+  const photoInput = document.getElementById("profile-photo");
+
+  let photoData = "";
+  let lastSaved = null;
+
+  function getInitials(name) {
+    const parts = (name || "US").trim().split(/\s+/).filter(Boolean);
+    return (
+      parts.length > 1
+        ? parts[0][0] + parts[parts.length - 1][0]
+        : (parts[0] || "US").slice(0,2)
+    ).toUpperCase();
+  }
+
+  function showNotice(text) {
+    notice.textContent = text;
+    notice.classList.add("show");
+  }
+
+  function updateSummary() {
+    const fullName =
+      document.getElementById("full-name").value.trim() ||
+      "Seu nome completo";
+
+    const displayName =
+      document.getElementById("display-name").value.trim() ||
+      fullName;
+
+    const email =
+      document.getElementById("email").value.trim() ||
+      "Seu e-mail";
+
+    document.getElementById("banner-name").textContent = displayName;
+    document.getElementById("banner-email").textContent = email;
+    document.getElementById("top-name").textContent = displayName;
+
+    if (!photoData) {
+      const initials = getInitials(displayName);
+      const node = document.getElementById("initials");
+
+      if (node) node.textContent = initials;
+
+      document.getElementById("top-avatar").textContent = initials;
     }
+  }
 
-    function mostrarMensagem(texto) {
-      mensagem.textContent = texto;
-      mensagem.style.display = "block";
-    }
+  function readData() {
+    const data = {};
 
-    function atualizarCabecalho() {
-      document.getElementById("nome-exibido").textContent =
-        nome.value.trim() || "Seu Nome";
-
-      document.getElementById("email-exibido").textContent =
-        email.value.trim() || "sousasantosdanieltiktok275@gmail.com";
-
-      const partes = (nome.value.trim() || "US").split(/\s+/);
-      const iniciais = partes.length > 1
-        ? partes[0][0] + partes[partes.length - 1][0]
-        : partes[0].substring(0, 2);
-
-      document.getElementById("avatar").textContent =
-        iniciais.toUpperCase();
-    }
-
-    editar.addEventListener("click", function () {
-      guardarDados();
-
-      campos.forEach(function (campo) {
-        campo.readOnly = false;
-      });
-
-      editar.hidden = true;
-      salvar.hidden = false;
-      cancelar.hidden = false;
-      mensagem.style.display = "none";
-
-      nome.focus();
+    fields.forEach(field => {
+      data[field.id] = field.value;
     });
 
-    cancelar.addEventListener("click", function () {
-      nome.value = dadosOriginais.nome;
-      email.value = dadosOriginais.email;
-      telefone.value = dadosOriginais.telefone;
-      cidade.value = dadosOriginais.cidade;
-
-      campos.forEach(function (campo) {
-        campo.readOnly = true;
-      });
-
-      editar.hidden = false;
-      salvar.hidden = true;
-      cancelar.hidden = true;
-      mensagem.style.display = "none";
-
-      atualizarCabecalho();
+    toggles.forEach(toggle => {
+      data[toggle.id] = toggle.checked;
     });
 
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
+    data.profilePhoto = photoData;
+    return data;
+  }
 
-      if (!form.checkValidity()) {
-        form.reportValidity();
-        return;
+  function renderPhoto(dataUrl) {
+    photoData = dataUrl || "";
+
+    const wrap = document.getElementById("photo-wrap");
+    const topAvatar = document.getElementById("top-avatar");
+
+    if (photoData) {
+      wrap.innerHTML = "";
+
+      const image = document.createElement("img");
+      image.src = photoData;
+      image.alt = "Foto de perfil";
+      wrap.appendChild(image);
+
+      topAvatar.innerHTML = "";
+
+      const smallImage = document.createElement("img");
+      smallImage.src = photoData;
+      smallImage.alt = "Foto de perfil";
+      topAvatar.appendChild(smallImage);
+    } else {
+      wrap.innerHTML = '<span id="initials">US</span>';
+    }
+
+    updateSummary();
+  }
+
+  function applyData(data) {
+    if (!data) return;
+
+    fields.forEach(field => {
+      if (typeof data[field.id] === "string") {
+        field.value = data[field.id];
       }
-
-      campos.forEach(function (campo) {
-        campo.readOnly = true;
-      });
-
-      editar.hidden = false;
-      salvar.hidden = true;
-      cancelar.hidden = true;
-
-      atualizarCabecalho();
-      guardarDados();
-
-      mostrarMensagem(
-        "Informações atualizadas nesta tela com sucesso."
-      );
     });
 
-    document.getElementById("notificacoes")
-      .addEventListener("change", function (event) {
-        mostrarMensagem(
-          event.target.checked
-            ? "Preferência de notificações ativada."
-            : "Preferência de notificações desativada."
-        );
+    toggles.forEach(toggle => {
+      if (typeof data[toggle.id] === "boolean") {
+        toggle.checked = data[toggle.id];
+      }
+    });
+
+    renderPhoto(data.profilePhoto || "");
+    updateSummary();
+  }
+
+  function loadData() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem(key) || "null"
+      );
+
+      if (saved) {
+        applyData(saved);
+        saveState.textContent = "Dados carregados deste navegador.";
+      } else {
+        saveState.textContent =
+          "Preencha os campos e clique em Salvar todas as informações.";
+      }
+    } catch (error) {
+      saveState.textContent = "Preencha os campos e salve suas informações.";
+    }
+
+    lastSaved = readData();
+  }
+
+  function markChanged() {
+    saveState.textContent = "Você tem alterações ainda não salvas.";
+    notice.classList.remove("show");
+    updateSummary();
+  }
+
+  /* SALVAR */
+  form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    if (!form.reportValidity()) return;
+
+    const data = readData();
+
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+      lastSaved = JSON.parse(JSON.stringify(data));
+
+      saveState.textContent = "Informações salvas neste navegador.";
+      showNotice("Tudo certo! Suas informações foram salvas neste navegador.");
+    } catch (error) {
+      showNotice("Não foi possível salvar. Escolha uma foto menor e tente novamente.");
+    }
+
+    updateSummary();
+  });
+
+  /* DESFAZER ALTERAÇÕES */
+  document.getElementById("undo-button").addEventListener("click", function() {
+    if (!lastSaved) {
+      showNotice("Ainda não há uma versão salva para recuperar.");
+      return;
+    }
+
+    if (!confirm("Desfazer as alterações e recuperar a última versão salva?")) {
+      return;
+    }
+
+    applyData(lastSaved);
+    saveState.textContent = "Última versão salva restaurada.";
+    showNotice("As alterações foram desfeitas.");
+  });
+
+  fields.forEach(field => {
+    field.addEventListener("input", markChanged);
+  });
+
+  toggles.forEach(toggle => {
+    toggle.addEventListener("change", markChanged);
+  });
+
+  /* FOTO DE PERFIL */
+  photoInput.addEventListener("change", function(event) {
+    const file = event.target.files && event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      showNotice("Selecione um arquivo de imagem válido.");
+      photoInput.value = "";
+      return;
+    }
+
+    if (file.size > 1200000) {
+      showNotice("Escolha uma foto de até 1,2 MB.");
+      photoInput.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      renderPhoto(String(reader.result));
+      markChanged();
+      showNotice("Foto escolhida. Clique em Salvar todas as informações para guardá-la.");
+    };
+
+    reader.onerror = function() {
+      showNotice("Não foi possível carregar a foto.");
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  /* APAGAR DADOS */
+  document.getElementById("clear-profile").addEventListener("click", function() {
+    if (!confirm("Apagar as informações do perfil salvas neste navegador?")) {
+      return;
+    }
+
+    localStorage.removeItem(key);
+    form.reset();
+    photoInput.value = "";
+    renderPhoto("");
+
+    lastSaved = readData();
+
+    saveState.textContent = "Dados locais apagados.";
+    showNotice("Os dados salvos por esta tela foram apagados deste navegador.");
+
+    updateSummary();
+  });
+
+  /* NAVEGAR PELAS SEÇÕES */
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.addEventListener("click", function() {
+      document.querySelectorAll(".tab").forEach(item => {
+        item.classList.remove("active");
       });
 
-    document.getElementById("sair")
-      .addEventListener("click", function () {
-        const confirmar = window.confirm(
-          "Deseja realmente sair da conta?"
-        );
+      tab.classList.add("active");
 
-        if (confirmar) {
-          mostrarMensagem(
-            "Para sair de verdade, conecte este botão ao sistema de login do seu projeto."
-          );
-        }
-      });
+      const section = document.getElementById(tab.dataset.target);
 
-    atualizarCabecalho();
-    guardarDados();
-  </script>
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+      }
+    });
+  });
 
+  loadData();
+})();
+</script>
 </body>
 </html>

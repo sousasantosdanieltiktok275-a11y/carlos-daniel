@@ -1,580 +1,1315 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>AgroTrator - Abastecimento</title>
-
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-
-        body {
-
-            margin: 0;
-
-            min-height: 100vh;
-
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            background: #f5f7f5;
-        }
-
-
-        .celular {
-
-            width: 390px;
-
-            height: 844px;
-
-            background: #f5f7f5;
-
-            overflow: hidden;
-
-            position: relative;
-
-            border-radius: 25px;
-        }
-
-
-        /* CABEÇALHO */
-
-        header {
-
-            height: 85px;
-
-            background: #087a35;
-
-            color: white;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 15px;
-
-            padding: 15px 20px;
-        }
-
-
-        .botao-voltar {
-
-            color: white;
-
-            text-decoration: none;
-
-            font-size: 30px;
-
-            line-height: 1;
-        }
-
-
-        header h1 {
-
-            font-size: 21px;
-        }
-
-
-        /* CONTEÚDO */
-
-        .conteudo {
-
-            height: calc(100% - 85px);
-
-            overflow-y: auto;
-
-            padding: 20px;
-
-            padding-bottom: 30px;
-        }
-
-
-        /* IMAGEM */
-
-        .imagem-abastecimento {
-
-            width: 100%;
-
-            height: 180px;
-
-            object-fit: cover;
-
-            border-radius: 17px;
-
-            display: block;
-
-            margin-bottom: 18px;
-
-            box-shadow:
-                0 3px 10px rgba(0,0,0,0.10);
-        }
-
-
-        .titulo {
-
-            color: #087a35;
-
-            font-size: 25px;
-
-            margin-bottom: 18px;
-        }
-
-
-        /* FORMULÁRIO */
-
-        .campo {
-
-            margin-bottom: 14px;
-        }
-
-
-        .campo label {
-
-            display: block;
-
-            color: #555;
-
-            font-size: 14px;
-
-            font-weight: bold;
-
-            margin-bottom: 6px;
-        }
-
-
-        .campo input,
-        .campo select {
-
-            width: 100%;
-
-            height: 48px;
-
-            border: none;
-
-            outline: none;
-
-            background: white;
-
-            border-radius: 11px;
-
-            padding: 0 13px;
-
-            font-size: 15px;
-
-            box-shadow:
-                0 2px 8px rgba(0,0,0,0.08);
-        }
-
-
-        /* DUAS COLUNAS */
-
-        .linha {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 12px;
-        }
-
-
-        /* RESUMO */
-
-        .resumo {
-
-            background: white;
-
-            border-radius: 15px;
-
-            padding: 15px;
-
-            margin-top: 18px;
-
-            box-shadow:
-                0 3px 10px rgba(0,0,0,0.08);
-        }
-
-
-        .resumo h2 {
-
-            color: #087a35;
-
-            font-size: 18px;
-
-            margin-bottom: 12px;
-        }
-
-
-        .resumo-item {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            padding: 6px 0;
-
-            color: #555;
-
-            font-size: 14px;
-        }
-
-
-        .resumo-item strong {
-
-            color: #222;
-        }
-
-
-        /* BOTÃO */
-
-        .botao-registrar {
-
-            width: 100%;
-
-            height: 50px;
-
-            border: none;
-
-            border-radius: 11px;
-
-            background: #087a35;
-
-            color: white;
-
-            font-size: 16px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            margin-top: 18px;
-        }
-
-
-        .botao-registrar:hover {
-
-            background: #06652c;
-        }
-
-
-        /* MENSAGEM */
-
-        #mensagem {
-
-            text-align: center;
-
-            color: #087a35;
-
-            font-weight: bold;
-
-            margin-top: 12px;
-
-            display: none;
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroTrator - Abastecimento</title>
+
+<style>
+:root {
+  --verde: #2e7d32;
+  --verde-escuro: #1d5e2a;
+  --verde-claro: #e8f4e9;
+  --laranja: #f57c00;
+  --fundo: #f4f6f4;
+  --texto: #202a23;
+  --cinza: #6d776f;
+  --borda: #e2e9e2;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--fundo);
+  color: var(--texto);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ESTRUTURA */
+
+.app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+}
+
+.sidebar {
+  background: white;
+  border-right: 1px solid var(--borda);
+  min-height: 100vh;
+  padding: 25px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--verde-escuro);
+  padding: 0 8px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: var(--verde-claro);
+  border-radius: 12px;
+  font-size: 23px;
+}
+
+.brand-name span {
+  color: var(--laranja);
+}
+
+.nav-title {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #98a19a;
+  font-weight: 800;
+  padding: 0 11px;
+  margin-bottom: 10px;
+}
+
+.nav {
+  display: grid;
+  gap: 6px;
+}
+
+.nav a {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  border-radius: 9px;
+  color: #566158;
+  font-size: 14px;
+}
+
+.nav a:hover {
+  background: #f2f7f2;
+}
+
+.nav a.active {
+  background: var(--verde-claro);
+  color: var(--verde-escuro);
+  font-weight: 700;
+}
+
+.nav-icon {
+  width: 24px;
+  text-align: center;
+  font-size: 19px;
+}
+
+.help {
+  margin-top: auto;
+  background: #f1f7f1;
+  border: 1px solid #e0ecdf;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--cinza);
+}
+
+.help strong {
+  display: block;
+  font-size: 14px;
+  color: var(--texto);
+  margin-bottom: 6px;
+}
+
+.help a {
+  display: block;
+  color: var(--verde);
+  font-weight: 800;
+  margin-top: 9px;
+}
+
+.main {
+  min-width: 0;
+}
+
+/* CABEÇALHO */
+
+.topbar {
+  min-height: 78px;
+  background: white;
+  border-bottom: 1px solid var(--borda);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 3vw, 44px);
+  gap: 16px;
+}
+
+.topbar small {
+  display: block;
+  color: var(--cinza);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.topbar strong {
+  font-size: 18px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 41px;
+  height: 41px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--verde-claro);
+  color: var(--verde-escuro);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.user span {
+  display: block;
+  color: var(--cinza);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* CONTEÚDO */
+
+.content {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 28px clamp(20px, 3vw, 44px) 45px;
+}
+
+.intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--verde);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: clamp(27px, 2.4vw, 35px);
+  margin: 0 0 8px;
+}
+
+.intro p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cinza);
+  margin: 0;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 13px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 7px;
+}
+
+.btn-green {
+  background: var(--verde);
+  color: white;
+}
+
+.btn-green:hover {
+  background: var(--verde-escuro);
+}
+
+.btn-light {
+  background: var(--verde-claro);
+  border: 1px solid #cfe2d1;
+  color: var(--verde-escuro);
+}
+
+/* BANNER */
+
+.banner {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  align-items: center;
+  min-height: 160px;
+  margin-bottom: 22px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: linear-gradient(
+    110deg,
+    #1e672d,
+    #398747 65%,
+    #80ac6e
+  );
+  color: white;
+}
+
+.banner-copy {
+  padding: 25px 30px;
+}
+
+.banner-label {
+  display: inline-block;
+  background: #ffffff25;
+  border: 1px solid #ffffff45;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.banner h2 {
+  font-size: clamp(22px, 2vw, 29px);
+  margin: 0 0 9px;
+}
+
+.banner p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #ffffffdd;
+  margin: 0;
+  max-width: 650px;
+}
+
+.banner-art {
+  display: grid;
+  place-items: center;
+  min-height: 160px;
+  font-size: 80px;
+  background: radial-gradient(
+    circle at 70% 35%,
+    #a6ca80aa,
+    transparent 50%
+  );
+}
+
+/* INDICADORES */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 23px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 17px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  min-width: 0;
+  box-shadow: 0 4px 14px #00000007;
+}
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--verde-claro);
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.stat strong {
+  display: block;
+  color: var(--verde);
+  font-size: 22px;
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.stat small {
+  display: block;
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* FORMULÁRIO E RESUMO */
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(270px, .8fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  background: white;
+  border: 1px solid var(--borda);
+  border-radius: 13px;
+  padding: 22px;
+  min-width: 0;
+  box-shadow: 0 4px 14px #00000007;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.panel-head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.panel-head p {
+  margin: 6px 0 0;
+  color: var(--cinza);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.panel-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--verde-claro);
+  border-radius: 11px;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.field {
+  min-width: 0;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 7px;
+  color: #39443b;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 43px;
+  border: 1px solid #d5ded6;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--texto);
+  outline: none;
+}
+
+.field textarea {
+  min-height: 75px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px #2e7d3218;
+}
+
+.field input[readonly] {
+  background: #eef2ee;
+}
+
+.field-help {
+  color: var(--cinza);
+  font-size: 11px;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.notice {
+  display: none;
+  margin-top: 13px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--verde-claro);
+  color: var(--verde-escuro);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.notice.show {
+  display: block;
+}
+
+/* RESUMO DO CONSUMO */
+
+.total-box {
+  background: #f2f8f2;
+  border: 1px solid #dcebdc;
+  border-radius: 11px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+
+.total-box span {
+  display: block;
+  color: var(--cinza);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.total-box strong {
+  display: block;
+  color: var(--verde);
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.total-box small {
+  color: var(--cinza);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 13px;
+}
+
+.summary-row:last-child {
+  border-bottom: 0;
+}
+
+.summary-row span {
+  color: var(--cinza);
+}
+
+.tip {
+  margin-top: 15px;
+  padding: 13px;
+  background: #fff8ed;
+  border: 1px solid #f6e6cc;
+  color: #7a5317;
+  border-radius: 9px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.tip strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* HISTÓRICO */
+
+.history {
+  margin-top: 22px;
+}
+
+.history-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.history-head h2 {
+  margin: 0 0 5px;
+  font-size: 20px;
+}
+
+.history-head p {
+  margin: 0;
+  color: var(--cinza);
+  font-size: 12px;
+}
+
+.search {
+  width: min(280px, 100%);
+  height: 39px;
+  border: 1px solid #d5ded6;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 670px;
+}
+
+th {
+  text-align: left;
+  background: #f7f9f7;
+  color: #778179;
+  font-size: 11px;
+  text-transform: uppercase;
+  padding: 12px;
+  border-bottom: 1px solid var(--borda);
+}
+
+td {
+  font-size: 13px;
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf0ed;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.total-cell {
+  font-weight: 800;
+  color: var(--verde-escuro);
+  white-space: nowrap;
+}
+
+.delete-btn {
+  background: #fff7f6;
+  border: 1px solid #f1d6d2;
+  color: #b42318;
+  border-radius: 7px;
+  padding: 7px 9px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.empty {
+  display: none;
+  padding: 25px 15px;
+  color: var(--cinza);
+  border: 1px dashed var(--borda);
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.footnote {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--cinza);
+  margin: 14px 0 0;
+}
+
+/* MENU MÓVEL */
+
+.mobile-nav {
+  display: none;
+}
+
+/* RESPONSIVO */
+
+@media(max-width:1300px) {
+  .app {
+    grid-template-columns: 215px minmax(0, 1fr);
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(max-width:850px) {
+  .app {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 22px 17px 85px;
+  }
+
+  .banner {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-art {
+    min-height: 90px;
+    font-size: 60px;
+  }
+
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    justify-content: space-around;
+    padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+    background: #fffffff5;
+    border-top: 1px solid var(--borda);
+  }
+
+  .mobile-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--cinza);
+    font-size: 10px;
+  }
+
+  .mobile-nav a span {
+    font-size: 21px;
+  }
+
+  .mobile-nav a.active {
+    color: var(--verde);
+    font-weight: 800;
+  }
+}
+
+@media(max-width:580px) {
+  .topbar {
+    height: 70px;
+    padding: 0 14px;
+  }
+
+  .user .meta {
+    display: none;
+  }
+
+  .content {
+    padding: 20px 12px 85px;
+  }
+
+  .intro {
+    flex-direction: column;
+  }
+
+  .intro .btn {
+    width: 100%;
+  }
+
+  .stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+
+  .stat {
+    padding: 12px;
+    gap: 9px;
+  }
+
+  .stat-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+
+  .stat strong {
+    font-size: 19px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full {
+    grid-column: auto;
+  }
+
+  .panel {
+    padding: 17px;
+  }
+
+  .history-head {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .actions .btn {
+    flex: 1;
+  }
+}
+</style>
 </head>
 
-
 <body>
+<div class="app">
 
+  <!-- MENU LATERAL -->
+  <aside class="sidebar">
+    <a class="brand" href="principal.html">
+      <span class="brand-icon">🌱</span>
+      <span class="brand-name">Agro<span>Trator</span></span>
+    </a>
 
-<div class="celular">
+    <nav>
+      <p class="nav-title">Menu principal</p>
 
+      <div class="nav">
+        <a href="principal.html"><span class="nav-icon">🏠</span>Início</a>
+        <a href="tratores.html"><span class="nav-icon">🚜</span>Tratores</a>
+        <a href="manutenção.html"><span class="nav-icon">🔧</span>Manutenção</a>
+        <a class="active" href="abastecimento.html"><span class="nav-icon">⛽</span>Abastecimento</a>
+        <a href="oficina.html"><span class="nav-icon">🛠️</span>Oficina</a>
+        <a href="mapa.html"><span class="nav-icon">📍</span>GPS e mapa</a>
+        <a href="perfil.html"><span class="nav-icon">👤</span>Perfil</a>
+        <a href="historico.html"><span class="nav-icon">📋</span>Histórico</a>
+        <a href="relatorios.html"><span class="nav-icon">📊</span>Relatórios</a>
+      </div>
+    </nav>
+
+    <div class="help">
+      <strong>Controle seu consumo</strong>
+      Registre cada abastecimento para consultar custos e litros utilizados.
+      <a href="relatorios.html">Ver relatórios →</a>
+    </div>
+  </aside>
+
+  <div class="main">
 
     <!-- CABEÇALHO -->
+    <header class="topbar">
+      <div>
+        <small>Controle da frota</small>
+        <strong>Abastecimento</strong>
+      </div>
 
-    <header>
-
-        <a
-            href="detalhes.html"
-            class="botao-voltar"
-        >
-            ←
-        </a>
-
-        <h1>
-            Abastecimento
-        </h1>
-
+      <a class="user" href="perfil.html">
+        <div class="avatar">CD</div>
+        <div class="meta">
+          <strong>Carlos</strong>
+          <span>Administrador</span>
+        </div>
+      </a>
     </header>
 
+    <main class="content">
 
-
-    <!-- CONTEÚDO -->
-
-    <main class="conteudo">
-
-
-        <!-- IMAGEM -->
-
-        <img
-            src="imagens/imagens/abastecimento.jpg.jpg"
-            alt="Abastecimento de trator"
-            class="imagem-abastecimento"
-        >
-
-
-        <h2 class="titulo">
-            Registrar abastecimento
-        </h2>
-
-
-
-        <!-- TRATOR -->
-
-        <div class="campo">
-
-            <label>
-                Trator
-            </label>
-
-            <select id="trator">
-
-                <option>
-                    John Deere 6110
-                </option>
-
-                <option>
-                    Massey Ferguson 4297
-                </option>
-
-                <option>
-                    New Holland T7
-                </option>
-
-                <option>
-                    Valtra A134
-                </option>
-
-            </select>
-
+      <section class="intro">
+        <div>
+          <div class="eyebrow">Combustível e consumo</div>
+          <h1>Abastecimento da frota</h1>
+          <p>Registre abastecimentos, acompanhe os custos e consulte o histórico de cada trator.</p>
         </div>
 
+        <button class="btn btn-green" id="focus-form" type="button">
+          ＋ Registrar abastecimento
+        </button>
+      </section>
 
-
-        <!-- DATA E HORA -->
-
-        <div class="linha">
-
-
-            <div class="campo">
-
-                <label>
-                    Data
-                </label>
-
-                <input
-                    type="date"
-                    id="data"
-                    value="2026-09-15"
-                >
-
-            </div>
-
-
-            <div class="campo">
-
-                <label>
-                    Horímetro
-                </label>
-
-                <input
-                    type="number"
-                    id="horimetro"
-                    value="1450"
-                >
-
-            </div>
-
+      <!-- BANNER -->
+      <section class="banner">
+        <div class="banner-copy">
+          <span class="banner-label">Gestão inteligente</span>
+          <h2>Controle cada litro de diesel.</h2>
+          <p>Organize os registros por trator, data, quantidade de litros e valor pago. Os indicadores são calculados com base nos lançamentos salvos neste navegador.</p>
         </div>
 
+        <div class="banner-art" aria-hidden="true">⛽🚜</div>
+      </section>
 
-
-        <!-- LITROS E VALOR -->
-
-        <div class="linha">
-
-
-            <div class="campo">
-
-                <label>
-                    Litros
-                </label>
-
-                <input
-                    type="number"
-                    id="litros"
-                    placeholder="Ex.: 180"
-                    step="0.1"
-                >
-
-            </div>
-
-
-            <div class="campo">
-
-                <label>
-                    Valor (R$)
-                </label>
-
-                <input
-                    type="number"
-                    id="valor"
-                    placeholder="Ex.: 950"
-                    step="0.01"
-                >
-
-            </div>
-
+      <!-- INDICADORES -->
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-icon">⛽</div>
+          <div><strong id="stat-liters">0 L</strong><small>Litros registrados</small></div>
         </div>
 
+        <div class="stat">
+          <div class="stat-icon">💰</div>
+          <div><strong id="stat-cost">R$ 0,00</strong><small>Total gasto</small></div>
+        </div>
 
+        <div class="stat">
+          <div class="stat-icon">📊</div>
+          <div><strong id="stat-average">R$ 0,00</strong><small>Preço médio por litro</small></div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">🧾</div>
+          <div><strong id="stat-records">0</strong><small>Abastecimentos</small></div>
+        </div>
+      </section>
+
+      <div class="columns">
+
+        <!-- FORMULÁRIO -->
+        <section class="panel" id="form-panel">
+          <div class="panel-head">
+            <div>
+              <h2>Registrar abastecimento</h2>
+              <p>Preencha os dados e salve o lançamento.</p>
+            </div>
+            <div class="panel-icon">📝</div>
+          </div>
+
+          <form id="fuel-form">
+            <div class="form-grid">
+
+              <div class="field">
+                <label for="tractor">Trator *</label>
+                <select id="tractor" required>
+                  <option value="">Selecione o trator</option>
+                  <option>Valtra</option>
+                  <option>New Holland</option>
+                  <option>John Deere</option>
+                  <option>Massey Ferguson</option>
+                  <option>Outro trator</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="fuel-date">Data *</label>
+                <input type="date" id="fuel-date" required>
+              </div>
+
+              <div class="field">
+                <label for="liters">Quantidade de litros *</label>
+                <input type="number" id="liters" min="0.01" step="0.01" placeholder="Ex.: 80" required>
+              </div>
+
+              <div class="field">
+                <label for="price">Preço por litro (R$) *</label>
+                <input type="number" id="price" min="0" step="0.001" placeholder="Ex.: 6.20" required>
+              </div>
+
+              <div class="field">
+                <label for="total-price">Valor total (R$)</label>
+                <input type="text" id="total-price" value="R$ 0,00" readonly>
+                <div class="field-help">Calculado automaticamente.</div>
+              </div>
+
+              <div class="field">
+                <label for="hours">Horímetro (horas)</label>
+                <input type="number" id="hours" min="0" step="0.1" placeholder="Ex.: 184">
+              </div>
+
+              <div class="field full">
+                <label for="station">Posto ou fornecedor</label>
+                <input id="station" type="text" placeholder="Nome do posto ou fornecedor">
+              </div>
+
+              <div class="field full">
+                <label for="fuel-notes">Observações</label>
+                <textarea id="fuel-notes" placeholder="Nota fiscal, local ou outra informação"></textarea>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-green" type="submit">Salvar abastecimento</button>
+              <button class="btn btn-light" id="reset-form" type="button">Limpar campos</button>
+            </div>
+
+            <div class="notice" id="form-notice" role="status"></div>
+          </form>
+        </section>
 
         <!-- RESUMO -->
-
-        <div class="resumo">
-
-            <h2>
-                Último abastecimento
-            </h2>
-
-
-            <div class="resumo-item">
-
-                <span>
-                    Trator
-                </span>
-
-                <strong>
-                    John Deere 6110
-                </strong>
-
+        <aside class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Resumo do consumo</h2>
+              <p>Calculado com base no histórico atual.</p>
             </div>
+            <div class="panel-icon">📈</div>
+          </div>
 
+          <div class="total-box">
+            <span>Total de litros registrados</span>
+            <strong id="summary-liters">0 L</strong>
+            <small>Soma dos lançamentos salvos neste navegador.</small>
+          </div>
 
-            <div class="resumo-item">
+          <div class="summary-row">
+            <span>Total gasto</span>
+            <strong id="summary-cost">R$ 0,00</strong>
+          </div>
 
-                <span>
-                    Data
-                </span>
+          <div class="summary-row">
+            <span>Preço médio por litro</span>
+            <strong id="summary-price">R$ 0,00</strong>
+          </div>
 
-                <strong>
-                    15/09/2026
-                </strong>
+          <div class="summary-row">
+            <span>Último abastecimento</span>
+            <strong id="summary-last">Nenhum</strong>
+          </div>
 
-            </div>
+          <div class="summary-row">
+            <span>Tratores abastecidos</span>
+            <strong id="summary-tractors">0</strong>
+          </div>
 
+          <div class="tip">
+            <strong>💡 Dica</strong>
+            Registre os dados logo após abastecer para acompanhar melhor os custos e o consumo.
+          </div>
+        </aside>
+      </div>
 
-            <div class="resumo-item">
+      <!-- HISTÓRICO -->
+      <section class="panel history">
+        <div class="history-head">
+          <div>
+            <h2>Histórico de abastecimentos</h2>
+            <p>Consulte ou exclua os lançamentos registrados neste navegador.</p>
+          </div>
 
-                <span>
-                    Litros
-                </span>
-
-                <strong>
-                    180 L
-                </strong>
-
-            </div>
-
-
-            <div class="resumo-item">
-
-                <span>
-                    Horímetro
-                </span>
-
-                <strong>
-                    1450 h
-                </strong>
-
-            </div>
-
+          <input class="search" type="search" id="history-search" placeholder="Buscar trator ou fornecedor">
         </div>
 
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Trator</th>
+                <th>Fornecedor</th>
+                <th>Litros</th>
+                <th>Preço/litro</th>
+                <th>Total</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
 
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
 
-        <!-- BOTÃO -->
+        <div class="empty" id="history-empty">
+          Nenhum abastecimento cadastrado. Preencha o formulário acima para começar.
+        </div>
 
-        <button
-            class="botao-registrar"
-            onclick="registrarAbastecimento()"
-        >
-            ⛽ Registrar abastecimento
-        </button>
-
-
-        <p id="mensagem">
-            Abastecimento registrado com sucesso!
+        <p class="footnote">
+          Os dados são guardados no navegador deste computador e não são enviados automaticamente a um servidor.
         </p>
-
+      </section>
 
     </main>
-
+  </div>
 </div>
 
-
+<!-- MENU PARA CELULARES -->
+<nav class="mobile-nav" aria-label="Menu móvel">
+  <a href="principal.html"><span>🏠</span>Início</a>
+  <a href="tratores.html"><span>🚜</span>Tratores</a>
+  <a class="active" href="abastecimento.html"><span>⛽</span>Abastecer</a>
+  <a href="mapa.html"><span>📍</span>GPS</a>
+  <a href="perfil.html"><span>👤</span>Perfil</a>
+</nav>
 
 <script>
+function init() {
+  const STORAGE_KEY = "agrotrator_abastecimentos";
+  const form = document.getElementById("fuel-form");
+  const litersInput = document.getElementById("liters");
+  const priceInput = document.getElementById("price");
+  const totalInput = document.getElementById("total-price");
+  const historyBody = document.getElementById("history-body");
+  const searchInput = document.getElementById("history-search");
+  const notice = document.getElementById("form-notice");
 
-    function registrarAbastecimento() {
+  const money = value => new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  }).format(value);
 
-        const litros =
-            document.getElementById("litros").value;
+  const number = value => new Intl.NumberFormat("pt-BR", {
+    maximumFractionDigits: 2
+  }).format(value);
 
-        const valor =
-            document.getElementById("valor").value;
+  let records = [];
 
+  function showNotice(message, isError = false) {
+    notice.textContent = message;
+    notice.classList.add("show");
+    notice.style.background = isError ? "#fff0ee" : "var(--verde-claro)";
+    notice.style.color = isError ? "#a1271c" : "var(--verde-escuro)";
+  }
 
-        if (litros === "" || valor === "") {
+  function loadRecords() {
+    try {
+      const saved = JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
 
-            alert(
-                "Preencha os litros e o valor."
-            );
+      records = Array.isArray(saved) ? saved : [];
+    } catch (error) {
+      records = [];
+    }
+  }
 
-            return;
+  function saveRecords() {
+    try {
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(records)
+      );
+
+      return true;
+    } catch (error) {
+      showNotice(
+        "Não foi possível salvar os registros neste navegador.",
+        true
+      );
+
+      return false;
+    }
+  }
+
+  function calculateTotal() {
+    const liters = Number(litersInput.value) || 0;
+    const price = Number(priceInput.value) || 0;
+
+    totalInput.value = money(liters * price);
+  }
+
+  function formatDate(value) {
+    if (!value) return "—";
+
+    const parts = value.split("-");
+
+    return parts.length === 3
+      ? `${parts[2]}/${parts[1]}/${parts[0]}`
+      : value;
+  }
+
+  function updateStats() {
+    const totalLiters = records.reduce(
+      (sum, record) => sum + Number(record.liters || 0), 0
+    );
+
+    const totalCost = records.reduce(
+      (sum, record) => sum + Number(record.total || 0), 0
+    );
+
+    const average = totalLiters > 0
+      ? totalCost / totalLiters
+      : 0;
+
+    const uniqueTractors = new Set(
+      records.map(record => record.tractor)
+    ).size;
+
+    document.getElementById("stat-liters").textContent =
+      number(totalLiters) + " L";
+
+    document.getElementById("stat-cost").textContent =
+      money(totalCost);
+
+    document.getElementById("stat-average").textContent =
+      money(average);
+
+    document.getElementById("stat-records").textContent =
+      records.length;
+
+    document.getElementById("summary-liters").textContent =
+      number(totalLiters) + " L";
+
+    document.getElementById("summary-cost").textContent =
+      money(totalCost);
+
+    document.getElementById("summary-price").textContent =
+      money(average);
+
+    document.getElementById("summary-tractors").textContent =
+      uniqueTractors;
+
+    if (records.length > 0) {
+      const latest = [...records].sort(
+        (a, b) => (b.date || "").localeCompare(a.date || "")
+      )[0];
+
+      document.getElementById("summary-last").textContent =
+        formatDate(latest.date);
+    } else {
+      document.getElementById("summary-last").textContent =
+        "Nenhum";
+    }
+  }
+
+  function renderHistory() {
+    historyBody.innerHTML = "";
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    const visibleRecords = records
+      .map((record, index) => ({ record, index }))
+      .filter(({ record }) => {
+        const text = (
+          record.tractor + " " +
+          (record.station || "") + " " +
+          (record.notes || "")
+        ).toLowerCase();
+
+        return !query || text.includes(query);
+      })
+      .sort((a, b) =>
+        (b.record.date || "").localeCompare(a.record.date || "")
+      );
+
+    document.getElementById("history-empty").style.display =
+      visibleRecords.length > 0 ? "none" : "block";
+
+    visibleRecords.forEach(({ record, index }) => {
+      const row = document.createElement("tr");
+
+      const values = [
+        formatDate(record.date),
+        record.tractor,
+        record.station || "Não informado",
+        number(Number(record.liters)) + " L",
+        money(Number(record.price)),
+        money(Number(record.total))
+      ];
+
+      values.forEach((value, columnIndex) => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+
+        if (columnIndex === 5) {
+          cell.className = "total-cell";
         }
 
+        row.appendChild(cell);
+      });
 
-        document.getElementById(
-            "mensagem"
-        ).style.display = "block";
+      const actionCell = document.createElement("td");
+      const removeButton = document.createElement("button");
 
+      removeButton.type = "button";
+      removeButton.className = "delete-btn";
+      removeButton.textContent = "Excluir";
 
-        document.getElementById(
-            "litros"
-        ).value = "";
+      removeButton.addEventListener("click", function() {
+        if (!confirm("Deseja excluir este abastecimento?")) {
+          return;
+        }
 
+        const previousRecords = records.slice();
+        records.splice(index, 1);
 
-        document.getElementById(
-            "valor"
-        ).value = "";
+        if (saveRecords()) {
+          renderHistory();
+          updateStats();
+        } else {
+          records = previousRecords;
+        }
+      });
 
+      actionCell.appendChild(removeButton);
+      row.appendChild(actionCell);
+      historyBody.appendChild(row);
+    });
+  }
+
+  form.addEventListener("submit"), function(event) {
+    event.preventDefault();
+
+    if (!form.reportValidity()) {
+      return;
     }
 
-</script>
+    const liters = Number(litersInput.value);
+    const price = Number(priceInput.value);
 
+    if (
+      !Number.isFinite(liters) ||
+      liters <= 0 ||
+      !Number.isFinite(price) ||
+      price < 0
+    ) {
+      showNotice("Informe litros e preço válidos.", true);
+      return;
+    }
 
-</body>
-
-</html>
+    const record = {
+      tractor: document.getElementById("tractor").value,
+      date: document.getElementById("fuel-date").value,
+      liters: liters,
+      price: price,
+      total: liters * price,
+        hours: Number(document.getElementById("hours").value) || null,
+        station: document.getElementById("station").value.trim() || null,
+        notes: document.getElementById("fuel-notes").value.trim() || null
+    };  
+};
+};
