@@ -1,398 +1,1526 @@
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manutenção - AgroTrator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgroTrator | Manutenção</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+<style>
+:root {
+  --green: #2e7d32;
+  --dark: #1d5e2a;
+  --soft: #e8f4e9;
+  --orange: #f57c00;
+  --bg: #f4f6f4;
+  --text: #202a23;
+  --muted: #68736a;
+  --border: #e1e8e1;
+  --red: #b42318;
+}
 
-        body {
-            background: #f5f7f5;
-            color: #263329;
-        }
+* {
+  box-sizing: border-box;
+}
 
-        header {
-            background: #087a35;
-            color: white;
-            padding: 22px 18px;
-        }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-        header a {
-            color: white;
-            text-decoration: none;
-        }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-        header h1 {
-            margin-top: 20px;
-            font-size: 27px;
-        }
+button, input, select, textarea {
+  font: inherit;
+}
 
-        header p {
-            margin-top: 8px;
-            font-size: 14px;
-        }
+button {
+  cursor: pointer;
+}
 
-        main {
-            max-width: 650px;
-            margin: 20px auto;
-            padding: 0 15px 30px;
-        }
+.layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 235px minmax(0, 1fr);
+}
 
-        .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 18px;
-            border-radius: 14px;
-            box-shadow: 0 3px 12px #0000000d;
-        }
+.sidebar {
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 23px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
 
-        h2 {
-            color: #087a35;
-            font-size: 21px;
-            margin-bottom: 15px;
-        }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  color: var(--dark);
+  font-size: 22px;
+  font-weight: 800;
+}
 
-        .aviso {
-            background: #e8f5eb;
-            padding: 12px;
-            border-left: 4px solid #087a35;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  font-size: 19px;
+}
 
-        label {
-            display: block;
-            margin: 15px 0 7px;
-            font-size: 14px;
-            font-weight: bold;
-        }
+.orange {
+  color: var(--orange);
+}
 
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccd5cd;
-            border-radius: 8px;
-            background: white;
-            font-size: 15px;
-        }
+.label {
+  padding: 0 10px;
+  color: #909990;
+  font-size: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
 
-        textarea {
-            min-height: 85px;
-            resize: vertical;
-        }
+.nav {
+  display: grid;
+  gap: 5px;
+}
 
-        button, .botao {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            margin-top: 16px;
-            border: none;
-            border-radius: 9px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 10px;
+  border-radius: 9px;
+  color: #566158;
+  font-size: 13px;
+}
 
-        .verde {
-            background: #087a35;
-            color: white;
-        }
+.nav a:hover,
+.nav a.active {
+  background: var(--soft);
+  color: var(--dark);
+}
 
-        .claro {
-            background: #e8f5eb;
-            color: #087a35;
-        }
+.nav a.active {
+  font-weight: bold;
+}
 
-        .registro {
-            padding: 14px;
-            border: 1px solid #e0e6e0;
-            border-radius: 10px;
-            margin-top: 12px;
-            overflow-wrap: anywhere;
-        }
+.nav-icon {
+  width: 23px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 16px;
+}
 
-        .registro h3 {
-            color: #087a35;
-            margin-bottom: 8px;
-            font-size: 17px;
-        }
+.help {
+  margin-top: auto;
+  padding: 15px;
+  background: #f1f7f1;
+  border-radius: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
 
-        .registro p {
-            font-size: 14px;
-            line-height: 1.7;
-        }
+.help strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 5px;
+  font-size: 14px;
+}
 
-        .vazio {
-            color: #68746b;
-            font-size: 14px;
-            line-height: 1.5;
-        }
+.help a {
+  display: block;
+  margin-top: 10px;
+  color: var(--green);
+  font-weight: bold;
+}
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: #68746b;
-            font-size: 12px;
-        }
-    </style>
+.main {
+  min-width: 0;
+}
+
+.topbar {
+  min-height: 76px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px clamp(18px, 3vw, 40px);
+  gap: 12px;
+}
+
+.topbar small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.topbar strong {
+  font-size: 16px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--soft);
+  color: var(--dark);
+  font-weight: bold;
+}
+
+.content {
+  max-width: 1600px;
+  margin: auto;
+  padding: 28px clamp(18px, 3vw, 40px) 48px;
+}
+
+.intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(28px, 3vw, 35px);
+}
+
+.intro p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 13px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-green {
+  background: var(--green);
+  color: #fff;
+}
+
+.btn-green:hover {
+  background: var(--dark);
+}
+
+.btn-light {
+  background: var(--soft);
+  color: var(--dark);
+  border: 1px solid #cfe2d1;
+}
+
+.btn-white {
+  background: #fff;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-red {
+  background: #fff7f6;
+  color: var(--red);
+  border: 1px solid #f1d6d2;
+}
+
+.banner {
+  background: linear-gradient(110deg, #1e672d, #398747 70%, #80ac6e);
+  color: white;
+  border-radius: 15px;
+  padding: 25px 32px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  display: inline-block;
+  padding: 6px 10px;
+  border: 1px solid #ffffff45;
+  background: #ffffff25;
+  border-radius: 18px;
+  font-size: 10px;
+  font-weight: bold;
+  margin-bottom: 9px;
+}
+
+.banner h2 {
+  margin: 0 0 8px;
+  font-size: clamp(22px, 2vw, 27px);
+}
+
+.banner p {
+  margin: 0;
+  font-size: 13px;
+  color: #ffffffdf;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 19px;
+}
+
+.stat strong {
+  color: var(--green);
+  display: block;
+  font-size: clamp(17px, 1.6vw, 22px);
+  margin-bottom: 4px;
+  overflow-wrap: anywhere;
+}
+
+.stat span {
+  color: var(--muted);
+  display: block;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 21px;
+  min-width: 0;
+  margin-bottom: 18px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 17px;
+}
+
+.panel-head h2 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.panel-head p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.panel-icon {
+  width: 38px;
+  height: 38px;
+  background: var(--soft);
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  flex-shrink: 0;
+  font-size: 19px;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.field {
+  min-width: 0;
+}
+
+.field.full {
+  grid-column: 1 / -1;
+}
+
+.field label {
+  display: block;
+  font-weight: bold;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid #d5ded6;
+  border-radius: 8px;
+  background: #fbfcfb;
+  padding: 10px;
+  font-size: 13px;
+  outline: none;
+  color: var(--text);
+}
+
+.field input,
+.field select {
+  height: 42px;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 86px;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--green);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.tip {
+  background: #f8faf8;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.tip strong {
+  color: var(--text);
+}
+
+.summary-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 17px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.summary-row span {
+  color: var(--muted);
+}
+
+.summary-row strong {
+  color: var(--dark);
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.5fr) minmax(140px, .8fr) minmax(140px, .8fr) auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.filters .field input,
+.filters .field select {
+  height: 41px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+th {
+  text-align: left;
+  padding: 12px;
+  background: #f7f9f7;
+  border-bottom: 1px solid var(--border);
+  color: #778179;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  white-space: nowrap;
+}
+
+td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #edf0ed;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #fbfdfb;
+}
+
+.subtext {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.pill {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.status-pendente {
+  background: #fff0d9;
+  color: #895900;
+}
+
+.status-andamento {
+  background: #e8f1ff;
+  color: #174ea6;
+}
+
+.status-concluida {
+  background: #e8f4e9;
+  color: #1d5e2a;
+}
+
+.status-cancelada {
+  background: #fff0ef;
+  color: #b42318;
+}
+
+.row-btn {
+  padding: 7px 9px;
+  font-size: 11px;
+  margin: 2px;
+}
+
+.empty {
+  padding: 28px 14px;
+  margin-top: 10px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.empty strong {
+  display: block;
+  color: var(--text);
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.note {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  background: #203d27;
+  color: white;
+  border-radius: 9px;
+  padding: 13px 17px;
+  z-index: 999;
+  font-size: 13px;
+  box-shadow: 0 5px 20px #0002;
+}
+
+.toast.show {
+  display: block;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 1250px) {
+  .layout {
+    grid-template-columns: 205px minmax(0, 1fr);
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filters .search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .layout {
+    display: block;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .content {
+    padding: 20px 13px 85px;
+  }
+
+  .intro {
+    flex-direction: column;
+  }
+
+  .mobile-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-around;
+    padding: 9px 3px;
+    z-index: 100;
+  }
+
+  .mobile-nav a {
+    color: var(--muted);
+    font-size: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .mobile-nav span {
+    font-size: 19px;
+  }
+
+  .user-meta {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .stats {
+    gap: 8px;
+  }
+
+  .stat {
+    padding: 10px;
+    gap: 7px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .stat strong {
+    font-size: 16px;
+  }
+
+  .field-grid,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .field.full,
+  .filters .search {
+    grid-column: auto;
+  }
+
+  .panel {
+    padding: 14px;
+  }
+
+  .banner {
+    padding: 22px;
+  }
+
+  .filters .btn {
+    width: 100%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-    <a id="voltar" href="detalhes.html">← Voltar para os detalhes</a>
-    <h1>🔧 Manutenção</h1>
-    <p>AgroTrator — controle das máquinas agrícolas</p>
-</header>
+<div class="layout">
 
-<main>
-
-    <section class="card">
-        <h2>Registrar manutenção</h2>
-
-        <div class="aviso">
-            Cadastre as manutenções dos seus tratores para organizar
-            os serviços e acompanhar as horas de uso.
-        </div>
-
-        <form id="formManutencao">
-
-            <label for="trator">Trator</label>
-            <select id="trator" required>
-                <option value="">Selecione o trator</option>
-                <option value="valtra">Valtra</option>
-                <option value="new-holland">New Holland</option>
-                <option value="john-deere">John Deere</option>
-                <option value="massey-ferguson">Massey Ferguson</option>
-            </select>
-
-            <label for="tipo">Tipo de manutenção</label>
-            <select id="tipo" required>
-                <option value="">Selecione o serviço</option>
-                <option value="Preventiva">Manutenção preventiva</option>
-                <option value="Corretiva">Manutenção corretiva</option>
-                <option value="Troca de óleo">Troca de óleo</option>
-                <option value="Troca de filtros">Troca de filtros</option>
-                <option value="Revisão geral">Revisão geral</option>
-                <option value="Reparo mecânico">Reparo mecânico</option>
-                <option value="Outro">Outro serviço</option>
-            </select>
-
-            <label for="data">Data da manutenção</label>
-            <input type="date" id="data" required>
-
-            <label for="horas">Horas de uso</label>
-            <input
-                type="number"
-                id="horas"
-                min="0"
-                step="0.1"
-                placeholder="Ex.: 1250"
-                required
-            >
-
-            <label for="descricao">Descrição do serviço</label>
-            <textarea
-                id="descricao"
-                placeholder="Descreva o serviço realizado..."
-            ></textarea>
-
-            <button type="submit" class="verde">
-                Salvar manutenção
-            </button>
-
-        </form>
-    </section>
-
-    <section class="card">
-        <h2>Histórico de manutenções</h2>
-
-        <div id="historico">
-            <p class="vazio">Carregando registros...</p>
-        </div>
-
-        <button type="button" id="limpar" class="claro">
-            Apagar histórico deste trator
-        </button>
-    </section>
-
-    <a href="tratores.html" class="botao claro">
-        Voltar para os tratores
+  <aside class="sidebar">
+    <a class="brand" href="principal.html">
+      <span class="brand-icon">AT</span>
+      <span>Agro<span class="orange">Trator</span></span>
     </a>
 
-</main>
+    <div>
+      <p class="label">Menu principal</p>
 
-<footer>
-    AgroTrator © 2026 — Gestão de máquinas agrícolas
-</footer>
+      <nav class="nav">
+        <a href="principal.html"><span class="nav-icon">🏠</span>Início</a>
+        <a href="tratores.html"><span class="nav-icon">🚜</span>Tratores</a>
+        <a class="active" href="manutencao.html"><span class="nav-icon">🔧</span>Manutenção</a>
+        <a href="abastecimento.html"><span class="nav-icon">⛽</span>Abastecimento</a>
+        <a href="oficina.html"><span class="nav-icon">🛠️</span>Oficina</a>
+        <a href="mapa.html"><span class="nav-icon">📍</span>GPS e mapa</a>
+        <a href="perfil.html"><span class="nav-icon">👤</span>Perfil</a>
+        <a href="historico.html"><span class="nav-icon">📋</span>Histórico</a>
+        <a href="relatorios.html"><span class="nav-icon">📊</span>Relatórios</a>
+      </nav>
+    </div>
+
+    <div class="help">
+      <strong>Cuidados com a frota</strong>
+      Registre as revisões, serviços e próximas datas de manutenção.
+      <a href="#maintenance-form">＋ Registrar manutenção</a>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div>
+        <small>Planejamento e serviços da frota</small>
+        <strong>Manutenção</strong>
+      </div>
+
+      <a class="user" href="perfil.html">
+        <div class="avatar">AT</div>
+        <div class="user-meta">
+          <strong>AgroTrator</strong>
+          <small>Gestão da frota</small>
+        </div>
+      </a>
+    </header>
+
+    <main class="content">
+
+      <section class="intro">
+        <div>
+          <div class="eyebrow">Prevenção e cuidados</div>
+          <h1>Manutenção dos tratores</h1>
+          <p>
+            Cadastre revisões, trocas de óleo e reparos, acompanhe os
+            serviços e organize as próximas manutenções.
+          </p>
+        </div>
+
+        <button class="btn btn-green" id="go-form" type="button">
+          ＋ Nova manutenção
+        </button>
+      </section>
+
+      <section class="banner">
+        <span class="tag">Controle de manutenção</span>
+        <h2>Cuide da sua frota antes que o problema apareça.</h2>
+        <p>
+          Registre cada serviço realizado e acompanhe o status, o horímetro,
+          o custo e a próxima revisão de cada trator.
+        </p>
+      </section>
+
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-icon">📋</div>
+          <div>
+            <strong id="stat-total">0</strong>
+            <span>Registros cadastrados</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">⏳</div>
+          <div>
+            <strong id="stat-pending">0</strong>
+            <span>Pendentes</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">✅</div>
+          <div>
+            <strong id="stat-done">0</strong>
+            <span>Concluídas</span>
+          </div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-icon">💰</div>
+          <div>
+            <strong id="stat-cost">R$ 0,00</strong>
+            <span>Custo total registrado</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="columns">
+
+        <section class="panel" id="maintenance-form">
+          <div class="panel-head">
+            <div>
+              <h2 id="form-title">Registrar manutenção</h2>
+              <p>Preencha os dados do serviço. Os campos com * são obrigatórios.</p>
+            </div>
+            <div class="panel-icon">🔧</div>
+          </div>
+
+          <form id="form-maintenance">
+            <div class="field-grid">
+
+              <div class="field">
+                <label for="tractor">Trator *</label>
+                <select id="tractor" required>
+                  <option value="">Selecione o trator</option>
+                  <option>Valtra</option>
+                  <option>New Holland</option>
+                  <option>John Deere</option>
+                  <option>Massey Ferguson</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="service-date">Data do serviço *</label>
+                <input id="service-date" type="date" required>
+              </div>
+
+              <div class="field">
+                <label for="type">Tipo de manutenção *</label>
+                <select id="type" required>
+                  <option value="">Selecione</option>
+                  <option>Revisão preventiva</option>
+                  <option>Troca de óleo</option>
+                  <option>Troca de filtros</option>
+                  <option>Motor</option>
+                  <option>Sistema elétrico</option>
+                  <option>Sistema hidráulico</option>
+                  <option>Transmissão</option>
+                  <option>Pneus e rodas</option>
+                  <option>Lubrificação</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="status">Status *</label>
+                <select id="status" required>
+                  <option value="Pendente">Pendente</option>
+                  <option value="Em andamento">Em andamento</option>
+                  <option value="Concluída">Concluída</option>
+                  <option value="Cancelada">Cancelada</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="hours">Horímetro (horas)</label>
+                <input id="hours" type="number" min="0" step="0.1" placeholder="Ex.: 1250">
+              </div>
+
+              <div class="field">
+                <label for="cost">Custo (R$)</label>
+                <input id="cost" type="number" min="0" step="0.01" placeholder="0,00">
+              </div>
+
+              <div class="field">
+                <label for="next-date">Próxima manutenção</label>
+                <input id="next-date" type="date">
+              </div>
+
+              <div class="field">
+                <label for="responsible">Responsável / mecânico</label>
+                <input id="responsible" type="text" placeholder="Nome do responsável">
+              </div>
+
+              <div class="field full">
+                <label for="description">Descrição do serviço *</label>
+                <textarea id="description" placeholder="Descreva a revisão, defeito encontrado, peças trocadas ou serviço realizado..." required></textarea>
+              </div>
+
+              <div class="field full">
+                <label for="notes">Observações</label>
+                <textarea id="notes" placeholder="Informações adicionais (opcional)" style="min-height:65px"></textarea>
+              </div>
+
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-green" id="save-button" type="submit">
+                Salvar manutenção
+              </button>
+              <button class="btn btn-light" id="reset-button" type="button">
+                Limpar formulário
+              </button>
+              <button class="btn btn-white" id="cancel-edit" type="button" hidden>
+                Cancelar edição
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <aside>
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Resumo da manutenção</h2>
+                <p>Indicadores calculados a partir dos registros salvos.</p>
+              </div>
+              <div class="panel-icon">📊</div>
+            </div>
+
+            <div class="tip">
+              <strong>Como funciona?</strong><br>
+              Cadastre o serviço, informe o status e o custo. As informações
+              aparecem na tabela e ficam guardadas no armazenamento deste navegador.
+            </div>
+
+            <div class="summary-list">
+              <div class="summary-row">
+                <span>Em andamento</span>
+                <strong id="stat-progress">0</strong>
+              </div>
+
+              <div class="summary-row">
+                <span>Próximas revisões cadastradas</span>
+                <strong id="stat-next">0</strong>
+              </div>
+
+              <div class="summary-row">
+                <span>Tratores atendidos</span>
+                <strong id="stat-tractors">0</strong>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-white" id="export-csv" type="button">
+                ⬇ Exportar CSV
+              </button>
+            </div>
+
+            <p class="note">
+              Os dados ficam salvos neste navegador. Para compartilhar as
+              informações entre dispositivos, será necessário integrar o projeto
+              a um banco de dados.
+            </p>
+          </section>
+        </aside>
+
+      </div>
+
+      <section class="panel" id="maintenance-list">
+        <div class="panel-head">
+          <div>
+            <h2>Histórico de manutenção</h2>
+            <p>Pesquise, filtre, edite ou exclua registros.</p>
+          </div>
+          <div class="panel-icon">📋</div>
+        </div>
+
+        <div class="filters">
+          <div class="field search">
+            <label for="search">Pesquisar</label>
+            <input id="search" type="search" placeholder="Trator, serviço ou responsável">
+          </div>
+
+          <div class="field">
+            <label for="filter-status">Status</label>
+            <select id="filter-status">
+              <option value="todos">Todos os status</option>
+              <option>Pendente</option>
+              <option>Em andamento</option>
+              <option>Concluída</option>
+              <option>Cancelada</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="filter-tractor">Trator</label>
+            <select id="filter-tractor">
+              <option value="todos">Todos os tratores</option>
+              <option>Valtra</option>
+              <option>New Holland</option>
+              <option>John Deere</option>
+              <option>Massey Ferguson</option>
+            </select>
+          </div>
+
+          <button class="btn btn-light" id="clear-filters" type="button">
+            Limpar filtros
+          </button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Trator / manutenção</th>
+                <th>Status</th>
+                <th>Horímetro</th>
+                <th>Custo</th>
+                <th>Próxima revisão</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="maintenance-body"></tbody>
+          </table>
+        </div>
+
+        <div class="empty" id="empty">
+          <strong>Nenhuma manutenção cadastrada</strong>
+          Use o formulário acima para registrar a primeira manutenção.
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<nav class="mobile-nav">
+  <a href="principal.html"><span>🏠</span>Início</a>
+  <a href="tratores.html"><span>🚜</span>Tratores</a>
+  <a href="abastecimento.html"><span>⛽</span>Abastecer</a>
+  <a href="manutencao.html"><span>🔧</span>Manutenção</a>
+  <a href="mapa.html"><span>📍</span>GPS</a>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
-    const CHAVE = "agroTratorManutencoes";
+(function () {
+  'use strict';
 
-    const nomes = {
-        "valtra": "Valtra",
-        "new-holland": "New Holland",
-        "john-deere": "John Deere",
-        "massey-ferguson": "Massey Ferguson"
+  const STORAGE_KEY = 'agrotrator_manutencoes';
+  const $ = id => document.getElementById(id);
+
+  let records = loadRecords();
+  let editingId = null;
+
+  function loadRecords() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+      return Array.isArray(value)
+        ? value.filter(r => r && typeof r === 'object')
+        : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function saveRecords() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      return true;
+    } catch (error) {
+      toast('Não foi possível salvar os dados neste navegador.');
+      return false;
+    }
+  }
+
+  function todayLocal() {
+    const date = new Date();
+    const offset = date.getTimezoneOffset();
+
+    return new Date(
+      date.getTime() - offset * 60000
+    ).toISOString().slice(0, 10);
+  }
+
+  function number(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : 0;
+  }
+
+  function money(value) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(number(value));
+  }
+
+  function dateBR(value) {
+    if (!value) return '—';
+
+    const parts = String(value).slice(0, 10).split('-');
+
+    return parts.length === 3
+      ? parts[2] + '/' + parts[1] + '/' + parts[0]
+      : String(value);
+  }
+
+  function toast(message) {
+    const element = $('toast');
+    element.textContent = message;
+    element.classList.add('show');
+
+    window.setTimeout(() => {
+      element.classList.remove('show');
+    }, 2600);
+  }
+
+  function statusClass(status) {
+    if (status === 'Concluída') return 'status-concluida';
+    if (status === 'Em andamento') return 'status-andamento';
+    if (status === 'Cancelada') return 'status-cancelada';
+
+    return 'status-pendente';
+  }
+
+  function updateStats() {
+    $('stat-total').textContent = records.length;
+
+    $('stat-pending').textContent = records.filter(
+      r => r.status === 'Pendente'
+    ).length;
+
+    $('stat-progress').textContent = records.filter(
+      r => r.status === 'Em andamento'
+    ).length;
+
+    $('stat-done').textContent = records.filter(
+      r => r.status === 'Concluída'
+    ).length;
+
+    $('stat-cost').textContent = money(
+      records.reduce((sum, r) => sum + number(r.cost), 0)
+    );
+
+    $('stat-tractors').textContent = new Set(
+      records.map(r => r.tractor).filter(Boolean)
+    ).size;
+
+    $('stat-next').textContent = records.filter(
+      r => r.nextDate && r.status !== 'Cancelada'
+    ).length;
+  }
+
+  function filteredRecords() {
+    const query = $('search').value.trim().toLocaleLowerCase('pt-BR');
+    const status = $('filter-status').value;
+    const tractor = $('filter-tractor').value;
+
+    return records
+      .map((record, index) => ({ record, index }))
+      .filter(({ record: r }) => {
+        const text = [
+          r.tractor,
+          r.type,
+          r.description,
+          r.responsible,
+          r.notes,
+          r.status,
+          r.date,
+          r.nextDate
+        ].join(' ').toLocaleLowerCase('pt-BR');
+
+        return (
+          (!query || text.includes(query)) &&
+          (status === 'todos' || r.status === status) &&
+          (tractor === 'todos' || r.tractor === tractor)
+        );
+      })
+      .sort((a, b) =>
+        String(b.record.date || '').localeCompare(
+          String(a.record.date || '')
+        )
+      );
+  }
+
+  function makeCell(row, text, className) {
+    const cell = document.createElement('td');
+
+    cell.textContent = text == null || text === ''
+      ? '—'
+      : String(text);
+
+    if (className) {
+      cell.className = className;
+    }
+
+    row.appendChild(cell);
+    return cell;
+  }
+
+  function render() {
+    const tbody = $('maintenance-body');
+    tbody.replaceChildren();
+
+    const list = filteredRecords();
+
+    list.forEach(({ record: r }) => {
+      const row = document.createElement('tr');
+
+      makeCell(row, dateBR(r.date));
+
+      const descCell = document.createElement('td');
+
+      const tractor = document.createElement('strong');
+      tractor.textContent = r.tractor || 'Trator não informado';
+
+      const detail = document.createElement('span');
+      detail.className = 'subtext';
+      detail.textContent = r.type || 'Manutenção';
+
+      descCell.append(tractor, detail);
+      row.appendChild(descCell);
+
+      const statusCell = document.createElement('td');
+      const badge = document.createElement('span');
+
+      badge.className = 'pill ' + statusClass(r.status);
+      badge.textContent = r.status || 'Pendente';
+
+      statusCell.appendChild(badge);
+      row.appendChild(statusCell);
+
+      makeCell(
+        row,
+        r.hours ? number(r.hours).toLocaleString('pt-BR') + ' h' : '—'
+      );
+
+      makeCell(row, money(r.cost));
+      makeCell(row, dateBR(r.nextDate));
+
+      const actions = document.createElement('td');
+      actions.style.whiteSpace = 'nowrap';
+
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'btn btn-light row-btn';
+      edit.textContent = 'Editar';
+
+      edit.addEventListener('click', () => startEdit(r.id));
+
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'btn btn-red row-btn';
+      del.textContent = 'Excluir';
+
+      del.addEventListener('click', () => deleteRecord(r.id));
+
+      actions.append(edit, del);
+      row.appendChild(actions);
+      tbody.appendChild(row);
+    });
+
+    $('empty').style.display = list.length ? 'none' : 'block';
+
+    updateStats();
+  }
+
+  function resetForm() {
+    $('form-maintenance').reset();
+    $('service-date').value = todayLocal();
+    $('status').value = 'Pendente';
+
+    editingId = null;
+
+    $('form-title').textContent = 'Registrar manutenção';
+    $('save-button').textContent = 'Salvar manutenção';
+    $('cancel-edit').hidden = true;
+
+    const params = new URLSearchParams(window.location.search);
+    const model = (params.get('modelo') || '').toLocaleLowerCase('pt-BR');
+
+    const map = {
+      'valtra': 'Valtra',
+      'new holland': 'New Holland',
+      'new-holland': 'New Holland',
+      'john deere': 'John Deere',
+      'john-deere': 'John Deere',
+      'massey ferguson': 'Massey Ferguson',
+      'massey-ferguson': 'Massey Ferguson'
     };
 
-    const parametros = new URLSearchParams(window.location.search);
-    const tratorURL = parametros.get("trator");
+    if (map[model]) {
+      $('tractor').value = map[model];
+    }
+  }
 
-    const campoTrator = document.getElementById("trator");
-    const formulario = document.getElementById("formManutencao");
-    const historico = document.getElementById("historico");
+  function startEdit(id) {
+    const r = records.find(item => String(item.id) === String(id));
+    if (!r) return;
 
-    // Aceita tanto identificadores como nomes dos tratores.
-    function normalizarTrator(valor) {
-        if (!valor) return "";
+    editingId = r.id;
 
-        const texto = valor.toLowerCase().trim();
+    $('tractor').value = r.tractor || '';
+    $('service-date').value = r.date || todayLocal();
+    $('type').value = r.type || '';
+    $('status').value = r.status || 'Pendente';
+    $('hours').value = r.hours ?? '';
+    $('cost').value = r.cost ?? '';
+    $('next-date').value = r.nextDate || '';
+    $('responsible').value = r.responsible || '';
+    $('description').value = r.description || '';
+    $('notes').value = r.notes || '';
 
-        if (nomes[texto]) return texto;
+    $('form-title').textContent = 'Editar manutenção';
+    $('save-button').textContent = 'Salvar alterações';
+    $('cancel-edit').hidden = false;
 
-        const encontrado = Object.keys(nomes).find(
-            chave => nomes[chave].toLowerCase() === texto
-        );
+    $('maintenance-form').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
 
-        return encontrado || "";
+  function deleteRecord(id) {
+    const record = records.find(r => String(r.id) === String(id));
+
+    if (
+      !record ||
+      !confirm('Deseja excluir este registro de manutenção?')
+    ) {
+      return;
     }
 
-    const tratorInicial = normalizarTrator(tratorURL);
+    const old = records;
 
-    if (tratorInicial) {
-        campoTrator.value = tratorInicial;
+    records = records.filter(r => String(r.id) !== String(id));
+
+    if (saveRecords()) {
+      render();
+      toast('Registro excluído.');
+    } else {
+      records = old;
+      render();
+    }
+  }
+
+  $('form-maintenance').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const record = {
+      id: editingId ||
+        (Date.now().toString() + Math.random().toString(16).slice(2)),
+      tractor: $('tractor').value,
+      date: $('service-date').value,
+      type: $('type').value,
+      status: $('status').value,
+      hours: $('hours').value,
+      cost: number($('cost').value),
+      nextDate: $('next-date').value,
+      responsible: $('responsible').value.trim(),
+      description: $('description').value.trim(),
+      notes: $('notes').value.trim(),
+      updatedAt: new Date().toISOString()
+    };
+
+    if (
+      !record.tractor ||
+      !record.date ||
+      !record.type ||
+      !record.description
+    ) {
+      toast('Preencha todos os campos obrigatórios.');
+      return;
     }
 
-    // Preserva o trator ao voltar para a página de detalhes.
-    document.getElementById("voltar").href =
-        "detalhes.html" + window.location.search;
+    const previous = records.slice();
+    const wasEditing = editingId !== null;
 
-    function obterRegistros() {
-        try {
-            return JSON.parse(localStorage.getItem(CHAVE)) || [];
-        } catch (erro) {
-            return [];
-        }
+    if (editingId) {
+      const index = records.findIndex(
+        r => String(r.id) === String(editingId)
+      );
+
+      if (index < 0) {
+        toast('Este registro não foi encontrado.');
+        return;
+      }
+
+      records[index] = record;
+    } else {
+      records.push(record);
     }
 
-    function formatarData(data) {
-        if (!data) return "Não informada";
-        return data.split("-").reverse().join("/");
+    if (saveRecords()) {
+      resetForm();
+      render();
+
+      toast(
+        wasEditing
+          ? 'Manutenção atualizada.'
+          : 'Manutenção salva com sucesso.'
+      );
+
+      $('maintenance-list').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    } else {
+      records = previous;
+      render();
+    }
+  });
+
+  $('reset-button').addEventListener('click', resetForm);
+  $('cancel-edit').addEventListener('click', resetForm);
+
+  $('go-form').addEventListener('click', () => {
+    $('maintenance-form').scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+
+  $('search').addEventListener('input', render);
+  $('filter-status').addEventListener('change', render);
+  $('filter-tractor').addEventListener('change', render);
+
+  $('clear-filters').addEventListener('click', () => {
+    $('search').value = '';
+    $('filter-status').value = 'todos';
+    $('filter-tractor').value = 'todos';
+    render();
+  });
+
+  $('export-csv').addEventListener('click', () => {
+    const list = filteredRecords().map(item => item.record);
+
+    if (!list.length) {
+      alert('Não há registros para exportar.');
+      return;
     }
 
-    function mostrarHistorico() {
-        historico.innerHTML = "";
+    const rows = [[
+      'Data',
+      'Trator',
+      'Tipo',
+      'Status',
+      'Horímetro',
+      'Custo',
+      'Próxima manutenção',
+      'Responsável',
+      'Descrição',
+      'Observações'
+    ]];
 
-        const registros = obterRegistros().filter(
-            registro => registro.trator === campoTrator.value
-        );
-
-        if (!campoTrator.value || registros.length === 0) {
-            historico.innerHTML =
-                '<p class="vazio">Nenhuma manutenção cadastrada para este trator.</p>';
-            return;
-        }
-
-        registros.slice().reverse().forEach(registro => {
-            const item = document.createElement("div");
-            item.className = "registro";
-
-            const titulo = document.createElement("h3");
-            titulo.textContent =
-                (nomes[registro.trator] || registro.trator) +
-                " — " + registro.tipo;
-
-            const data = document.createElement("p");
-            data.textContent = "Data: " + formatarData(registro.data);
-
-            const horas = document.createElement("p");
-            horas.textContent = "Horas de uso: " + registro.horas + " h";
-
-            const descricao = document.createElement("p");
-            descricao.textContent =
-                "Descrição: " + (registro.descricao || "Não informada");
-
-            item.append(titulo, data, horas, descricao);
-            historico.appendChild(item);
-        });
-    }
-
-    formulario.addEventListener("submit", function(evento) {
-        evento.preventDefault();
-
-        const registro = {
-            id: Date.now(),
-            trator: campoTrator.value,
-            tipo: document.getElementById("tipo").value,
-            data: document.getElementById("data").value,
-            horas: document.getElementById("horas").value,
-            descricao: document.getElementById("descricao").value.trim()
-        };
-
-        const registros = obterRegistros();
-        registros.push(registro);
-
-        try {
-            localStorage.setItem(CHAVE, JSON.stringify(registros));
-        } catch (erro) {
-            alert("Não foi possível salvar os dados no navegador.");
-            return;
-        }
-
-        formulario.reset();
-
-        if (tratorInicial) {
-            campoTrator.value = tratorInicial;
-        }
-
-        mostrarHistorico();
-        alert("Manutenção salva com sucesso!");
+    list.forEach(r => {
+      rows.push([
+        r.date,
+        r.tractor,
+        r.type,
+        r.status,
+        r.hours,
+        r.cost,
+        r.nextDate,
+        r.responsible,
+        r.description,
+        r.notes
+      ]);
     });
 
-    campoTrator.addEventListener("change", mostrarHistorico);
+    const csv = '\uFEFF' + rows.map(row =>
+      row.map(value =>
+        '"' + String(value ?? '').replace(/"/g, '""') + '"'
+      ).join(';')
+    ).join('\r\n');
 
-    document.getElementById("limpar").addEventListener("click", function() {
-        const trator = campoTrator.value;
+    const url = URL.createObjectURL(
+      new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+    );
 
-        if (!trator) {
-            alert("Selecione um trator primeiro.");
-            return;
-        }
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'manutencoes-agrotrator.csv';
 
-        const registros = obterRegistros();
-        const existem = registros.some(item => item.trator === trator);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
 
-        if (!existem) {
-            alert("Não há registros para apagar deste trator.");
-            return;
-        }
+    URL.revokeObjectURL(url);
+  });
 
-        if (confirm("Deseja apagar o histórico deste trator?")) {
-            const restantes = registros.filter(
-                item => item.trator !== trator
-            );
-
-            localStorage.setItem(CHAVE, JSON.stringify(restantes));
-            mostrarHistorico();
-        }
-    });
-
-    mostrarHistorico();
+  resetForm();
+  render();
+})();
 </script>
 
 </body>
 </html>
-```

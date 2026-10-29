@@ -42,18 +42,14 @@ button {
   cursor: pointer;
 }
 
-/* ESTRUTURA */
-
 .app {
   min-height: 100vh;
   display: grid;
   grid-template-columns: 250px minmax(0,1fr);
 }
 
-/* MENU LATERAL */
-
 .sidebar {
-  background: white;
+  background: #fff;
   border-right: 1px solid var(--border);
   min-height: 100vh;
   padding: 27px 18px 22px;
@@ -160,8 +156,6 @@ button {
   font-weight: 800;
 }
 
-/* CABEÇALHO */
-
 .main-column {
   min-width: 0;
 }
@@ -169,7 +163,7 @@ button {
 .topbar {
   min-height: 82px;
   padding: 0 clamp(22px,3vw,48px);
-  background: white;
+  background: #fff;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
@@ -217,8 +211,6 @@ button {
   color: var(--muted);
   font-size: 11px;
 }
-
-/* CONTEÚDO */
 
 .content {
   width: 100%;
@@ -277,7 +269,7 @@ h1 {
   border: 1px solid #d5ded6;
   border-radius: 8px;
   color: var(--ink);
-  background: white;
+  background: #fff;
 }
 
 .btn {
@@ -294,14 +286,12 @@ h1 {
 
 .btn-green {
   background: var(--green);
-  color: white;
+  color: #fff;
 }
 
 .btn-green:hover {
   background: var(--dark);
 }
-
-/* INDICADORES */
 
 .stats {
   display: grid;
@@ -315,7 +305,7 @@ h1 {
   align-items: center;
   gap: 13px;
   padding: 18px;
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 13px;
   box-shadow: var(--shadow);
@@ -348,8 +338,6 @@ h1 {
   line-height: 1.4;
 }
 
-/* PAINÉIS */
-
 .grid-two {
   display: grid;
   grid-template-columns: minmax(0,1.25fr) minmax(280px,.75fr);
@@ -358,7 +346,7 @@ h1 {
 }
 
 .panel {
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: 22px;
@@ -396,8 +384,6 @@ h1 {
   font-size: 21px;
   flex-shrink: 0;
 }
-
-/* GRÁFICO DE CONSUMO */
 
 .chart-wrap {
   position: relative;
@@ -452,8 +438,6 @@ h1 {
   background: var(--green);
 }
 
-/* GRÁFICO CIRCULAR */
-
 .donut-area {
   min-height: 260px;
   display: flex;
@@ -477,7 +461,7 @@ h1 {
   position: absolute;
   inset: 32px;
   border-radius: 50%;
-  background: white;
+  background: #fff;
 }
 
 .donut-center {
@@ -539,8 +523,6 @@ h1 {
   font-size: 11px;
 }
 
-/* TABELA */
-
 .table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -601,8 +583,6 @@ tbody tr:last-child td {
   display: none;
 }
 
-/* RESPONSIVIDADE */
-
 @media(max-width:1320px) {
   .app {
     grid-template-columns: 220px minmax(0,1fr);
@@ -643,7 +623,7 @@ tbody tr:last-child td {
     z-index: 30;
     justify-content: space-around;
     gap: 5px;
-    padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
+    padding: 9px 5px;
     background: rgba(255,255,255,.97);
     border-top: 1px solid var(--border);
   }
@@ -722,7 +702,6 @@ tbody tr:last-child td {
 <body>
 <div class="app">
 
-  <!-- MENU LATERAL -->
   <aside class="sidebar">
     <a class="brand" href="principal.html">
       <span class="brand-mark">🌱</span>
@@ -735,7 +714,7 @@ tbody tr:last-child td {
       <div class="nav-list">
         <a class="nav-link" href="principal.html"><span class="nav-icon">🏠</span>Início</a>
         <a class="nav-link" href="tratores.html"><span class="nav-icon">🚜</span>Tratores</a>
-        <a class="nav-link" href="manutenção.html"><span class="nav-icon">🔧</span>Manutenção</a>
+        <a class="nav-link" href="manutencao.html"><span class="nav-icon">🔧</span>Manutenção</a>
         <a class="nav-link" href="abastecimento.html"><span class="nav-icon">⛽</span>Abastecimento</a>
         <a class="nav-link" href="oficina.html"><span class="nav-icon">🛠️</span>Oficina</a>
         <a class="nav-link" href="mapa.html"><span class="nav-icon">📍</span>GPS e mapa</a>
@@ -756,7 +735,6 @@ tbody tr:last-child td {
 
   <div class="main-column">
 
-    <!-- CABEÇALHO -->
     <header class="topbar">
       <div class="page-heading">
         <small>Gestão e acompanhamento</small>
@@ -774,7 +752,6 @@ tbody tr:last-child td {
 
     <main class="content">
 
-      <!-- TÍTULO E FILTROS -->
       <section class="intro">
         <div>
           <div class="eyebrow">Análise da operação</div>
@@ -798,7 +775,6 @@ tbody tr:last-child td {
         </div>
       </section>
 
-      <!-- INDICADORES -->
       <section class="stats">
 
         <div class="stat">
@@ -835,7 +811,6 @@ tbody tr:last-child td {
 
       </section>
 
-      <!-- GRÁFICOS -->
       <section class="grid-two">
 
         <div class="panel">
@@ -889,7 +864,6 @@ tbody tr:last-child td {
 
       </section>
 
-      <!-- TABELA POR TRATOR -->
       <section class="panel">
         <div class="panel-head">
           <div>
@@ -910,7 +884,6 @@ tbody tr:last-child td {
                 <th>Preço médio/L</th>
               </tr>
             </thead>
-
             <tbody id="tractor-table"></tbody>
           </table>
         </div>
@@ -929,7 +902,6 @@ tbody tr:last-child td {
   </div>
 </div>
 
-<!-- MENU PARA CELULARES -->
 <nav class="mobile-nav" aria-label="Navegação móvel">
   <a href="principal.html"><span>🏠</span>Início</a>
   <a href="tratores.html"><span>🚜</span>Tratores</a>
@@ -939,18 +911,20 @@ tbody tr:last-child td {
 </nav>
 
 <script>
-functionizeReports(); {
+(function () {
   const STORAGE_KEY = "agrotrator_abastecimentos";
   const period = document.getElementById("period");
 
-  const money = value => new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL"
-  }).format(value);
+  const money = value =>
+    new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    }).format(value);
 
-  const number = value => new Intl.NumberFormat("pt-BR", {
-    maximumFractionDigits: 2
-  }).format(value);
+  const number = value =>
+    new Intl.NumberFormat("pt-BR", {
+      maximumFractionDigits: 2
+    }).format(value);
 
   const green = "#2e7d32";
 
@@ -965,8 +939,6 @@ functionizeReports(); {
     "#df7777"
   ];
 
-  /* LER OS REGISTROS DE ABASTECIMENTO */
-
   function readRecords() {
     try {
       const data = JSON.parse(
@@ -974,19 +946,17 @@ functionizeReports(); {
       );
 
       return Array.isArray(data)
-        ? data.filter(record =>
-            record &&
-            record.date &&
-            Number.isFinite(Number(record.liters)) &&
-            Number.isFinite(Number(record.total))
+        ? data.filter(r =>
+            r &&
+            r.date &&
+            Number.isFinite(Number(r.liters)) &&
+            Number.isFinite(Number(r.total))
           )
         : [];
     } catch (error) {
       return [];
     }
   }
-
-  /* FILTRAR O PERÍODO */
 
   function getRangeRecords() {
     const records = readRecords();
@@ -999,9 +969,7 @@ functionizeReports(); {
     today.setHours(23, 59, 59, 999);
 
     const start = new Date();
-    start.setDate(
-      start.getDate() - Number(period.value) + 1
-    );
+    start.setDate(start.getDate() - Number(period.value) + 1);
     start.setHours(0, 0, 0, 0);
 
     return records.filter(record => {
@@ -1034,8 +1002,6 @@ functionizeReports(); {
     }).replace(".", "");
   }
 
-  /* ATUALIZAR INDICADORES */
-
   function updateMetrics(records) {
     const liters = records.reduce(
       (sum, record) => sum + Number(record.liters),
@@ -1047,8 +1013,6 @@ functionizeReports(); {
       0
     );
 
-    const average = liters ? cost / liters : 0;
-
     document.getElementById("metric-liters").textContent =
       number(liters) + " L";
 
@@ -1056,7 +1020,7 @@ functionizeReports(); {
       money(cost);
 
     document.getElementById("metric-average").textContent =
-      money(average);
+      money(liters ? cost / liters : 0);
 
     document.getElementById("metric-count").textContent =
       records.length;
@@ -1064,8 +1028,6 @@ functionizeReports(); {
     document.getElementById("donut-total").textContent =
       money(cost);
   }
-
-  /* PREPARAR GRÁFICO */
 
   function setupCanvas(canvas) {
     const rect = canvas.getBoundingClientRect();
@@ -1083,67 +1045,301 @@ functionizeReports(); {
     return { ctx, width, height };
   }
 
-  /* GRÁFICO MENSAL */
+  function drawMonthly(records) {
+    const canvas = document.getElementById("monthly-chart");
+    const empty = document.getElementById("monthly-empty");
 
-    function drawMonthly(records) {
-      const canvas = document.getElementById("monthly-chart");
-      const empty = document.getElementById("monthly-empty");
+    const { ctx, width, height } = setupCanvas(canvas);
 
-      if (!canvas || !canvas.getContext) {
-        return;
+    ctx.clearRect(0, 0, width, height);
+
+    if (!records.length) {
+      empty.classList.add("show");
+      return;
+    }
+
+    empty.classList.remove("show");
+
+    const byMonth = {};
+
+    records.forEach(record => {
+      const key = monthKey(record.date);
+
+      byMonth[key] =
+        (byMonth[key] || 0) + Number(record.liters);
+    });
+
+    let keys = Object.keys(byMonth).sort();
+
+    if (period.value !== "all" && keys.length > 6) {
+      keys = keys.slice(-6);
+    }
+
+    if (keys.length === 1) {
+      const [year, month] = keys[0].split("-").map(Number);
+      const date = new Date(year, month - 2, 1);
+
+      keys.unshift(
+        date.getFullYear() + "-" +
+        String(date.getMonth() + 1).padStart(2, "0")
+      );
+    }
+
+    const values = keys.map(key => byMonth[key] || 0);
+    const max = Math.max(...values, 1);
+
+    const left = 48;
+    const right = 14;
+    const top = 15;
+    const bottom = 39;
+
+    const plotW = width - left - right;
+    const plotH = height - top - bottom;
+
+    ctx.font = "11px Arial";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+
+    for (let i = 0; i <= 4; i++) {
+      const value = max * i / 4;
+      const y = top + plotH - plotH * i / 4;
+
+      ctx.strokeStyle = "#e8eee8";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(left, y);
+      ctx.lineTo(width - right, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#7a857c";
+      ctx.fillText(number(value), left - 9, y);
+    }
+
+    const step = plotW / keys.length;
+    const barWidth = Math.min(44, step * .55);
+
+    keys.forEach((key, index) => {
+      const barHeight = values[index] / max * plotH;
+      const x = left + step * index + (step - barWidth) / 2;
+      const y = top + plotH - barHeight;
+
+      ctx.fillStyle = values[index] ? green : "#e6eee6";
+      ctx.beginPath();
+      ctx.rect(x, y, barWidth, Math.max(barHeight, 1));
+      ctx.fill();
+
+      ctx.fillStyle = "#627064";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText(
+        monthLabel(key),
+        x + barWidth / 2,
+        top + plotH + 12
+      );
+    });
+  }
+
+  function drawDonut(records) {
+    const donut = document.getElementById("donut");
+    const legend = document.getElementById("donut-legend");
+    const empty = document.getElementById("donut-empty");
+    const totals = {};
+
+    records.forEach(record => {
+      const name = record.tractor || "Trator não informado";
+
+      totals[name] =
+        (totals[name] || 0) + Number(record.total);
+    });
+
+    const rows = Object.entries(totals)
+      .sort((a, b) => b[1] - a[1]);
+
+    const total = rows.reduce(
+      (sum, row) => sum + row[1],
+      0
+    );
+
+    if (!total || !rows.length) {
+      donut.style.background =
+        "conic-gradient(#dfe8df 0 100%)";
+
+      legend.textContent = "Sem dados no período";
+      empty.style.display = "block";
+      return;
+    }
+
+    empty.style.display = "none";
+
+    let angle = 0;
+    const segments = [];
+
+    rows.forEach(([name, value], index) => {
+      const end = angle + value / total * 360;
+
+      segments.push(
+        `${colors[index % colors.length]} ${angle}deg ${end}deg`
+      );
+
+      angle = end;
+    });
+
+    donut.style.background =
+      `conic-gradient(${segments.join(",")})`;
+
+    legend.replaceChildren();
+
+    rows.forEach(([name, value], index) => {
+      const row = document.createElement("div");
+      row.className = "donut-legend-row";
+
+      const swatch = document.createElement("i");
+      swatch.style.background = colors[index % colors.length];
+
+      const text = document.createElement("div");
+
+      const strong = document.createElement("strong");
+      strong.textContent = name;
+
+      const detail = document.createElement("span");
+      detail.textContent =
+        money(value) + " · " + number(value / total * 100) + "%";
+
+      text.append(strong, detail);
+      row.append(swatch, text);
+      legend.appendChild(row);
+    });
+  }
+
+  function drawTable(records) {
+    const body = document.getElementById("tractor-table");
+    const empty = document.getElementById("table-empty");
+
+    body.replaceChildren();
+
+    const totals = {};
+
+    records.forEach(record => {
+      const name = record.tractor || "Trator não informado";
+
+      if (!totals[name]) {
+        totals[name] = {
+          count: 0,
+          liters: 0,
+          cost: 0
+        };
       }
 
-      const { ctx, width, height } = setupCanvas(canvas);
+      totals[name].count++;
+      totals[name].liters += Number(record.liters);
+      totals[name].cost += Number(record.total);
+    });
 
-      const monthly = {};
+    const rows = Object.entries(totals)
+      .sort((a, b) => b[1].cost - a[1].cost);
 
-      for (const record of records) {
-        const key = monthKey(record.date);
+    empty.style.display = rows.length ? "none" : "block";
 
-        if (!monthly[key]) {
-          monthly[key] = 0;
+    rows.forEach(([name, data]) => {
+      const tr = document.createElement("tr");
+
+      [
+        name,
+        data.count,
+        number(data.liters) + " L",
+        money(data.cost),
+        money(data.liters ? data.cost / data.liters : 0)
+      ].forEach((value, index) => {
+        const td = document.createElement("td");
+        td.textContent = value;
+
+        if (index === 3) {
+          td.className = "money";
         }
 
-        monthly[key] += Number(record.liters);
-      }
+        tr.appendChild(td);
+      });
 
-      const keys = Object.keys(monthly).sort();
+      body.appendChild(tr);
+    });
+  }
 
-      if (!keys.length) {
-        empty.classList.add("show");
+  function refresh() {
+    const records = getRangeRecords();
+
+    updateMetrics(records);
+    drawMonthly(records);
+    drawDonut(records);
+    drawTable(records);
+  }
+
+  document.getElementById("export-csv")
+    .addEventListener("click", () => {
+      const records = getRangeRecords();
+
+      if (!records.length) {
+        alert("Não há registros no período selecionado para exportar.");
         return;
-      } else {
-        empty.classList.remove("show");
       }
 
-      const values = keys.map(key => monthly[key]);
+      const rows = [
+        [
+          "Data",
+          "Trator",
+          "Fornecedor",
+          "Litros",
+          "Preço por litro",
+          "Total",
+          "Horímetro",
+          "Observações"
+        ],
+        ...records.map(record => [
+          record.date,
+          record.tractor,
+          record.station || "",
+          record.liters,
+          record.price,
+          record.total,
+          record.hours || "",
+          record.notes || ""
+        ])
+      ];
 
-      const maxValue = Math.max(...values);
-      const padding = 20;
-      const barWidth = (width - padding * 2) / keys.length * 0.6;
-      const barSpacing = (width - padding * 2) / keys.length * 0.4;
+      const csv = "\uFEFF" + rows.map(row =>
+        row.map(value =>
+          '"' + String(value ?? "").replace(/"/g, '""') + '"'
+        ).join(";")
+      ).join("\r\n");
 
-      ctx.clearRect(0, 0, width, height);
+      const blob = new Blob(
+        [csv],
+        { type: "text/csv;charset=utf-8;" }
+      );
 
-      ctx.fillStyle = green;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
 
-      for (let i = 0; i < keys.length; i++) {
-        const x = padding + i * (barWidth + barSpacing);
-        const barHeight = (values[i] / maxValue) * (height - padding * 2);
-        const y = height - padding - barHeight;
+      link.href = url;
+      link.download = "relatorio-agrotrator.csv";
 
-        ctx.fillRect(x, y, barWidth, barHeight);
-      }
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
 
-      ctx.fillStyle = "#566158";
-      ctx.font = "12px Arial";
-      ctx.textAlign = "center";
+      URL.revokeObjectURL(url);
+    });
 
-      for (let i = 0; i < keys.length; i++) {
-        const x = padding + i * (barWidth + barSpacing) + barWidth / 2;
-        const labelY = height - padding + 15;
+  period.addEventListener("change", refresh);
 
-        ctx.fillText(monthLabel(keys[i]), x, labelY);
-      }
-}
-}
+  window.addEventListener("resize", () => {
+    clearTimeout(window.__reportResize);
+
+    window.__reportResize = setTimeout(refresh, 120);
+  });
+
+  refresh();
+})();
+</script>
+
+</body>
+</html>
